@@ -1,13 +1,11 @@
 console.log("MAIN MODULE LOADED");
 
-import { homepageHTML } from "./homepage.js";
-console.log("homepage module loaded");
+const VERSION = "1.0.3";
 
-import { loadShelf } from "./shelf.js";
-console.log("shelf module loaded");
-
-import { ensureCovers, watchResults, refreshGeneratedCovers } from "./covers.js";
-console.log("covers module loaded");
+import { homepageHTML } from "/koha-opac/js/homepage.js?v=" + VERSION;
+import { loadShelf } from "/koha-opac/js/shelf.js?v=" + VERSION;
+import { ensureCovers, watchResults, refreshGeneratedCovers }
+  from "/koha-opac/js/covers.js?v=" + VERSION;
 
 
 function init(){
@@ -28,6 +26,24 @@ function init(){
 
         loadShelf("random-books", 6);     // report id for random books
         loadShelf("anthro-books", 7);     // report id for anthropology
+
+        const wrapper = shelf.closest(".discover-wrapper");
+
+        const leftBtn = wrapper.querySelector(".scroll-btn.left");
+        const rightBtn = wrapper.querySelector(".scroll-btn.right");
+
+        if(!shelf.dataset.scrollInit){
+
+            leftBtn?.addEventListener("click",()=>{
+                shelf.scrollBy({ left:-400, behavior:"smooth" });
+            });
+
+            rightBtn?.addEventListener("click",()=>{
+                shelf.scrollBy({ left:400, behavior:"smooth" });
+            });
+
+            shelf.dataset.scrollInit = "1";
+        }
 
     } else{
         ensureCovers();
