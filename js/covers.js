@@ -2,9 +2,11 @@ export function ensureCovers(){
 
 document.querySelectorAll(".bookcover").forEach(el=>{
 
-    if(el.querySelector("#random-books")) return;
+    /* skip homepage shelf */
+    if(el.closest("#random-books")) return;
+
+    /* skip if real cover image exists */
     if(el.querySelector("img")) return;
-    if(el.querySelector(".generated-cover")) return;
 
     const row = el.closest("tr");
 
@@ -19,14 +21,12 @@ document.querySelectorAll(".bookcover").forEach(el=>{
         row?.querySelector(".author")?.innerText ||
         "";
 
+    /* do not duplicate covers */
+    if(el.querySelector(".generated-cover")) return;
 
-    el.style.background = `linear-gradient(
-    135deg,
-    hsl(${hue},60%,60%),
-    hsl(${hue+15},65%,45%)
-    )`;
+    let cover = createGeneratedCover(title, author);
 
-    el.appendChild(createGeneratedCover(title, author));
+    el.appendChild(cover);
 
 });
 
@@ -38,6 +38,8 @@ function createGeneratedCover(title, author){
 const div = document.createElement("div");
 div.className = "generated-cover";
 
+/* generate color from title */
+
 let hash = 0;
 
 for(let i=0;i<title.length;i++){
@@ -46,15 +48,22 @@ for(let i=0;i<title.length;i++){
 
 const hue = 220 + (Math.abs(hash)%60);
 
+/* apply gradient */
+
+div.style.background = `linear-gradient(
+135deg,
+hsl(${hue},60%,60%),
+hsl(${hue+15},65%,45%)
+)`;
+
+/* shorten title */
+
 const short = title.substring(0,30);
 
 div.innerHTML = `
 <div class="cover-title">${short}</div>
 <div class="cover-author">${author}</div>
 `;
-
-
-
 
 return div;
 
