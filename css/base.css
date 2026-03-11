@@ -6,12 +6,12 @@ color:var(--text-dark);
 .navbar,
 #header,
 .navbar-inverse{
-background:var(--pssc-purple);
+background:white;
 border:none;
 }
 
 .navbar a{
-color:var(--text-light);
+color:var(--text-dark);
 }
 
 .navbar a:hover{
@@ -100,4 +100,12 @@ transition:all .2s ease;
 
 .card:hover{
 transform:translateY(-2px);
+}
+
+#moresearches{
+    color:var(--text-light);
+}
+
+.dropdown-item{
+    color: var(--text-dark);
 }
