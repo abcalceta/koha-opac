@@ -21,22 +21,10 @@ data.forEach(row=>{
 	let title_short = title.substring(0,30);
 	let subtitle_short = subtitle.substring(0,10)+"...";
 
-
-	let hash = 0;
-
-	for(let i=0;i<title.length;i++){
-	    hash = title.charCodeAt(i) + ((hash<<5)-hash);
-	}
-
-	const hue = 220 + (Math.abs(hash)%60);
-
 	html+=`
 	<a class="random-book"
 	href="/cgi-bin/koha/opac-detail.pl?biblionumber=${biblio}">
-		<div class="bookcover"
-		style="background:linear-gradient(135deg,
-		hsl(${hue},60%,60%),
-		hsl(${hue+15},65%,45%))" 
+	<div class="bookcover" 	
 		data-title="${title_short}"
     	data-subtitle="${subtitle_short}"
      	data-author="${author}">
