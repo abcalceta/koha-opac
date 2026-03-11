@@ -33,35 +33,35 @@ document.querySelectorAll(".bookcover").forEach(el=>{
 
 function createGeneratedCover(title, author){
 
-div.className = "generated-cover";
+    div.className = "generated-cover";
 
-/* generate color from title */
+    /* generate color from title */
 
-let hash = 0;
+    let hash = 0;
 
-for(let i=0;i<title.length;i++){
-    hash = title.charCodeAt(i) + ((hash<<5)-hash);
-}
+    for(let i=0;i<title.length;i++){
+        hash = title.charCodeAt(i) + ((hash<<5)-hash);
+    }
 
-const hue = 220 + (Math.abs(hash)%60);
+    const hue = 220 + (Math.abs(hash)%60);
 
-/* apply gradient */
+    /* apply gradient */
 
-div.style.background = `linear-gradient(
-135deg,
-hsl(${hue},60%,60%),
-hsl(${hue+15},65%,45%)
-)`;
+    div.style.background = `linear-gradient(
+    135deg,
+    hsl(${hue},60%,60%),
+    hsl(${hue+15},65%,45%)
+    )`;
 
-/* shorten title */
+    /* shorten title */
 
-const short = title.substring(0,30);
+    const short = title.substring(0,30);
 
-div.innerHTML = `
-<div class="cover-title">${short}</div>
-<div class="cover-author">${author}</div>
-`;
+    div.innerHTML = `
+    <div class="cover-title">${short}</div>
+    <div class="cover-author">${author}</div>
+    `;
 
-return div;
+    return div;
 
 }
