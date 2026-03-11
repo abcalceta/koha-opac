@@ -31,3 +31,4 @@ async function loadRandomBooks(){
 }
 
 loadRandomBooks();
+document.querySelectorAll(".generated-cover").forEach(styleGeneratedCover);

@@ -19,15 +19,18 @@ color:var(--text-dark);
 color:var(--pssc-gold);
 }
 
+.main{
+background:var(--pssc-purple-dark);
+}
+
 .maincontent,
 #opac-main,
 .panel,
 .card,
 .well{
-/*background:var(--bg-panel);*/
-background:var(--pssc-purple-dark);
+background:var(--bg-panel);
 border-radius:8px;
-border:1px solid var(--pssc-purple-dark);
+border:1px solid var(--border-color);
 }
 
 .btn-primary{
