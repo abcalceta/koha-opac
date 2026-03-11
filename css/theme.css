@@ -35,6 +35,9 @@ display:-webkit-box;
 -webkit-box-orient:vertical;
 }
 
+.bookcover img + .generated-cover{
+display:none;
+}
 
 .bookcover{
 position:relative;
