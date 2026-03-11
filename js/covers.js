@@ -106,7 +106,9 @@ export function refreshGeneratedCovers(){
         let authorEl = el.querySelector(".cover-author");
 
         /* remove Koha fallback text */
-        el.textContent = "";
+        el.childNodes.forEach(n=>{
+          if(n.nodeType === Node.TEXT_NODE) n.remove();
+        });
 
         /* create title if missing */
         if(!titleEl){
@@ -121,7 +123,6 @@ export function refreshGeneratedCovers(){
             authorEl.className = "cover-author";
             el.appendChild(authorEl);
         }
-
         titleEl.textContent = title.substring(0,60);
         authorEl.textContent = author;
 
