@@ -39,18 +39,20 @@ for(let i=0;i<title.length;i++){
 
 const hue = 220 + (Math.abs(hash)%60);
 
-div.style.background = `linear-gradient(
-135deg,
-hsl(${hue},60%,60%),
-hsl(${hue+15},65%,45%)
-)`;
-
 const short = title.substring(0,30);
 
 div.innerHTML = `
 <div class="cover-title">${short}</div>
 <div class="cover-author">${author}</div>
 `;
+
+
+div.style.background = `linear-gradient(
+135deg,
+hsl(${hue},60%,60%),
+hsl(${hue+15},65%,45%)
+)`;
+
 
 return div;
 
