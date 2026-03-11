@@ -1,46 +1,39 @@
-export function createGeneratedCover(title, author){
+import { createGeneratedCover } from "./covers.js";
 
-    title = String(title || "");
-    author = String(author || "");
+export async function loadShelf(shelfId, reportId){
 
-    const div = document.createElement("div");
-    div.className = "generated-cover";
+    const shelf = document.querySelector(`#${shelfId}`);
+    if(!shelf) return;
 
-    div.dataset.title = title;
-    div.dataset.author = author;
+    const data = await fetch(`/cgi-bin/koha/svc/report?id=${reportId}`)
+        .then(r => r.json());
 
-    /* hash → color */
-    let hash = 0;
-    for(let i=0;i<title.length;i++){
-        hash = title.charCodeAt(i) + ((hash<<5)-hash);
-    }
+    shelf.innerHTML = "";
 
-    const hue = Math.abs(hash) % 360;
+    data.forEach(row => {
 
-    /* richer gradient */
-    div.style.background =
-        `linear-gradient(
-            135deg,
-            hsl(${hue},50%,28%),
-            hsl(${hue+10},55%,38%)
-        )`;
+        const biblio = row[0];
+        const title = row[1] || "[NO TITLE]";
+        const subtitle = row[2] || "";
+        const author = row[3] || "";
 
-    /* spine shading */
-    div.style.boxShadow =
-        "inset 8px 0 12px rgba(0,0,0,0.25), inset -3px 0 6px rgba(255,255,255,0.08)";
+        const title_short = title.substring(0,30);
 
-    /* title */
-    const titleEl = document.createElement("div");
-    titleEl.className = "cover-title";
-    titleEl.textContent = title.substring(0,60);
+        const link = document.createElement("a");
+        link.className = "random-book";
+        link.href = `/cgi-bin/koha/opac-detail.pl?biblionumber=${biblio}`;
 
-    /* author */
-    const authorEl = document.createElement("div");
-    authorEl.className = "cover-author";
-    authorEl.textContent = author;
+        const cover = createGeneratedCover(title_short, author);
 
-    div.appendChild(titleEl);
-    div.appendChild(authorEl);
+        const label = document.createElement("span");
+        label.className = "booktitle";
+        label.textContent = subtitle ? `${title}: ${subtitle}` : title;
 
-    return div;
+        link.appendChild(cover);
+        link.appendChild(label);
+
+        shelf.appendChild(link);
+
+    });
+
 }

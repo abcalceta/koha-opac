@@ -3,7 +3,7 @@ console.log("MAIN MODULE LOADED");
 import { homepageHTML } from "./homepage.js";
 console.log("homepage module loaded");
 
-import { loadRandomBooks } from "./shelf.js";
+import { loadShelf } from "./shelf.js";
 console.log("shelf module loaded");
 
 import { ensureCovers, watchResults, refreshGeneratedCovers } from "./covers.js";
@@ -26,7 +26,8 @@ function init(){
 
         container.innerHTML = homepageHTML;
 
-        loadRandomBooks();
+        loadShelf("random-books", 6);     // report id for random books
+        loadShelf("anthro-books", 7);     // report id for anthropology
 
     } else{
         ensureCovers();
