@@ -144,12 +144,18 @@ background: transparent;
 }
 
 #results .maincontent{
-    background: var(--pssc-purple-dark);
+    background: var(--bg-dark);
 }
 
 #results main{
     background: var(--bg-dark);
 }
+
+#results #numresults{
+    color: var(--pssc-white);
+}
+
+
 
 #opac-detail main{
     background: var(--pssc-white);

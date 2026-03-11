@@ -22,19 +22,24 @@ function generateCovers(){
 
     document.querySelectorAll(".bookcover").forEach(el => {
 
-        if(el.querySelector("img")) return;
-        if(el.querySelector(".generated-cover")) return;
+        /* skip if Koha already created a fallback */
+
+        if (el.querySelector(".generated-cover")) return;
+
+        /* skip if real cover exists */
+
+        if (el.querySelector("img")) return;
 
         let title = el.dataset.title || "Book";
 
-        let cover = document.createElement("div");
-        cover.className = "generated-cover";
-        cover.dataset.title = title;
-        cover.innerText = title;
+        let cover = createGeneratedCover(title);
 
         el.appendChild(cover);
 
     });
+
+
+
 
 }
 
