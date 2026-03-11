@@ -2,7 +2,7 @@ export function ensureCovers(){
 
 document.querySelectorAll(".bookcover").forEach(el=>{
 
-    if(el.closest("#random-books")) return;
+    if(el.querySelector("#random-books")) return;
     if(el.querySelector("img")) return;
     if(el.querySelector(".generated-cover")) return;
 
