@@ -48,7 +48,7 @@ const short = shortTitle(title);
 
 div.innerHTML = `
 <div class="cover-title">${short}</div>
-<div class="cover-author">${author}</div>
+<div class="cover-author">author</div>
 `;
 
 return div;
