@@ -128,3 +128,7 @@ background: var(--bg-dark);
 #opac-main .container-fluid{
 background: transparent;
 }
+
+#opac-main main{
+    background: var(--pssc-white);
+}
