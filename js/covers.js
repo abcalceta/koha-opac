@@ -31,24 +31,38 @@ document
 });
 }
 
+
 function createGeneratedCover(title, author){
+
+    title = String(title || "");
+    author = String(author || "");
 
     const div = document.createElement("div");
     div.className = "generated-cover";
 
     let hash = 0;
 
-    for(let i=0;i<title.length;i++){
-        hash = title.charCodeAt(i) + ((hash<<5)-hash);
+    for(let i = 0; i < title.length; i++){
+        hash = title.charCodeAt(i) + ((hash << 5) - hash);
     }
 
-    const hue = 220 + (Math.abs(hash)%60);
+    const hue = 220 + (Math.abs(hash) % 60);
 
     div.style.background =
         `linear-gradient(135deg,
         hsl(${hue},60%,60%),
         hsl(${hue+15},65%,45%))`;
 
-    return div;
+    const titleEl = document.createElement("div");
+    titleEl.className = "cover-title";
+    titleEl.textContent = title.substring(0, 30);
 
+    const authorEl = document.createElement("div");
+    authorEl.className = "cover-author";
+    authorEl.textContent = author;
+
+    div.appendChild(titleEl);
+    div.appendChild(authorEl);
+
+    return div;
 }

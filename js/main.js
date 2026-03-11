@@ -31,6 +31,9 @@ function init(){
 
         loadRandomBooks();
 
+    } else{
+        /* covers everywhere else */
+        ensureCovers();
     }
 
 }
