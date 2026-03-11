@@ -67,8 +67,8 @@ document.querySelectorAll(".bookcover").forEach(el=>{
 ensureCovers();
 
 /* rerun when Koha updates DOM */
-new MutationObserver(ensureCovers).observe(
-document.querySelector("main"),{
-childList:true,
-subtree:true
-});
+
+// new MutationObserver(ensureCovers).observe(document.body,{
+// childList:true,
+// subtree:true
+// });
