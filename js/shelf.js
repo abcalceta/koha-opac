@@ -1,51 +1,50 @@
 import { ensureCovers } from "./covers.js";
+import { createGeneratedCover } from "./covers.js";
 
 export async function loadRandomBooks(){
 
-	let shelf=document.querySelector("#random-books");
+    const shelf = document.querySelector("#random-books");
+    if(!shelf) return;
 
-	if(!shelf) return;
+    const data = await fetch("/cgi-bin/koha/svc/report?id=6")
+        .then(r => r.json());
 
-	let data=await fetch("/cgi-bin/koha/svc/report?id=6")
-	.then(r=>r.json());
+    shelf.innerHTML = "";
 
-	let html="";
+    data.forEach(row=>{
 
-	data.forEach(row=>{
+        const biblio = row[0];
+        const title = row[1] || "[NO TITLE]";
+        const subtitle = row[2] || "";
+        const author = row[3] || "";
 
-		let biblio=row[0];
-		let title=row[1]||"[NO TITLE]";
-		let subtitle=row[2]||"";
-		let author=row[3]||"";
+        const title_short = title.substring(0,30);
 
-		let title_short = title.substring(0,30);
-		let subtitle_short = subtitle.substring(0,10)+"...";
+        const link = document.createElement("a");
+        link.className = "random-book";
+        link.href = `/cgi-bin/koha/opac-detail.pl?biblionumber=${biblio}`;
 
-		html+=`
-		<a class="random-book"
-		href="/cgi-bin/koha/opac-detail.pl?biblionumber=${biblio}">
+        const cover = createGeneratedCover(title_short, author);
 
-		<span class="booktitle">${title} ${subtitle}</span>
-		</a>
-		`;
+        const label = document.createElement("span");
+        label.className = "booktitle";
+        label.textContent = `${title} ${subtitle}`;
 
-		const cover = createGeneratedCover(title_short, author);
+        link.appendChild(cover);
+        link.appendChild(label);
 
-	    shelf.appendChild(cover);
+        shelf.appendChild(link);
 
+    });
 
-	});
+    ensureCovers();
 
-	shelf.innerHTML=html;
+    document.querySelector(".scroll-btn.left")?.addEventListener("click",()=>{
+        shelf.scrollBy({left:-400,behavior:"smooth"});
+    });
 
-	ensureCovers();
-
-	document.querySelector(".scroll-btn.left")?.addEventListener("click",()=>{
-	shelf.scrollBy({left:-400,behavior:"smooth"});
-	});
-
-	document.querySelector(".scroll-btn.right")?.addEventListener("click",()=>{
-	shelf.scrollBy({left:400,behavior:"smooth"});
-	});
+    document.querySelector(".scroll-btn.right")?.addEventListener("click",()=>{
+        shelf.scrollBy({left:400,behavior:"smooth"});
+    });
 
 }
