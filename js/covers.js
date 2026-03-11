@@ -94,7 +94,8 @@ export function refreshGeneratedCovers(){
 
     document.querySelectorAll(".generated-cover").forEach(el => {
 
-        const title = el.dataset.title || el.textContent || "";
+        const title = el.dataset.title || "";
+        const author = el.dataset.author || "";
 
         let hash = 0;
         for(let i = 0; i < title.length; i++){
@@ -105,14 +106,21 @@ export function refreshGeneratedCovers(){
 
         el.style.background =
             `linear-gradient(135deg,
-            hsl(${hue},60%,60%),
-            hsl(${hue+15},65%,45%))`;
+            hsl(${hue},60%,30%),
+            hsl(${hue+5},65%,35%))`;
 
-        div.appendChild(titleEl);
-        div.appendChild(authorEl);
+        // restore title text
+        const titleEl = el.querySelector(".cover-title");
+        if(titleEl){
+            titleEl.textContent = title.substring(0,30);
+        }
 
+        // restore author text
+        const authorEl = el.querySelector(".cover-author");
+        if(authorEl){
+            authorEl.textContent = author;
+        }
 
     });
 
 }
-
