@@ -1,0 +1,36 @@
+:root {
+
+    /* Primary brand purple */
+    --pssc-purple: #5A3A8D;
+
+    /* Dark purple (text + accents) */
+    --pssc-purple-dark: #3B2A5A;
+
+    /* Light purple (background accents) */
+    --pssc-purple-light: #7B5FA8;
+
+    /* Gold from the flame */
+    --pssc-gold: #E5A81C;
+
+    /* Dark gold */
+    --pssc-gold-dark: #C89214;
+
+    /* Light gold highlight */
+    --pssc-gold-light: #F2C94C;
+
+    /* Neutral colors */
+    --pssc-white: #FFFFFF;
+    --pssc-gray-light: #F5F5F5;
+    --pssc-gray: #DADADA;
+
+    /* Theme */
+
+    --bg-dark:#1F1B2E;
+    --bg-panel:#F7F7FA;
+
+    --text-dark:#222222;
+    --text-light:#FFFFFF;
+
+    --border-color:#E3E3EA;
+
+}
