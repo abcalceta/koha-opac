@@ -13,17 +13,25 @@ let html="";
 
 data.forEach(row=>{
 
-let biblio=row[0];
-let title=row[1]||"Book";
-let subtitle=row[2]||"Book";
+	let biblio=row[0];
+	let title=row[1]||"Book";
+	let subtitle=row[2]||"Book";
+	let author=row[3]||"Book";
 
-html+=`
-<a class="random-book"
-href="/cgi-bin/koha/opac-detail.pl?biblionumber=${biblio}">
-<div class="bookcover" data-title="${title}"></div>
-<span class="booktitle">${title} ${subtitle}</span>
-</a>
-`;
+	let title_short = title.substring(0,10);
+	let subtitle_short = subtitle.substring(0,10);
+
+	html+=`
+	<a class="random-book"
+	href="/cgi-bin/koha/opac-detail.pl?biblionumber=${biblio}">
+	<div class="bookcover" 	
+		data-title="${title_short}"
+    	data-subtitle="${subtitle_short}"
+     	data-author="${author}">
+     </div>
+	<span class="booktitle">${title} ${subtitle}</span>
+	</a>
+	`;
 
 });
 
