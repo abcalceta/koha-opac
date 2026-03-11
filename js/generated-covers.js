@@ -62,13 +62,14 @@ document.querySelectorAll(".bookcover").forEach(el=>{
 
 }
 
-/* run once */
 
 ensureCovers();
 
-/* rerun when Koha updates DOM */
+const observer = new MutationObserver(()=>{
+    setTimeout(ensureCovers,50);
+});
 
-// new MutationObserver(ensureCovers).observe(document.body,{
-// childList:true,
-// subtree:true
-// });
+observer.observe(document.body,{
+    childList:true,
+    subtree:true
+});
