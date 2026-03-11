@@ -58,4 +58,16 @@ document.head.appendChild(css);
 }
 
 
+function runCoverFix(){
 
+    ensureCovers();
+
+    new MutationObserver(ensureCovers)
+        .observe(document.body,{
+            childList:true,
+            subtree:true
+        });
+
+}
+
+runCoverFix();
