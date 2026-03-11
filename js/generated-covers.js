@@ -93,3 +93,36 @@ childList:true,
 subtree:true
 });
 
+
+function generateMissingCovers(){
+
+document.querySelectorAll(".bookcover").forEach(el=>{
+
+    /* if nothing inside the container */
+
+    if(el.children.length === 0){
+
+        let title = el.dataset.title || "Book";
+
+        let cover = createGeneratedCover(title);
+
+        el.appendChild(cover);
+
+    }
+
+});
+
+}
+
+/* run once */
+
+generateMissingCovers();
+
+/* run when Koha dynamically loads search results */
+
+new MutationObserver(generateMissingCovers)
+.observe(document.body,{
+    childList:true,
+    subtree:true
+});
+
