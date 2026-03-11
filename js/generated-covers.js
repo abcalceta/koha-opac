@@ -47,9 +47,6 @@ function generateCovers(){
 
 generateCovers();
 
-new MutationObserver(generateCovers)
-.observe(document.body,{childList:true,subtree:true});
-
 
 function fixKohaCovers(){
 
@@ -85,13 +82,6 @@ document.querySelectorAll(".bookcover").forEach(el=>{
 
 fixKohaCovers();
 
-/* watch for Koha dynamic updates */
-
-new MutationObserver(fixKohaCovers)
-.observe(document.body,{
-childList:true,
-subtree:true
-});
 
 
 function generateMissingCovers(){

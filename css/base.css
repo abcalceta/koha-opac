@@ -182,9 +182,11 @@ background: transparent;
 
 #breadcrumbs>ol{
     background: none;
-    color: var(--pssc-white);
 }
 
+#breadcrumbs>ol>li{
+    color: var(--pssc-white);
+}
 
 
 #opac-detail main{
