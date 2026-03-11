@@ -1,3 +1,4 @@
+import { createGeneratedCover } from "./covers.js";
 
 export async function loadShelf(shelfId, reportId){
 

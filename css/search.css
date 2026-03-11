@@ -5,3 +5,7 @@
 .sr-only{
 	visibility: hidden;
 }
+
+#advsearch{
+	background: var(--pssc-white);
+}
