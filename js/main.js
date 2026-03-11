@@ -3,10 +3,27 @@ import { loadRandomBooks } from "./random-books.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    ensureCovers();
+  if (document.body.id !== "opac-main") return;
 
-    if(document.body.id === "opac-main"){
-        loadRandomBooks();
-    }
+  fetch("https://abcalceta.github.io/koha-opac/html/homepage.html")
+    .then(r => r.text())
+    .then(html => {
+
+      const container =
+        document.querySelector("#OpacMainUserBlock .default_body") ||
+        document.querySelector("#OpacMainUserBlock");
+
+      if (!container) {
+        console.log("Homepage container not found");
+        return;
+      }
+
+      container.innerHTML = html;
+
+      /* initialize homepage features */
+      initShelf?.();
+
+    })
+    .catch(err => console.error("Homepage fetch failed:", err));
 
 });
