@@ -151,6 +151,13 @@ background: transparent;
     background: var(--pssc-white);
 }
 
+#opac-main .booktitle{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* A width or max-width is required for truncation to work */
+    max-width: 200px; 
+}
 
 
 #results main{
