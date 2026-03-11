@@ -1,3 +1,6 @@
+import "./random-books.js";
+
+
 function loadRandomBooks(){
 
     fetch("/cgi-bin/koha/svc/report?id=6")

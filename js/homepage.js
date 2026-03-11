@@ -6,6 +6,8 @@ document.querySelector(".scroll-btn.right")?.addEventListener("click",()=>{
 document.querySelector(".discover-shelf").scrollBy({left:400,behavior:"smooth"});
 });
 
+
+
 document.addEventListener("DOMContentLoaded", () => {
 
     /* only run on homepage */
