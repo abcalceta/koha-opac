@@ -3,7 +3,7 @@ export function ensureCovers(){
 document.querySelectorAll(".bookcover").forEach(el=>{
 
     /* prevent reprocessing */
-    if(el.dataset.coverDone) return;
+    if(el.dataset.coverDone);
 
     /* skip if real cover image exists */
     if(el.querySelector("img")) return;
@@ -30,37 +30,20 @@ document.querySelectorAll(".bookcover").forEach(el=>{
 });
 }
 
+function createGeneratedCover(title){
 
-function createGeneratedCover(title, author){
-
-    div.className = "bookcover";
-
-    /* generate color from title */
+    const div = document.createElement("div");
+    div.className = "generated-cover";
 
     let hash = 0;
-
     for(let i=0;i<title.length;i++){
         hash = title.charCodeAt(i) + ((hash<<5)-hash);
     }
 
     const hue = 220 + (Math.abs(hash)%60);
 
-    /* apply gradient */
-
-    div.style.background = `linear-gradient(
-    135deg,
-    hsl(${hue},60%,60%),
-    hsl(${hue+15},65%,45%)
-    )`;
-
-    /* shorten title */
-
-    const short = title.substring(0,30);
-
-    div.innerHTML = `
-    <div class="cover-title">${short}</div>
-    <div class="cover-author">${author}</div>
-    `;
+    div.style.background =
+        `linear-gradient(135deg,hsl(${hue},60%,60%),hsl(${hue+15},65%,45%))`;
 
     return div;
 
