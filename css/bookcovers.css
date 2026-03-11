@@ -14,12 +14,17 @@ border-radius:8px;
 
 .cover-title{
 font-weight:700;
-font-size:1.1rem;
+font-size:1rem;
 line-height:1.2;
 }
 
 .cover-author{
-margin-top:8px;
+margin-top:6px;
 font-size:.75rem;
 opacity:.85;
+}
+
+.cover-title{
+text-transform:uppercase;
+letter-spacing:.04em;
 }

@@ -19,7 +19,7 @@ data.forEach(row=>{
 	let author=row[3]||"";
 
 	let title_short = title.substring(0,10);
-	let subtitle_short = subtitle.substring(0,10);
+	let subtitle_short = subtitle.substring(0,10)+"...";
 
 	html+=`
 	<a class="random-book"
