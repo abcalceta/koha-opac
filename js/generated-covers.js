@@ -1,98 +1,25 @@
-function styleGeneratedCover(el){
-
-    let title = el.dataset.title || el.textContent || "Book";
-
-    let hash = 0;
-    for (let i = 0; i < title.length; i++) {
-        hash = title.charCodeAt(i) + ((hash << 5) - hash);
-    }
-
-    let hue = 220 + (Math.abs(hash) % 60);
-
-    el.style.background = `linear-gradient(
-        135deg,
-        hsl(${hue},60%,60%),
-        hsl(${hue+15},65%,45%)
-    )`;
-
-
-}
-
-function generateCovers(){
-
-    document.querySelectorAll(".bookcover").forEach(el => {
-        /* skip if Koha already created a fallback */
-        if (el.querySelector(".generated-cover")) return;
-        /* skip if real cover exists */
-        if (el.querySelector("img")) return;
-        let title = el.dataset.title || "Book";
-        let cover = createGeneratedCover(title);
-        el.appendChild(cover);
-
-    });
-
-    document.querySelectorAll("#opac-detail .bookcover").forEach(el => {
-
-        if(el.querySelector("img")) return;
-        if(el.querySelector(".generated-cover")) return;
-        let title = document.querySelector("#catalogue_detail_biblio h1")?.innerText || "Book";
-        let cover = createGeneratedCover(title);
-        el.appendChild(cover);
-
-    });
-
-
-
-}
-
-generateCovers();
-
-
-function fixKohaCovers(){
+function ensureCovers(){
 
 document.querySelectorAll(".bookcover").forEach(el=>{
 
-    let realCover = el.querySelector("img");
+    let img = el.querySelector("img");
     let generated = el.querySelector(".generated-cover");
 
-    /* remove fallback if real cover exists */
+    /* remove placeholder if real cover exists */
 
-    if(realCover && generated){
+    if(img && generated){
         generated.remove();
         return;
     }
 
-    /* create fallback if none exists */
+    /* create placeholder if empty */
 
-    if(!realCover && !generated){
+    if(!img && !generated){
 
-        let title = el.dataset.title || "Book";
-
-        let cover = createGeneratedCover(title);
-
-        el.appendChild(cover);
-
-    }
-
-});
-
-}
-
-/* run once */
-
-fixKohaCovers();
-
-
-
-function generateMissingCovers(){
-
-document.querySelectorAll(".bookcover").forEach(el=>{
-
-    /* if nothing inside the container */
-
-    if(el.children.length === 0){
-
-        let title = el.dataset.title || "Book";
+        let title =
+            el.dataset.title ||
+            document.querySelector("#catalogue_detail_biblio h1")?.innerText ||
+            "Book";
 
         let cover = createGeneratedCover(title);
 
@@ -106,13 +33,12 @@ document.querySelectorAll(".bookcover").forEach(el=>{
 
 /* run once */
 
-generateMissingCovers();
+ensureCovers();
 
-/* run when Koha dynamically loads search results */
+/* rerun when Koha updates results */
 
-new MutationObserver(generateMissingCovers)
+new MutationObserver(ensureCovers)
 .observe(document.body,{
-    childList:true,
-    subtree:true
+childList:true,
+subtree:true
 });
-
