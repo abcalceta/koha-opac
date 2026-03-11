@@ -89,15 +89,32 @@ padding:10px;
 }
 
 .generated-cover{
-color:white;
-font-weight:600;
+
+width:120px;
+height:180px;
+
+padding:14px;
+
 border-radius:10px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+text-align:center;
+line-height:1.2;
+
+font-size:.9rem;
+font-weight:600;
 
 background:linear-gradient(
 135deg,
 var(--pssc-purple),
 var(--pssc-purple-dark)
 );
+
+color:white;
+
 }
 
 
@@ -163,6 +180,14 @@ background: transparent;
 
 
 
+.bookcover .cover-slider + .generated-cover,
+.bookcover .cover-slider ~ .generated-cover{
+display:none;
+}
 
+.bookcover .cover-slider ~ .generated-cover,
+.bookcover .cover-slider + .generated-cover{
+display:none;
+}
 
 

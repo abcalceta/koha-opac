@@ -21,23 +21,25 @@ function styleGeneratedCover(el){
 function generateCovers(){
 
     document.querySelectorAll(".bookcover").forEach(el => {
-
         /* skip if Koha already created a fallback */
-
         if (el.querySelector(".generated-cover")) return;
-
         /* skip if real cover exists */
-
         if (el.querySelector("img")) return;
-
         let title = el.dataset.title || "Book";
-
         let cover = createGeneratedCover(title);
-
         el.appendChild(cover);
 
     });
 
+    document.querySelectorAll("#opac-detail .bookcover").forEach(el => {
+
+        if(el.querySelector("img")) return;
+        if(el.querySelector(".generated-cover")) return;
+        let title = document.querySelector("#catalogue_detail_biblio h1")?.innerText || "Book";
+        let cover = createGeneratedCover(title);
+        el.appendChild(cover);
+
+    });
 
 
 
