@@ -28,6 +28,8 @@ data.forEach(row=>{
 		data-title="${title_short}"
     	data-subtitle="${subtitle_short}"
      	data-author="${author}">
+     	<span class="cover-title">${title_short}</span>
+     	<span class="cover-author">${author}</span>
      </div>
 	<span class="booktitle">${title} ${subtitle}</span>
 	</a>
