@@ -2,11 +2,13 @@ export function ensureCovers(){
 
 document.querySelectorAll(".bookcover").forEach(el=>{
 
-    /* skip homepage shelf */
-    if(el.querySelector("#random-books")) return;
+    /* prevent reprocessing */
+    if(el.dataset.coverDone) return;
 
     /* skip if real cover image exists */
     if(el.querySelector("img")) return;
+
+    el.dataset.coverDone = "1";
 
     const row = el.closest("tr");
 
@@ -21,15 +23,11 @@ document.querySelectorAll(".bookcover").forEach(el=>{
         row?.querySelector(".author")?.innerText ||
         "";
 
-    /* do not duplicate covers */
-    if(el.querySelector(".generated-cover")) return;
-
-    let cover = createGeneratedCover(title, author);
+    const cover = createGeneratedCover(title, author);
 
     el.appendChild(cover);
 
 });
-
 }
 
 
