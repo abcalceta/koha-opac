@@ -3,23 +3,6 @@
 @import 'logo.css';
 @import 'homepage.css';
 
-#random-books{
-display:grid;
-grid-template-columns:repeat(auto-fill,190px);
-gap:20px;
-justify-content:center;
-margin-top:20px;
-}
-
-.random-book{
-display:flex;
-flex-direction:column;
-align-items:center;
-width:120px;
-text-decoration:none;
-}
-
-
 
 .generated-cover{
 width:180px;
