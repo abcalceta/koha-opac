@@ -1,17 +1,14 @@
 .generated-cover{
-width:100%;
-height:100%;
-display:flex;
-flex-direction:column;
-justify-content:flex-end;
-padding:12px;
-color:white;
-font-weight:600;
-border-radius:6px;
-background: var(--pssc-purple);
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    padding:10px;
+    color:white;
+    font-weight:600;
+    background: var(--pssc-purple);
 }
-
-
 
 
 .cover-title{
@@ -56,6 +53,26 @@ color:white;
 box-shadow:0 4px 10px rgba(0,0,0,.25);
 }
 
+
+.bookcover {
+    width: 120px;
+    height: 180px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+.bookcover img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+
+.bookcover{
+    box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
 
 .discover-shelf{
 display:flex;
