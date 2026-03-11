@@ -33,7 +33,7 @@ document.querySelectorAll(".bookcover").forEach(el=>{
 
 function createGeneratedCover(title, author){
 
-    div.className = "generated-cover";
+    div.className = "bookcover";
 
     /* generate color from title */
 
