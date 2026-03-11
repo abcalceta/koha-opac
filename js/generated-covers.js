@@ -1,4 +1,11 @@
+/* ---------------------------
+   Gradient cover generator
+--------------------------- */
+
 function createGeneratedCover(title){
+
+    let div = document.createElement("div");
+    div.className = "generated-cover";
 
     let hash = 0;
     for(let i=0;i<title.length;i++){
@@ -7,69 +14,65 @@ function createGeneratedCover(title){
 
     let hue = 220 + (Math.abs(hash) % 60);
 
-    return {
-        background:`linear-gradient(
-            135deg,
-            hsl(${hue},60%,60%),
-            hsl(${hue+15},65%,45%)
-        )`,
-        title:title
-    };
+    div.style.background = `linear-gradient(
+        135deg,
+        hsl(${hue},60%,60%),
+        hsl(${hue+15},65%,45%)
+    )`;
 
+    div.innerText = title;
+
+    return div;
 }
+
+
+/* ---------------------------
+   Ensure covers exist
+--------------------------- */
 
 function ensureCovers(){
 
 document.querySelectorAll(".bookcover").forEach(el=>{
 
-    let img = el.querySelector("img");
-    let generated = el.querySelector(".generated-cover");
+    /* skip if real cover exists */
+    if(el.querySelector("img")) return;
+
+    /* skip if we already generated one */
+    if(el.querySelector(".generated-cover")) return;
 
     let title =
         el.dataset.title ||
+        el.closest("tr")?.querySelector(".title")?.innerText ||
         document.querySelector("#catalogue_detail_biblio h1")?.innerText ||
         "Book";
 
-    /* if real cover exists remove placeholder */
+    let cover = createGeneratedCover(title);
 
-    if(img && generated){
-        generated.remove();
-        return;
-    }
-
-    /* generate colors */
-
-    let style = createGeneratedCover(title);
-
-    /* create placeholder if none exists */
-
-    if(!img && !generated){
-
-        generated = document.createElement("div");
-        generated.className = "generated-cover";
-        el.appendChild(generated);
-
-    }
-
-    /* apply styling */
-
-    if(generated){
-        generated.style.background = style.background;
-        generated.innerText = style.title;
-    }
+    el.appendChild(cover);
 
 });
 
 }
 
 
-ensureCovers();
+/* ---------------------------
+   Run once on page load
+--------------------------- */
 
-const observer = new MutationObserver(()=>{
+document.addEventListener("DOMContentLoaded", ensureCovers);
+
+
+/* ---------------------------
+   Watch for Koha dynamic updates
+--------------------------- */
+
+const coverObserver = new MutationObserver(()=>{
+
     setTimeout(ensureCovers,50);
+
 });
 
-observer.observe(document.body,{
+coverObserver.observe(document.body,{
     childList:true,
     subtree:true
 });

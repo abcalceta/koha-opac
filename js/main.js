@@ -1,6 +1,13 @@
-import "./generated-covers.js";
-import "./random-books.js";
-import "./homepage.js";
+[
+"https://abcalceta.github.io/koha-opac/js/generated-covers.js",
+"https://abcalceta.github.io/koha-opac/js/main.js"
+"https://abcalceta.github.io/koha-opac/js/homepage.js"
+].forEach(src=>{
+    let s=document.createElement("script");
+    s.src=src;
+    document.head.appendChild(s);
+});
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
