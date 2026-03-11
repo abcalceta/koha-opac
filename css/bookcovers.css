@@ -106,7 +106,28 @@ scroll-behavior:smooth;
 
 
 
+.generated-cover{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    padding:10px;
+    text-align:center;
+    color:white;
+    font-weight:600;
+    border-radius:6px;
+}
 
+.cover-title{
+    font-size:13px;
+    line-height:1.2;
+    margin-bottom:6px;
+}
+
+.cover-author{
+    font-size:11px;
+    opacity:0.9;
+}
 
 
 /**/

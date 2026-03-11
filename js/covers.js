@@ -36,7 +36,6 @@ export function ensureCovers(){
 }
 
 
-
 export function createGeneratedCover(title, author){
 
     title = String(title || "");
@@ -45,27 +44,33 @@ export function createGeneratedCover(title, author){
     const div = document.createElement("div");
     div.className = "generated-cover";
 
-    /* store for refresh */
     div.dataset.title = title;
     div.dataset.author = author;
 
-    /* generate color */
+    /* hash → color */
     let hash = 0;
-    for(let i = 0; i < title.length; i++){
-        hash = title.charCodeAt(i) + ((hash << 5) - hash);
+    for(let i=0;i<title.length;i++){
+        hash = title.charCodeAt(i) + ((hash<<5)-hash);
     }
 
-    const hue = 220 + (Math.abs(hash) % 60);
+    const hue = Math.abs(hash) % 360;
 
+    /* richer gradient */
     div.style.background =
-        `linear-gradient(135deg,
-        hsl(${hue},60%,30%),
-        hsl(${hue+5},65%,35%))`;
+        `linear-gradient(
+            135deg,
+            hsl(${hue},50%,28%),
+            hsl(${hue+10},55%,38%)
+        )`;
+
+    /* spine shading */
+    div.style.boxShadow =
+        "inset 8px 0 12px rgba(0,0,0,0.25), inset -3px 0 6px rgba(255,255,255,0.08)";
 
     /* title */
     const titleEl = document.createElement("div");
     titleEl.className = "cover-title";
-    titleEl.textContent = title.substring(0,30);
+    titleEl.textContent = title.substring(0,60);
 
     /* author */
     const authorEl = document.createElement("div");
@@ -76,10 +81,7 @@ export function createGeneratedCover(title, author){
     div.appendChild(authorEl);
 
     return div;
-
 }
-
-
 
 export function refreshGeneratedCovers(){
 
