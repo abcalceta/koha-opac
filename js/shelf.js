@@ -22,7 +22,7 @@ export async function loadRandomBooks(){
 		let subtitle_short = subtitle.substring(0,10)+"...";
 
 		html+=`
-		<a class="random-book generated_cover"
+		<a class="random-book"
 		href="/cgi-bin/koha/opac-detail.pl?biblionumber=${biblio}">
 
 		<span class="booktitle">${title} ${subtitle}</span>
