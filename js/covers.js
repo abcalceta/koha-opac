@@ -108,6 +108,10 @@ export function refreshGeneratedCovers(){
             hsl(${hue},60%,60%),
             hsl(${hue+15},65%,45%))`;
 
+        div.appendChild(titleEl);
+        div.appendChild(authorEl);
+
+
     });
 
 }
