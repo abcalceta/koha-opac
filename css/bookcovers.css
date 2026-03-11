@@ -1,14 +1,4 @@
-.generated-cover{
-    width:100%;
-    height:100%;
-    display:flex;
-    flex-direction:column;
-    justify-content:flex-end;
-    padding:10px;
-    color:white;
-    font-weight:600;
-    background: var(--pssc-purple);
-}
+
 
 
 .cover-title{
@@ -88,7 +78,18 @@ scroll-behavior:smooth;
 
 
 
-
+.generated-cover{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    padding:10px;
+    color:white;
+    font-weight:600;
+    background: var(--pssc-purple);
+    
+}
 
 
 
