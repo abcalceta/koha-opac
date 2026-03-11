@@ -1,56 +1,46 @@
-import { createGeneratedCover } from "./covers.js";
+export function createGeneratedCover(title, author){
 
-export async function loadRandomBooks(){
+    title = String(title || "");
+    author = String(author || "");
 
-    const shelf = document.querySelector("#random-books");
-    if(!shelf) return;
+    const div = document.createElement("div");
+    div.className = "generated-cover";
 
-    const data = await fetch("/cgi-bin/koha/svc/report?id=6")
-        .then(r => r.json());
+    div.dataset.title = title;
+    div.dataset.author = author;
 
-    shelf.innerHTML = "";
-
-    data.forEach(row=>{
-
-        const biblio = row[0];
-        const title = row[1] || "[NO TITLE]";
-        const subtitle = row[2] || "";
-        const author = row[3] || "";
-
-        const title_short = title.substring(0,30);
-
-        const link = document.createElement("a");
-        link.className = "random-book";
-        link.href = `/cgi-bin/koha/opac-detail.pl?biblionumber=${biblio}`;
-
-        const cover = createGeneratedCover(title_short, author);
-
-        const label = document.createElement("span");
-        label.className = "booktitle";
-
-        const labelText = subtitle ? `${title}: ${subtitle}` : title;
-        label.textContent = labelText;
-
-        link.appendChild(cover);
-        link.appendChild(label);
-
-        shelf.appendChild(link);
-
-    });
-
-    if(!shelf.dataset.scrollInit){
-
-        document.querySelector(".scroll-btn.left")?.addEventListener("click",()=>{
-            shelf.scrollBy({left:-400,behavior:"smooth"});
-        });
-
-        document.querySelector(".scroll-btn.right")?.addEventListener("click",()=>{
-            shelf.scrollBy({left:400,behavior:"smooth"});
-        });
-
-        shelf.dataset.scrollInit = "1";
+    /* hash → color */
+    let hash = 0;
+    for(let i=0;i<title.length;i++){
+        hash = title.charCodeAt(i) + ((hash<<5)-hash);
     }
 
+    const hue = Math.abs(hash) % 360;
+
+    /* richer gradient */
+    div.style.background =
+        `linear-gradient(
+            135deg,
+            hsl(${hue},50%,28%),
+            hsl(${hue+10},55%,38%)
+        )`;
+
+    /* spine shading */
+    div.style.boxShadow =
+        "inset 8px 0 12px rgba(0,0,0,0.25), inset -3px 0 6px rgba(255,255,255,0.08)";
+
+    /* title */
+    const titleEl = document.createElement("div");
+    titleEl.className = "cover-title";
+    titleEl.textContent = title.substring(0,60);
+
+    /* author */
+    const authorEl = document.createElement("div");
+    authorEl.className = "cover-author";
+    authorEl.textContent = author;
+
+    div.appendChild(titleEl);
+    div.appendChild(authorEl);
+
+    return div;
 }
-
-
