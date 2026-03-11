@@ -15,6 +15,14 @@ function styleGeneratedCover(el){
         hsl(${hue+15},65%,45%)
     )`;
 
+
 }
+
+document.querySelectorAll(".cover-slider").forEach(el=>{
+    let fallback = el.previousElementSibling;
+    if(fallback && fallback.classList.contains("generated-cover")){
+        fallback.remove();
+    }
+});
 
 document.querySelectorAll(".generated-cover").forEach(styleGeneratedCover);
