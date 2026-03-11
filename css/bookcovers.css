@@ -53,6 +53,15 @@ box-shadow:0 4px 10px rgba(0,0,0,.25);
     border-radius: 6px;
 }
 
+.random-book{
+	width: 120px;
+    height: 160px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+
 .bookcover img{
     width:150%;
     height:150%;
@@ -74,9 +83,6 @@ padding:10px;
 
 scroll-behavior:smooth;
 }
-
-
-
 
 
 .generated-cover{
