@@ -1,4 +1,13 @@
 
+document.querySelector(".scroll-btn.left")?.addEventListener("click",()=>{
+document.querySelector(".discover-shelf").scrollBy({left:-400,behavior:"smooth"});
+});
+
+document.querySelector(".scroll-btn.right")?.addEventListener("click",()=>{
+document.querySelector(".discover-shelf").scrollBy({left:400,behavior:"smooth"});
+});
+
+
 
 function loadRandomBooks(){
 
@@ -30,14 +39,6 @@ function loadRandomBooks(){
     });
 
 }
-
-document.querySelector(".scroll-btn.left")?.addEventListener("click",()=>{
-document.querySelector(".discover-shelf").scrollBy({left:-400,behavior:"smooth"});
-});
-
-document.querySelector(".scroll-btn.right")?.addEventListener("click",()=>{
-document.querySelector(".discover-shelf").scrollBy({left:400,behavior:"smooth"});
-});
 
 
 document.addEventListener("DOMContentLoaded", () => {
