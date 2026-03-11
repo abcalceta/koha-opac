@@ -1,3 +1,5 @@
+import { ensureCovers } from "./covers.js";
+
 export async function loadRandomBooks(){
 
 let shelf=document.querySelector("#random-books");
@@ -28,18 +30,12 @@ shelf.innerHTML=html;
 
 ensureCovers();
 
-}
-
-/* enable scroll buttons */
-
 document.querySelector(".scroll-btn.left")?.addEventListener("click",()=>{
-document.querySelector(".discover-shelf").scrollBy({left:-400,behavior:"smooth"});
+shelf.scrollBy({left:-400,behavior:"smooth"});
 });
 
 document.querySelector(".scroll-btn.right")?.addEventListener("click",()=>{
-document.querySelector(".discover-shelf").scrollBy({left:400,behavior:"smooth"});
+shelf.scrollBy({left:400,behavior:"smooth"});
 });
 
-/* run when shelf exists */
-
-document.addEventListener("DOMContentLoaded",loadRandomBooks);
+}

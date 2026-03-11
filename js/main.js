@@ -1,29 +1,45 @@
-import { ensureCovers } from "./covers.js";
 import { loadRandomBooks } from "./shelf.js";
+import { ensureCovers } from "./covers.js";
 
-document.addEventListener("DOMContentLoaded", () => {
 
-  if (document.body.id !== "opac-main") return;
+function loadCSS(){
 
-  fetch("https://abcalceta.github.io/koha-opac/html/homepage.html")
-    .then(r => r.text())
-    .then(html => {
+const css=document.createElement("link");
 
-      const container =
+css.rel="stylesheet";
+css.href="https://abcalceta.github.io/koha-opac/css/theme.css";
+
+document.head.appendChild(css);
+
+}
+
+loadCSS();
+
+async function loadHomepage(){
+
+    const r = await fetch(
+        "https://abcalceta.github.io/koha-opac/html/homepage.html"
+    );
+
+    const html = await r.text();
+
+    const container =
         document.querySelector("#OpacMainUserBlock .default_body") ||
         document.querySelector("#OpacMainUserBlock");
 
-      if (!container) {
-        console.log("Homepage container not found");
-        return;
-      }
+    if(!container) return;
 
-      container.innerHTML = html;
+    container.innerHTML = html;
 
-      /* initialize homepage features */
-      initShelf?.();
+    loadRandomBooks();
+}
 
-    })
-    .catch(err => console.error("Homepage fetch failed:", err));
+document.addEventListener("DOMContentLoaded", () => {
+
+    ensureCovers();
+
+    if(document.body.id === "opac-main"){
+        loadHomepage();
+    }
 
 });
