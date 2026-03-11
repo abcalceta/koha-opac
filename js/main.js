@@ -1,12 +1,11 @@
-console.log("MAIN MODULE LOADED");
 
 const VERSION = "1.0.3";
+console.log("MAIN MODULE LOADED: "+VERSION);
 
-import { homepageHTML } from "/koha-opac/js/homepage.js?v=" + VERSION;
-import { loadShelf } from "/koha-opac/js/shelf.js?v=" + VERSION;
-import { ensureCovers, watchResults, refreshGeneratedCovers }
-  from "/koha-opac/js/covers.js?v=" + VERSION;
-
+const { loadShelf } = await import(`./shelf.js?v=${VERSION}`);
+const { homepageHTML } = await import(`./homepage.js?v=${VERSION}`);
+const { ensureCovers, watchResults, refreshGeneratedCovers } =
+  await import(`./covers.js?v=${VERSION}`);
 
 function init(){
 
