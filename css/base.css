@@ -143,6 +143,12 @@ transform:translateY(-2px);
 background: var(--bg-dark);
 }
 
+#opac-main-search{
+border-radius:8px;
+    
+
+}
+
 #opac-main .container-fluid{
 background: transparent;
 }
