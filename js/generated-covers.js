@@ -1,44 +1,56 @@
 function createGeneratedCover(title){
 
-let div=document.createElement("div");
-div.className="generated-cover";
+    const div = document.createElement("div");
+    div.className = "generated-cover";
 
-let hash=0;
+    let hash = 0;
 
-for(let i=0;i<title.length;i++){
-hash=title.charCodeAt(i)+((hash<<5)-hash);
-}
+    for(let i=0;i<title.length;i++){
+        hash = title.charCodeAt(i) + ((hash<<5)-hash);
+    }
 
-let hue=220+(Math.abs(hash)%60);
+    const hue = 220 + (Math.abs(hash) % 60);
 
-div.style.background=`linear-gradient(
-135deg,
-hsl(${hue},60%,60%),
-hsl(${hue+15},65%,45%)
-)`;
+    div.style.background = `linear-gradient(
+        135deg,
+        hsl(${hue},60%,60%),
+        hsl(${hue+15},65%,45%)
+    )`;
 
-div.innerText=title;
+    div.textContent = title;
 
-return div;
-}
+    return div;
+
+}  
 
 function ensureCovers(){
 
 document.querySelectorAll(".bookcover").forEach(el=>{
 
-if(el.querySelector("img")) return;
-if(el.querySelector(".generated-cover")) return;
+    /* if Koha already has a real cover, leave it alone */
+    if(el.querySelector("img")) return;
 
-let title=
-el.dataset.title||
-el.closest("tr")?.querySelector(".title")?.innerText||
-document.querySelector("#catalogue_detail_biblio h1")?.innerText||
-"Book";
+    /* if we already created one, leave it */
+    if(el.querySelector(".generated-cover")) return;
 
-el.appendChild(createGeneratedCover(title));
+    let title =
+        el.dataset.title ||
+        document.querySelector("#catalogue_detail_biblio h1")?.innerText ||
+        "Book";
+
+    let cover = createGeneratedCover(title);
+
+    el.appendChild(cover);
 
 });
 
 }
 
-document.addEventListener("DOMContentLoaded",ensureCovers);
+
+if(document.body.id === "opac-search"){
+    ensureCovers();
+}
+
+if(document.body.id === "opac-detail"){
+    ensureCovers();
+}

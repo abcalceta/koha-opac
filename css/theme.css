@@ -4,29 +4,30 @@
 @import 'homepage.css';
 
 
-.generated-cover{
-width:180px;
-height:170px;
-border-radius:8px;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-color:white;
-font-weight:600;
-padding:10px;
-/* truncation */
-display:-webkit-box;
--webkit-line-clamp:4;        /* number of lines */
--webkit-box-orient:vertical;
-}
-
-#results .bookcover img + .generated-cover{
-display:none;
-}
-
 .bookcover{
-position:relative;
+    width:120px;
+    height:180px;
+    position:relative;
+}
+
+.generated-cover{
+    width:100%;
+    height:100%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:10px;
+    text-align:center;
+
+    font-weight:600;
+    font-size:14px;
+
+    color:white;
+    border-radius:8px;
+
+    overflow:hidden;
 }
 
 #opac-search .generated-cover{
