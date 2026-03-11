@@ -27,7 +27,7 @@ export async function loadRandomBooks(){
 
         const label = document.createElement("span");
         label.className = "booktitle";
-        label.textContent = `${title} ${subtitle}`;
+        label.textContent = `${title} ${subtitle} ...`;
 
         link.appendChild(cover);
         link.appendChild(label);
