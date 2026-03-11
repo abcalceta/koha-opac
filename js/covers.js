@@ -33,7 +33,7 @@ document
 }
 
 
-function createGeneratedCover(title, author){
+export function createGeneratedCover(title, author){
 
     title = String(title || "");
     author = String(author || "");
@@ -69,7 +69,7 @@ function createGeneratedCover(title, author){
 }
 
 
-function watchResults(){
+export function watchResults(){
 
     const results = document.querySelector("#results");
 
