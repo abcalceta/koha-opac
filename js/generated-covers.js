@@ -18,11 +18,29 @@ function styleGeneratedCover(el){
 
 }
 
-document.querySelectorAll(".cover-slider").forEach(el=>{
-    let fallback = el.previousElementSibling;
-    if(fallback && fallback.classList.contains("generated-cover")){
-        fallback.remove();
-    }
+document.querySelectorAll(".generated-cover").forEach(styleGeneratedCover);
+
+function generateCovers(){
+
+document.querySelectorAll(".bookcover").forEach(el => {
+
+    if(el.querySelector("img")) return;
+    if(el.querySelector(".generated-cover")) return;
+
+    let title = el.dataset.title || "Book";
+
+    let cover = document.createElement("div");
+    cover.className = "generated-cover";
+    cover.dataset.title = title;
+    cover.innerText = title;
+
+    el.appendChild(cover);
+
 });
 
-document.querySelectorAll(".generated-cover").forEach(styleGeneratedCover);
+}
+
+generateCovers();
+
+new MutationObserver(generateCovers)
+.observe(document.body,{childList:true,subtree:true});
