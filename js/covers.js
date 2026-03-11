@@ -12,16 +12,16 @@ document.querySelectorAll(".bookcover").forEach(el=>{
 
     const row = el.closest("tr");
 
-    let title =
-        el.dataset.title ||
-        row?.querySelector("a.title")?.innerText ||
-        document.querySelector("#catalogue_detail_biblio h1")?.innerText ||
-        "[NO TITLE]";
+    // let title =
+    //     el.dataset.title ||
+    //     row?.querySelector("a.title")?.innerText ||
+    //     document.querySelector("#catalogue_detail_biblio h1")?.innerText ||
+    //     "[NO TITLE]";
 
-    let author =
-        el.dataset.author ||
-        row?.querySelector(".author")?.innerText ||
-        "";
+    // let author =
+    //     el.dataset.author ||
+    //     row?.querySelector(".author")?.innerText ||
+    //     "";
 
     const cover = createGeneratedCover(title, author);
 
