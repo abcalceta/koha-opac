@@ -51,8 +51,8 @@ function createGeneratedCover(title, author){
 
     div.style.background =
         `linear-gradient(135deg,
-        hsl(${hue},60%,60%),
-        hsl(${hue+15},65%,45%))`;
+        hsl(${hue},60%,30%),
+        hsl(${hue+5},65%,35%))`;
 
     const titleEl = document.createElement("div");
     titleEl.className = "cover-title";
