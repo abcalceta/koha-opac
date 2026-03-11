@@ -30,11 +30,15 @@ data.forEach(row=>{
 
 	const hue = 220 + (Math.abs(hash)%60);
 
+let hue = 220 + (Math.abs(hash) % 60);
 
 	html+=`
 	<a class="random-book"
 	href="/cgi-bin/koha/opac-detail.pl?biblionumber=${biblio}">
-	<div class="bookcover" 	
+		<div class="bookcover"
+		style="background:linear-gradient(135deg,
+		hsl(${hue},60%,60%),
+		hsl(${hue+15},65%,45%))" 
 		data-title="${title_short}"
     	data-subtitle="${subtitle_short}"
      	data-author="${author}">
@@ -48,35 +52,6 @@ data.forEach(row=>{
 });
 
 shelf.innerHTML=html;
-
-function styleBookCovers(){
-
-document.querySelectorAll(".random-book .bookcover").forEach(el=>{
-
-    const title = el.dataset.title || "Book";
-
-    let hash = 0;
-
-    for(let i=0;i<title.length;i++){
-        hash = title.charCodeAt(i) + ((hash<<5)-hash);
-    }
-
-    const hue = 220 + (Math.abs(hash) % 60);
-
-    el.style.background = `linear-gradient(
-        135deg,
-        hsl(${hue},60%,60%),
-        hsl(${hue+15},65%,45%)
-    )`;
-
-});
-
-}
-
-shelf.innerHTML = html;
-
-styleBookCovers();
-
 
 ensureCovers();
 
