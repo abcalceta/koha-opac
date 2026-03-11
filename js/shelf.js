@@ -21,19 +21,19 @@ data.forEach(row=>{
 	let title_short = title.substring(0,30);
 	let subtitle_short = subtitle.substring(0,10)+"...";
 
-	html+=`
-	<a class="random-book"
-	href="/cgi-bin/koha/opac-detail.pl?biblionumber=${biblio}">
-	<div class="bookcover" 	
-		data-title="${title_short}"
-    	data-subtitle="${subtitle_short}"
-     	data-author="${author}">
-     	<span class="cover-title">${title_short}</span>
-     	<span class="cover-author">${author}</span>
-     </div>
-	<span class="booktitle">${title} ${subtitle}</span>
-	</a>
-	`;
+	// html+=`
+	// <a class="random-book"
+	// href="/cgi-bin/koha/opac-detail.pl?biblionumber=${biblio}">
+	// <div class="bookcover" 	
+	// 	data-title="${title_short}"
+    // 	data-subtitle="${subtitle_short}"
+    //  	data-author="${author}">
+    //  	<span class="cover-title">${title_short}</span>
+    //  	<span class="cover-author">${author}</span>
+    //  </div>
+	// <span class="booktitle">${title} ${subtitle}</span>
+	// </a>
+	// `;
 
 });
 
