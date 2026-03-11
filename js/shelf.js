@@ -18,8 +18,25 @@ data.forEach(row=>{
 	let subtitle=row[2]||"";
 	let author=row[3]||"";
 
-	let title_short = title.substring(0,10);
+	let title_short = title.substring(0,30);
 	let subtitle_short = subtitle.substring(0,10)+"...";
+
+
+	let hash = 0;
+
+	for(let i=0;i<title.length;i++){
+	    hash = title.charCodeAt(i) + ((hash<<5)-hash);
+	}
+
+	const hue = 220 + (Math.abs(hash)%60);
+
+	div.style.background = `linear-gradient(
+	135deg,
+	hsl(${hue},60%,60%),
+	hsl(${hue+15},65%,45%)
+	)`;
+
+
 
 	html+=`
 	<a class="random-book"
