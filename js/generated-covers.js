@@ -50,3 +50,33 @@ generateCovers();
 new MutationObserver(generateCovers)
 .observe(document.body,{childList:true,subtree:true});
 
+
+
+
+function fixKohaCovers(){
+
+document.querySelectorAll(".bookcover").forEach(el=>{
+
+    let realCover = el.querySelector("img");
+    let generated = el.querySelector(".generated-cover");
+
+    if(realCover && generated){
+        generated.remove();
+    }
+
+});
+
+}
+
+/* run once */
+
+fixKohaCovers();
+
+/* run when Koha dynamically loads results */
+
+new MutationObserver(fixKohaCovers)
+.observe(document.body,{
+    childList:true,
+    subtree:true
+});
+
