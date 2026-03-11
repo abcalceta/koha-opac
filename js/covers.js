@@ -67,3 +67,22 @@ function createGeneratedCover(title, author){
 
     return div;
 }
+
+
+function watchResults(){
+
+    const results = document.querySelector("#results");
+
+    if(!results) return;
+
+    const observer = new MutationObserver(() => {
+        applyGeneratedCovers();
+    });
+
+    observer.observe(results,{
+        childList: true,
+        subtree: true
+    });
+
+}
+

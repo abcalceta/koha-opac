@@ -38,6 +38,11 @@ function init(){
 
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    applyGeneratedCovers();
+    watchResults();
+});
+
 /* run immediately if DOM already loaded */
 
 if(document.readyState !== "loading"){
