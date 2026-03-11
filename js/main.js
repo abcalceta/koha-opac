@@ -6,11 +6,29 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(r => r.text())
     .then(html => {
 
-        document.querySelector("#OpacMainUserBlock").innerHTML = html;
+        const block = document.querySelector("#OpacMainUserBlock");
 
-        waitForElement("#random-books", initShelf);
+        if(!block){
+            console.log("OpacMainUserBlock not found");
+            return;
+        }
 
-    });
+        /* find the real container Koha renders */
+        let container = block.querySelector(".default_body");
+
+        if(!container){
+            container = block;
+        }
+
+        container.innerHTML = html;
+
+        /* wait one frame for DOM update */
+        requestAnimationFrame(() => {
+            initShelf();
+        });
+
+    })
+    .catch(err => console.error("Homepage load error:", err));
 
 });
 
