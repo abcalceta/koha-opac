@@ -20,6 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
     /* covers everywhere */
     ensureCovers();
 
+    console.log("Creating homepage");
+
     /* homepage only */
     if(document.body.id === "opac-main"){
 
