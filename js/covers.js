@@ -102,13 +102,32 @@ export function refreshGeneratedCovers(){
             hsl(${hue},60%,30%),
             hsl(${hue+5},65%,35%))`;
 
-        const titleEl = el.querySelector(".cover-title");
-        const authorEl = el.querySelector(".cover-author");
+        const title = el.dataset.title || "";
+        const author = el.dataset.author || "";
+
+        let titleEl = el.querySelector(".cover-title");
+        let authorEl = el.querySelector(".cover-author");
+
+        /* create title if missing */
+        if(!titleEl){
+            titleEl = document.createElement("div");
+            titleEl.className = "cover-title";
+            el.appendChild(titleEl);
+        }
+
+        /* create author if missing */
+        if(!authorEl){
+            authorEl = document.createElement("div");
+            authorEl.className = "cover-author";
+            el.appendChild(authorEl);
+        }
+
+        /* update content */
+        titleEl.textContent = title.substring(0,60);
+        authorEl.textContent = author;
 
         if(titleEl) titleEl.textContent = title.substring(0,30);
         if(authorEl) authorEl.textContent = author;
-        console.log(titleEl)
-
     });
 
 }
