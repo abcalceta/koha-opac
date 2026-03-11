@@ -29,4 +29,8 @@ text-align:center;
 color:white;
 font-weight:600;
 padding:10px;
+/* truncation */
+display:-webkit-box;
+-webkit-line-clamp:4;        /* number of lines */
+-webkit-box-orient:vertical;
 }

@@ -23,14 +23,18 @@ color:var(--pssc-gold);
 background:var(--pssc-purple-dark);
 }
 
+#facet-container{
+    background: var(--pssc-white);
+}
+
 .maincontent,
-#opac-main,
+/*#opac-main,*/
 .panel,
 .card,
 .well{
 background:var(--bg-panel);
 border-radius:8px;
-border:1px solid var(--border-color);
+/*border:1px solid var(--border-color);*/
 }
 
 .btn-primary{
@@ -115,3 +119,12 @@ transform:translateY(-2px);
     color: var(--text-dark);
 }
 
+
+
+#opac-main{
+background: var(--bg-dark);
+}
+
+#opac-main .container-fluid{
+background: transparent;
+}
