@@ -65,6 +65,7 @@ export function createGeneratedCover(title, author){
 
 
     div.dataset.title = title;
+    div.dataset.author = author;
     div.appendChild(titleEl);
     div.appendChild(authorEl);
 
