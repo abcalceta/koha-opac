@@ -3,8 +3,10 @@ export function ensureCovers(){
 document
 // .querySelectorAll(".bookcover:not([data-cover-done])")
 // .forEach(el=>{
-document.querySelectorAll(".bookcover").forEach(el=>{
+document.querySelectorAll(".covercol").forEach(element=>{
 
+    let el = element
+    
     if(el.dataset.coverDone) return;
 
     const img = el.querySelector("img");
