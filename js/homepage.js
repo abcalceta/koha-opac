@@ -1,3 +1,6 @@
+import "./random-books.js";
+
+
 document.querySelector(".scroll-btn.left")?.addEventListener("click",()=>{
 document.querySelector(".discover-shelf").scrollBy({left:-400,behavior:"smooth"});
 });
