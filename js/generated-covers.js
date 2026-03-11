@@ -51,8 +51,6 @@ new MutationObserver(generateCovers)
 .observe(document.body,{childList:true,subtree:true});
 
 
-
-
 function fixKohaCovers(){
 
 document.querySelectorAll(".bookcover").forEach(el=>{
@@ -60,8 +58,23 @@ document.querySelectorAll(".bookcover").forEach(el=>{
     let realCover = el.querySelector("img");
     let generated = el.querySelector(".generated-cover");
 
+    /* remove fallback if real cover exists */
+
     if(realCover && generated){
         generated.remove();
+        return;
+    }
+
+    /* create fallback if none exists */
+
+    if(!realCover && !generated){
+
+        let title = el.dataset.title || "Book";
+
+        let cover = createGeneratedCover(title);
+
+        el.appendChild(cover);
+
     }
 
 });
@@ -72,11 +85,11 @@ document.querySelectorAll(".bookcover").forEach(el=>{
 
 fixKohaCovers();
 
-/* run when Koha dynamically loads results */
+/* watch for Koha dynamic updates */
 
 new MutationObserver(fixKohaCovers)
 .observe(document.body,{
-    childList:true,
-    subtree:true
+childList:true,
+subtree:true
 });
 
