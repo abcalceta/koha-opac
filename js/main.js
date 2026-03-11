@@ -10,10 +10,10 @@ import { ensureCovers } from "./covers.js";
 console.log("covers module loaded");
 
 
-loadCSS();
 
 function init(){
 
+    loadCSS();
     /* covers everywhere */
     ensureCovers();
 
