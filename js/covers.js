@@ -102,27 +102,27 @@ export function refreshGeneratedCovers(){
             hsl(${hue},60%,30%),
             hsl(${hue+5},65%,35%))`;
 
+
+        const bookcover = el.closest(".bookcover");
+
+        const title = bookcover?.dataset.title || "";
+        const author = bookcover?.dataset.author || "";
+
         let titleEl = el.querySelector(".cover-title");
         let authorEl = el.querySelector(".cover-author");
 
-        /* remove Koha fallback text */
-        el.childNodes.forEach(n=>{
-          if(n.nodeType === Node.TEXT_NODE) n.remove();
-        });
-
-        /* create title if missing */
         if(!titleEl){
             titleEl = document.createElement("div");
             titleEl.className = "cover-title";
             el.appendChild(titleEl);
         }
 
-        /* create author if missing */
         if(!authorEl){
             authorEl = document.createElement("div");
             authorEl.className = "cover-author";
             el.appendChild(authorEl);
         }
+
         titleEl.textContent = title.substring(0,60);
         authorEl.textContent = author;
 
