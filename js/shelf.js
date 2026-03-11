@@ -14,9 +14,9 @@ let html="";
 data.forEach(row=>{
 
 	let biblio=row[0];
-	let title=row[1]||"Book";
-	let subtitle=row[2]||"Book";
-	let author=row[3]||"Book";
+	let title=row[1]||"[NO TITLE]";
+	let subtitle=row[2]||"";
+	let author=row[3]||"";
 
 	let title_short = title.substring(0,10);
 	let subtitle_short = subtitle.substring(0,10);
