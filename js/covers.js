@@ -6,7 +6,8 @@ document
 
     if(el.dataset.coverDone) return;
 
-    if(el.querySelector("img")) return;
+    const img = el.querySelector("img");
+    if(img && img.src && !img.src.includes("no-cover")) return;
 
 
     el.dataset.coverDone = "1";
