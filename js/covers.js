@@ -107,6 +107,7 @@ export function refreshGeneratedCovers(){
 
         if(titleEl) titleEl.textContent = title.substring(0,30);
         if(authorEl) authorEl.textContent = author;
+        console.log(titleEl)
 
     });
 
