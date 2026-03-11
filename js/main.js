@@ -2,10 +2,11 @@
 const VERSION = "1.1.0"; 
 console.log("MAIN MODULE VERSION LOADED: "+VERSION);
 
-const { loadShelf } = await import(`./shelf.js?v=${VERSION}`);
 const { homepageHTML } = await import(`./homepage.js?v=${VERSION}`);
 const { ensureCovers, watchResults, refreshGeneratedCovers } =
   await import(`./covers.js?v=${VERSION}`);
+const { loadShelf } = await import(`./shelf.js?v=${VERSION}`);
+
 
 function init(){
 
