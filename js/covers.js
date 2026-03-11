@@ -100,28 +100,22 @@ export function refreshGeneratedCovers(){
         const author = el.dataset.author || "";
 
         let hash = 0;
-        for(let i = 0; i < title.length; i++){
-            hash = title.charCodeAt(i) + ((hash << 5) - hash);
+        for(let i=0;i<title.length;i++){
+            hash = title.charCodeAt(i) + ((hash<<5)-hash);
         }
 
-        const hue = 220 + (Math.abs(hash) % 60);
+        const hue = 220 + (Math.abs(hash)%60);
 
         el.style.background =
             `linear-gradient(135deg,
             hsl(${hue},60%,30%),
             hsl(${hue+5},65%,35%))`;
 
-        // restore title text
         const titleEl = el.querySelector(".cover-title");
-        if(titleEl){
-            titleEl.textContent = title.substring(0,30);
-        }
-
-        // restore author text
         const authorEl = el.querySelector(".cover-author");
-        if(authorEl){
-            authorEl.textContent = author;
-        }
+
+        if(titleEl) titleEl.textContent = title.substring(0,30);
+        if(authorEl) authorEl.textContent = author;
 
     });
 
