@@ -29,7 +29,7 @@ export async function loadRandomBooks(){
 		</a>
 		`;
 
-		const cover = createGeneratedCover(title, author);
+		const cover = createGeneratedCover(title_short, author);
 
 	    shelf.appendChild(cover);
 
