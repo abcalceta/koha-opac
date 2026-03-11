@@ -1,5 +1,5 @@
 
-const VERSION = "1.0.3";
+const VERSION = "1.1.0";
 console.log("MAIN MODULE LOADED: "+VERSION);
 
 const { loadShelf } = await import(`./shelf.js?v=${VERSION}`);
