@@ -18,25 +18,23 @@ function styleGeneratedCover(el){
 
 }
 
-document.querySelectorAll(".generated-cover").forEach(styleGeneratedCover);
-
 function generateCovers(){
 
-document.querySelectorAll(".bookcover").forEach(el => {
+    document.querySelectorAll(".bookcover").forEach(el => {
 
-    if(el.querySelector("img")) return;
-    if(el.querySelector(".generated-cover")) return;
+        if(el.querySelector("img")) return;
+        if(el.querySelector(".generated-cover")) return;
 
-    let title = el.dataset.title || "Book";
+        let title = el.dataset.title || "Book";
 
-    let cover = document.createElement("div");
-    cover.className = "generated-cover";
-    cover.dataset.title = title;
-    cover.innerText = title;
+        let cover = document.createElement("div");
+        cover.className = "generated-cover";
+        cover.dataset.title = title;
+        cover.innerText = title;
 
-    el.appendChild(cover);
+        el.appendChild(cover);
 
-});
+    });
 
 }
 
@@ -44,3 +42,5 @@ generateCovers();
 
 new MutationObserver(generateCovers)
 .observe(document.body,{childList:true,subtree:true});
+
+document.querySelectorAll(".generated-cover").forEach(styleGeneratedCover);
