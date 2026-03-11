@@ -109,6 +109,11 @@ export function refreshGeneratedCovers(){
             hsl(${hue+5},65%,35%))`;
 
 
+        /* remove Koha fallback text */
+        el.childNodes.forEach(n=>{
+          if(n.nodeType === Node.TEXT_NODE) n.remove();
+        });
+
         if(!titleEl){
             titleEl = document.createElement("div");
             titleEl.className = "cover-title";
