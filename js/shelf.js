@@ -1,4 +1,4 @@
-async function loadRandomBooks(){
+export async function loadRandomBooks(){
 
 let shelf=document.querySelector("#random-books");
 
