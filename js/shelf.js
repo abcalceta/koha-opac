@@ -15,12 +15,13 @@ data.forEach(row=>{
 
 let biblio=row[0];
 let title=row[1]||"Book";
+let subtitle=row[2]||"Book";
 
 html+=`
 <a class="random-book"
 href="/cgi-bin/koha/opac-detail.pl?biblionumber=${biblio}">
 <div class="bookcover" data-title="${title}"></div>
-<span class="booktitle">${title}</span>
+<span class="booktitle">${title} ${subtitle}</span>
 </a>
 `;
 
