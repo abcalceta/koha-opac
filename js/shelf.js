@@ -1,4 +1,3 @@
-import { ensureCovers } from "./covers.js";
 import { createGeneratedCover } from "./covers.js";
 
 export async function loadRandomBooks(){
@@ -36,8 +35,6 @@ export async function loadRandomBooks(){
         shelf.appendChild(link);
 
     });
-
-    ensureCovers();
 
     document.querySelector(".scroll-btn.left")?.addEventListener("click",()=>{
         shelf.scrollBy({left:-400,behavior:"smooth"});
