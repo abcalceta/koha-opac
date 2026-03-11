@@ -1,0 +1,10 @@
+#logo img{
+display:none;
+}
+
+#logo{
+background:url("../images/logo.png") no-repeat left center;
+background-size:contain;
+height:60px;
+width:200px;
+}
