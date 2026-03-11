@@ -102,9 +102,6 @@ export function refreshGeneratedCovers(){
             hsl(${hue},60%,30%),
             hsl(${hue+5},65%,35%))`;
 
-        const title = el.dataset.title || "";
-        const author = el.dataset.author || "";
-
         let titleEl = el.querySelector(".cover-title");
         let authorEl = el.querySelector(".cover-author");
 
