@@ -27,18 +27,19 @@ function ensureCovers(){
 
 document.querySelectorAll(".bookcover").forEach(el=>{
 
-    /* if Koha already has a real cover, leave it alone */
+    /* keep real covers */
     if(el.querySelector("img")) return;
 
-    /* if we already created one, leave it */
+    /* avoid duplicates */
     if(el.querySelector(".generated-cover")) return;
 
-    let title =
+    const title =
         el.dataset.title ||
+        el.closest(".biblio-entry, tr")?.querySelector("a.title")?.innerText ||
         document.querySelector("#catalogue_detail_biblio h1")?.innerText ||
         "Book";
 
-    let cover = createGeneratedCover(title);
+    const cover = createGeneratedCover(title);
 
     el.appendChild(cover);
 
