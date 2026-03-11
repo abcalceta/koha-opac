@@ -12,22 +12,20 @@ console.log("covers module loaded");
 
 loadCSS();
 
-
-console.log("MAIN MODULE finished loadin");
-
-document.addEventListener("DOMContentLoaded", () => {
+function init(){
 
     /* covers everywhere */
     ensureCovers();
 
     console.log("Creating homepage");
 
-    /* homepage only */
     if(document.body.id === "opac-main"){
 
         const container =
             document.querySelector("#OpacMainUserBlock .default_body") ||
             document.querySelector("#OpacMainUserBlock");
+
+        if(!container) return;
 
         console.log("homepageHTML:", homepageHTML);
 
@@ -37,7 +35,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-});
+}
+
+/* run immediately if DOM already loaded */
+
+if(document.readyState !== "loading"){
+    init();
+}else{
+    document.addEventListener("DOMContentLoaded", init);
+}
+
 
 function loadCSS(){
 
