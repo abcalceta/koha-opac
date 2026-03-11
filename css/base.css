@@ -10,6 +10,7 @@ background:white;
 border:none;
 }
 
+
 .navbar a{
 color:var(--text-dark);
 }
@@ -23,9 +24,10 @@ color:var(--pssc-gold);
 .panel,
 .card,
 .well{
-background:var(--bg-panel);
+/*background:var(--bg-panel);*/
+background:var(--pssc-purple-dark);
 border-radius:8px;
-border:1px solid var(--border-color);
+border:1px solid var(--pssc-purple-dark);
 }
 
 .btn-primary{
@@ -102,10 +104,11 @@ transition:all .2s ease;
 transform:translateY(-2px);
 }
 
-#moresearches{
+#moresearches a{
     color:var(--text-light);
 }
 
 .dropdown-item{
     color: var(--text-dark);
 }
+
