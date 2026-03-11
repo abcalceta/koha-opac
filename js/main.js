@@ -1,8 +1,18 @@
+console.log("MAIN MODULE LOADED");
+
 import { homepageHTML } from "./homepage.js";
+console.log("homepage module loaded");
+
 import { loadRandomBooks } from "./shelf.js";
+console.log("shelf module loaded");
+
 import { ensureCovers } from "./covers.js";
+console.log("covers module loaded");
+
 
 loadCSS();
+
+
 console.log("MAIN MODULE LOADED");
 
 document.addEventListener("DOMContentLoaded", () => {
