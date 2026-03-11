@@ -13,7 +13,7 @@ console.log("covers module loaded");
 loadCSS();
 
 
-console.log("MAIN MODULE LOADED");
+console.log("MAIN MODULE finished loadin");
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -26,8 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const container =
             document.querySelector("#OpacMainUserBlock .default_body") ||
             document.querySelector("#OpacMainUserBlock");
-
-        if(!container) return;
 
         console.log("homepageHTML:", homepageHTML);
 

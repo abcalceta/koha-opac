@@ -2,12 +2,10 @@ export const homepageHTML = `
 <h2>Discover Books</h2>
 
 <div class="discover-wrapper">
-
 <button class="scroll-btn left">‹</button>
 
 <div id="random-books" class="discover-shelf"></div>
 
 <button class="scroll-btn right">›</button>
-
 </div>
 `;
