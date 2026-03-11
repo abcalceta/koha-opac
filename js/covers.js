@@ -19,6 +19,13 @@ document.querySelectorAll(".bookcover").forEach(el=>{
         row?.querySelector(".author")?.innerText ||
         "";
 
+
+    el.style.background = `linear-gradient(
+    135deg,
+    hsl(${hue},60%,60%),
+    hsl(${hue+15},65%,45%)
+    )`;
+
     el.appendChild(createGeneratedCover(title, author));
 
 });
@@ -47,11 +54,6 @@ div.innerHTML = `
 `;
 
 
-div.style.background = `linear-gradient(
-135deg,
-hsl(${hue},60%,60%),
-hsl(${hue+15},65%,45%)
-)`;
 
 
 return div;
