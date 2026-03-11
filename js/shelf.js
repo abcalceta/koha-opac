@@ -1,47 +1,129 @@
-import { createGeneratedCover } from "./covers.js";
+export function ensureCovers(){
 
-export async function loadRandomBooks(){
+    document.querySelectorAll(".bookcover").forEach(el => {
 
-    const shelf = document.querySelector("#random-books");
-    if(!shelf) return;
+        /* already processed */
+        if(el.dataset.coverDone) return;
 
-    const data = await fetch("/cgi-bin/koha/svc/report?id=6")
-        .then(r => r.json());
+        /* avoid duplicates */
+        if(el.querySelector(".generated-cover")) return;
 
-    shelf.innerHTML = "";
+        /* skip real covers */
+        const img = el.querySelector("img");
+        if(img && img.src && !img.src.includes("no-cover")) return;
 
-    data.forEach(row=>{
+        el.dataset.coverDone = "1";
 
-        const biblio = row[0];
-        const title = row[1] || "[NO TITLE]";
-        const subtitle = row[2] || "";
-        const author = row[3] || "";
+        const row = el.closest("tr");
 
-        const title_short = title.substring(0,30);
+        const title =
+            el.dataset.title ||
+            row?.querySelector("a.title")?.innerText ||
+            document.querySelector("#catalogue_detail_biblio h1")?.innerText ||
+            "[NO TITLE]";
 
-        const link = document.createElement("a");
-        link.className = "random-book";
-        link.href = `/cgi-bin/koha/opac-detail.pl?biblionumber=${biblio}`;
+        const author =
+            el.dataset.author ||
+            row?.querySelector(".author")?.innerText ||
+            "";
 
-        const cover = createGeneratedCover(title_short, author);
+        const cover = createGeneratedCover(title, author);
 
-        const label = document.createElement("span");
-        label.className = "booktitle";
-        label.textContent = `${title} ${subtitle} ...`;
-
-        link.appendChild(cover);
-        link.appendChild(label);
-
-        shelf.appendChild(link);
+        el.appendChild(cover);
 
     });
 
-    document.querySelector(".scroll-btn.left")?.addEventListener("click",()=>{
-        shelf.scrollBy({left:-400,behavior:"smooth"});
+}
+
+
+
+export function createGeneratedCover(title, author){
+
+    title = String(title || "");
+    author = String(author || "");
+
+    const div = document.createElement("div");
+    div.className = "generated-cover";
+
+    /* store for refresh */
+    div.dataset.title = title;
+    div.dataset.author = author;
+
+    /* generate color */
+    let hash = 0;
+    for(let i = 0; i < title.length; i++){
+        hash = title.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    const hue = 220 + (Math.abs(hash) % 60);
+
+    div.style.background =
+        `linear-gradient(135deg,
+        hsl(${hue},60%,30%),
+        hsl(${hue+5},65%,35%))`;
+
+    /* title */
+    const titleEl = document.createElement("div");
+    titleEl.className = "cover-title";
+    titleEl.textContent = title.substring(0,30);
+
+    /* author */
+    const authorEl = document.createElement("div");
+    authorEl.className = "cover-author";
+    authorEl.textContent = author;
+
+    div.appendChild(titleEl);
+    div.appendChild(authorEl);
+
+    return div;
+
+}
+
+
+
+export function refreshGeneratedCovers(){
+
+    document.querySelectorAll(".generated-cover").forEach(el => {
+
+        const title = el.dataset.title || "";
+        const author = el.dataset.author || "";
+
+        let hash = 0;
+        for(let i = 0; i < title.length; i++){
+            hash = title.charCodeAt(i) + ((hash << 5) - hash);
+        }
+
+        const hue = 220 + (Math.abs(hash) % 60);
+
+        el.style.background =
+            `linear-gradient(135deg,
+            hsl(${hue},60%,30%),
+            hsl(${hue+5},65%,35%))`;
+
+        const titleEl = el.querySelector(".cover-title");
+        const authorEl = el.querySelector(".cover-author");
+
+        if(titleEl) titleEl.textContent = title.substring(0,30);
+        if(authorEl) authorEl.textContent = author;
+
     });
 
-    document.querySelector(".scroll-btn.right")?.addEventListener("click",()=>{
-        shelf.scrollBy({left:400,behavior:"smooth"});
+}
+
+
+
+export function watchResults(){
+
+    const results = document.querySelector("#results");
+    if(!results) return;
+
+    const observer = new MutationObserver(() => {
+        ensureCovers();
+    });
+
+    observer.observe(results,{
+        childList: true,
+        subtree: true
     });
 
 }
