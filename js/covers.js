@@ -36,7 +36,7 @@ document.querySelectorAll(".bookcover").forEach(el=>{
 function createGeneratedCover(title, author){
 
 const div = document.createElement("div");
-div.className = "generated-cover";
+div.className = "bookcover";
 
 /* generate color from title */
 
