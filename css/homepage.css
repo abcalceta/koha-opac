@@ -1,0 +1,43 @@
+.discover-wrapper{
+position:relative;
+}
+
+.discover-shelf{
+display:flex;
+gap:20px;
+
+overflow-x:auto;
+scroll-behavior:smooth;
+
+padding:20px 10px;
+}
+
+.discover-shelf::-webkit-scrollbar{
+display:none;
+}
+
+.random-book{
+flex:0 0 auto;
+width:120px;
+text-decoration:none;
+}
+
+.scroll-btn{
+position:absolute;
+top:40%;
+z-index:5;
+
+background:var(--pssc-purple);
+color:white;
+
+border:none;
+border-radius:50%;
+
+width:36px;
+height:36px;
+
+cursor:pointer;
+}
+
+.scroll-btn.left{ left:-10px }
+.scroll-btn.right{ right:-10px }

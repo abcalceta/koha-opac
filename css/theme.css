@@ -1,6 +1,7 @@
 @import 'colors.css';
 @import 'base.css';
 @import 'logo.css';
+@import 'homepage.css';
 
 #random-books{
 display:grid;
