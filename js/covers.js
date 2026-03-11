@@ -4,12 +4,10 @@ document
 .querySelectorAll(".bookcover:not([data-cover-done])")
 .forEach(el=>{
 
-    
-    /* prevent reprocessing */
-    if(el.dataset.coverDone);
+    if(el.dataset.coverDone) return;
 
-    /* skip if real cover image exists */
     if(el.querySelector("img")) return;
+
 
     el.dataset.coverDone = "1";
 
