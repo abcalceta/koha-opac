@@ -35,6 +35,18 @@ document.querySelectorAll(".bookcover").forEach(el=>{
         return;
     }
 
+    if(!img && generated){
+        generated.remove();
+        let title =
+            el.dataset.title ||
+            document.querySelector("#catalogue_detail_biblio h1")?.innerText ||
+            "Book";
+
+        let cover = createGeneratedCover(title);
+
+        el.appendChild(cover);    
+    }
+
     /* create placeholder if empty */
 
     if(!img && !generated){
@@ -49,6 +61,10 @@ document.querySelectorAll(".bookcover").forEach(el=>{
         el.appendChild(cover);
 
     }
+
+
+
+
 
 });
 
