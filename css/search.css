@@ -1,3 +1,7 @@
 #advsearch_form{
 	border: 0px;
 }
+
+.sr-only{
+	visibility: hidden;
+}
