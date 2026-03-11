@@ -1,7 +1,10 @@
 export function ensureCovers(){
 
-document.querySelectorAll(".bookcover").forEach(el=>{
+document
+.querySelectorAll(".bookcover:not([data-cover-done])")
+.forEach(el=>{
 
+    
     /* prevent reprocessing */
     if(el.dataset.coverDone);
 
