@@ -43,4 +43,3 @@ generateCovers();
 new MutationObserver(generateCovers)
 .observe(document.body,{childList:true,subtree:true});
 
-document.querySelectorAll(".generated-cover").forEach(styleGeneratedCover);

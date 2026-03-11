@@ -17,12 +17,12 @@ async function loadRandomBooks(){
         card.href = `/cgi-bin/koha/opac-detail.pl?biblionumber=${biblio}`;
         card.className = "random-book";
 
-        let title_truncated = title.substring(0, 15);
+        let title_truncated = title.substring(0, 10)+'...';
         card.innerHTML = `
             <div class="generated-cover" data-title="${title}">
                 ${title_truncated}
             </div>
-            <span class="booktitle">${title_truncated}</span>
+            <span class="booktitle">${title}</span>
         `;
 
         container.appendChild(card);
