@@ -23,8 +23,3 @@ export const homepageHTML = `
 
 </div>
 `;
-
-
-
-loadShelf("random-books", 6);     // report id for random books
-loadShelf("anthro-books", 7);     // report id for anthropology
