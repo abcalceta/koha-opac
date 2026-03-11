@@ -24,10 +24,15 @@ export async function loadRandomBooks(){
 		html+=`
 		<a class="random-book"
 		href="/cgi-bin/koha/opac-detail.pl?biblionumber=${biblio}">
-	
+
 		<span class="booktitle">${title} ${subtitle}</span>
 		</a>
 		`;
+
+		const cover = createGeneratedCover(title, author);
+
+	    shelf.appendChild(cover);
+
 
 	});
 
