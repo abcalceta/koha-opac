@@ -1,39 +1,40 @@
 export function ensureCovers(){
 
-document
-// .querySelectorAll(".bookcover:not([data-cover-done])")
-// .forEach(el=>{
-document.querySelectorAll(".covercol").forEach(element=>{
+    document.querySelectorAll(".bookcover").forEach(el => {
 
-    let el = element
-    
-    if(el.dataset.coverDone) return;
+        /* already processed */
+        if(el.dataset.coverDone) return;
 
-    const img = el.querySelector("img");
-    if(img && img.src && !img.src.includes("no-cover")) return;
+        /* avoid duplicates */
+        if(el.querySelector(".generated-cover")) return;
 
+        /* skip real covers */
+        const img = el.querySelector("img");
+        if(img && img.src && !img.src.includes("no-cover")) return;
 
-    el.dataset.coverDone = "1";
+        el.dataset.coverDone = "1";
 
-    const row = el.closest("tr");
+        const row = el.closest("tr");
 
-    let title =
-        el.dataset.title ||
-        row?.querySelector("a.title")?.innerText ||
-        document.querySelector("#catalogue_detail_biblio h1")?.innerText ||
-        "[NO TITLE]";
+        const title =
+            el.dataset.title ||
+            row?.querySelector("a.title")?.innerText ||
+            document.querySelector("#catalogue_detail_biblio h1")?.innerText ||
+            "[NO TITLE]";
 
-    let author =
-        el.dataset.author ||
-        row?.querySelector(".author")?.innerText ||
-        "";
+        const author =
+            el.dataset.author ||
+            row?.querySelector(".author")?.innerText ||
+            "";
 
-    const cover = createGeneratedCover(title, author);
+        const cover = createGeneratedCover(title, author);
 
-    el.appendChild(cover);
+        el.appendChild(cover);
 
-});
+    });
+
 }
+
 
 
 export function createGeneratedCover(title, author){
@@ -44,8 +45,12 @@ export function createGeneratedCover(title, author){
     const div = document.createElement("div");
     div.className = "generated-cover";
 
-    let hash = 0;
+    /* store for refresh */
+    div.dataset.title = title;
+    div.dataset.author = author;
 
+    /* generate color */
+    let hash = 0;
     for(let i = 0; i < title.length; i++){
         hash = title.charCodeAt(i) + ((hash << 5) - hash);
     }
@@ -57,40 +62,24 @@ export function createGeneratedCover(title, author){
         hsl(${hue},60%,30%),
         hsl(${hue+5},65%,35%))`;
 
+    /* title */
     const titleEl = document.createElement("div");
     titleEl.className = "cover-title";
-    titleEl.textContent = title.substring(0, 30);
+    titleEl.textContent = title.substring(0,30);
 
+    /* author */
     const authorEl = document.createElement("div");
     authorEl.className = "cover-author";
     authorEl.textContent = author;
 
-
-    div.dataset.title = title;
-    div.dataset.author = author;
     div.appendChild(titleEl);
     div.appendChild(authorEl);
 
     return div;
-}
-
-
-export function watchResults(){
-
-    const results = document.querySelector("#results");
-
-    if(!results) return;
-
-    const observer = new MutationObserver(() => {
-        ensureCovers();
-    });
-
-    observer.observe(results,{
-        childList: true,
-        subtree: true
-    });
 
 }
+
+
 
 export function refreshGeneratedCovers(){
 
@@ -100,11 +89,11 @@ export function refreshGeneratedCovers(){
         const author = el.dataset.author || "";
 
         let hash = 0;
-        for(let i=0;i<title.length;i++){
-            hash = title.charCodeAt(i) + ((hash<<5)-hash);
+        for(let i = 0; i < title.length; i++){
+            hash = title.charCodeAt(i) + ((hash << 5) - hash);
         }
 
-        const hue = 220 + (Math.abs(hash)%60);
+        const hue = 220 + (Math.abs(hash) % 60);
 
         el.style.background =
             `linear-gradient(135deg,
@@ -117,6 +106,24 @@ export function refreshGeneratedCovers(){
         if(titleEl) titleEl.textContent = title.substring(0,30);
         if(authorEl) authorEl.textContent = author;
 
+    });
+
+}
+
+
+
+export function watchResults(){
+
+    const results = document.querySelector("#results");
+    if(!results) return;
+
+    const observer = new MutationObserver(() => {
+        ensureCovers();
+    });
+
+    observer.observe(results,{
+        childList: true,
+        subtree: true
     });
 
 }
