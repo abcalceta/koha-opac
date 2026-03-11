@@ -6,8 +6,7 @@ console.log("homepage module loaded");
 import { loadRandomBooks } from "./shelf.js";
 console.log("shelf module loaded");
 
-import { ensureCovers } from "./covers.js";
-console.log("covers module loaded");
+import { ensureCovers, watchResults, refreshGeneratedCovers } from "./covers.js";
 
 
 
@@ -39,9 +38,10 @@ function init(){
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    applyGeneratedCovers();
+    ensureCovers();
     watchResults();
 });
+
 
 import { refreshGeneratedCovers } from "./covers.js";
 
