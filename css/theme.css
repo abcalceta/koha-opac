@@ -41,6 +41,7 @@ inset:0;
 position:relative;
 }
 
-#opac-detail .generated-cover{
-	visibility: hidden;
+
+#opac-detail .generated-cover {
+    display: none;
 }
