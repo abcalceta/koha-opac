@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("Koha OPAC enhancements loaded");
 });
 
-let url = "https://USERNAME.github.io/koha-opac/html/homepage.html?v=" + Date.now();
+let url = "https://abcalceta.github.io/koha-opac/html/homepage.html?v=" + Date.now();
 
 fetch(url)
 .then(r=>r.text())
