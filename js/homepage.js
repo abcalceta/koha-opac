@@ -10,17 +10,21 @@ document.querySelector(".discover-shelf").scrollBy({left:400,behavior:"smooth"})
 });
 
 
-
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* only run on homepage */
-	fetch("https://abcalceta.github.io/koha-opac/html/homepage.html")
-	.then(r=>r.text())
-	.then(html=>{
-	    document.querySelector("#OpacMainUserBlock").innerHTML = html;
+    if(document.body.id === "opac-main"){
 
-	    /* NOW run the random books loader */
-	    loadRandomBooks();
-	});
+        fetch("https://abcalceta.github.io/koha-opac/html/homepage.html")
+        .then(r=>r.text())
+        .then(html=>{
+
+            document.querySelector("#OpacMainUserBlock").innerHTML = html;
+
+            /* start shelf */
+            loadRandomBooks();
+
+        });
+
+    }
 
 });

@@ -1,8 +1,5 @@
 function createGeneratedCover(title){
 
-    let div = document.createElement("div");
-    div.className = "generated-cover";
-
     let hash = 0;
     for(let i=0;i<title.length;i++){
         hash = title.charCodeAt(i) + ((hash<<5)-hash);
@@ -10,15 +7,15 @@ function createGeneratedCover(title){
 
     let hue = 220 + (Math.abs(hash) % 60);
 
-    div.style.background = `linear-gradient(
-        135deg,
-        hsl(${hue},60%,60%),
-        hsl(${hue+15},65%,45%)
-    )`;
+    return {
+        background:`linear-gradient(
+            135deg,
+            hsl(${hue},60%,60%),
+            hsl(${hue+15},65%,45%)
+        )`,
+        title:title
+    };
 
-    div.innerText = title;
-
-    return div;
 }
 
 function ensureCovers(){
@@ -28,43 +25,38 @@ document.querySelectorAll(".bookcover").forEach(el=>{
     let img = el.querySelector("img");
     let generated = el.querySelector(".generated-cover");
 
-    /* remove placeholder if real cover exists */
+    let title =
+        el.dataset.title ||
+        document.querySelector("#catalogue_detail_biblio h1")?.innerText ||
+        "Book";
+
+    /* if real cover exists remove placeholder */
 
     if(img && generated){
         generated.remove();
         return;
     }
 
-    if(!img && generated){
-        generated.remove();
-        let title =
-            el.dataset.title ||
-            document.querySelector("#catalogue_detail_biblio h1")?.innerText ||
-            "Book";
+    /* generate colors */
 
-        let cover = createGeneratedCover(title);
+    let style = createGeneratedCover(title);
 
-        el.appendChild(cover);    
-    }
-
-    /* create placeholder if empty */
+    /* create placeholder if none exists */
 
     if(!img && !generated){
 
-        let title =
-            el.dataset.title ||
-            document.querySelector("#catalogue_detail_biblio h1")?.innerText ||
-            "Book";
-
-        let cover = createGeneratedCover(title);
-
-        el.appendChild(cover);
+        generated = document.createElement("div");
+        generated.className = "generated-cover";
+        el.appendChild(generated);
 
     }
 
+    /* apply styling */
 
-
-
+    if(generated){
+        generated.style.background = style.background;
+        generated.innerText = style.title;
+    }
 
 });
 
@@ -74,10 +66,9 @@ document.querySelectorAll(".bookcover").forEach(el=>{
 
 ensureCovers();
 
-/* rerun when Koha updates results */
-
-new MutationObserver(ensureCovers)
-.observe(document.body,{
+/* rerun when Koha updates DOM */
+new MutationObserver(ensureCovers).observe(
+document.querySelector("main"),{
 childList:true,
 subtree:true
 });
