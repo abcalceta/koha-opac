@@ -63,6 +63,8 @@ export function createGeneratedCover(title, author){
     authorEl.className = "cover-author";
     authorEl.textContent = author;
 
+
+    div.dataset.title = title;
     div.appendChild(titleEl);
     div.appendChild(authorEl);
 
@@ -83,6 +85,28 @@ export function watchResults(){
     observer.observe(results,{
         childList: true,
         subtree: true
+    });
+
+}
+
+export function refreshGeneratedCovers(){
+
+    document.querySelectorAll(".generated-cover").forEach(el => {
+
+        const title = el.dataset.title || el.textContent || "";
+
+        let hash = 0;
+        for(let i = 0; i < title.length; i++){
+            hash = title.charCodeAt(i) + ((hash << 5) - hash);
+        }
+
+        const hue = 220 + (Math.abs(hash) % 60);
+
+        el.style.background =
+            `linear-gradient(135deg,
+            hsl(${hue},60%,60%),
+            hsl(${hue+15},65%,45%))`;
+
     });
 
 }

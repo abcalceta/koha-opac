@@ -43,6 +43,12 @@ document.addEventListener("DOMContentLoaded", () => {
     watchResults();
 });
 
+import { refreshGeneratedCovers } from "./covers.js";
+
+window.addEventListener("load", () => {
+    refreshGeneratedCovers();
+});
+
 /* run immediately if DOM already loaded */
 
 if(document.readyState !== "loading"){
