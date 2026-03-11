@@ -1,6 +1,6 @@
-/* ---------------------------
+/* -----------------------------
    Gradient cover generator
---------------------------- */
+----------------------------- */
 
 function createGeneratedCover(title){
 
@@ -23,56 +23,69 @@ function createGeneratedCover(title){
     div.innerText = title;
 
     return div;
+
 }
 
 
-/* ---------------------------
+/* -----------------------------
    Ensure covers exist
---------------------------- */
+----------------------------- */
 
 function ensureCovers(){
 
-document.querySelectorAll(".bookcover").forEach(el=>{
+document.querySelectorAll("td.covercol").forEach(cell=>{
+
+    let bookcover = cell.querySelector(".bookcover");
+
+    /* create container if missing */
+
+    if(!bookcover){
+
+        bookcover = document.createElement("div");
+        bookcover.className = "bookcover";
+
+        cell.prepend(bookcover);
+
+    }
 
     /* skip if real cover exists */
-    if(el.querySelector("img")) return;
 
-    /* skip if we already generated one */
-    if(el.querySelector(".generated-cover")) return;
+    if(bookcover.querySelector("img")) return;
+
+    /* skip if generated already */
+
+    if(bookcover.querySelector(".generated-cover")) return;
 
     let title =
-        el.dataset.title ||
-        el.closest("tr")?.querySelector(".title")?.innerText ||
+        cell.closest("tr")?.querySelector(".title")?.innerText ||
         document.querySelector("#catalogue_detail_biblio h1")?.innerText ||
         "Book";
 
     let cover = createGeneratedCover(title);
 
-    el.appendChild(cover);
+    bookcover.appendChild(cover);
 
 });
 
 }
 
 
-/* ---------------------------
-   Run once on page load
---------------------------- */
+/* -----------------------------
+   Run on page load
+----------------------------- */
 
 document.addEventListener("DOMContentLoaded", ensureCovers);
 
 
-/* ---------------------------
-   Watch for Koha dynamic updates
---------------------------- */
+/* -----------------------------
+   Watch dynamic updates
+----------------------------- */
 
-const coverObserver = new MutationObserver(()=>{
-
+const observer = new MutationObserver(()=>{
     setTimeout(ensureCovers,50);
-
 });
 
-coverObserver.observe(document.body,{
+observer.observe(document.body,{
     childList:true,
     subtree:true
 });
