@@ -30,12 +30,13 @@ document.querySelectorAll(".bookcover").forEach(el=>{
 });
 }
 
-function createGeneratedCover(title){
+function createGeneratedCover(title, author){
 
     const div = document.createElement("div");
     div.className = "generated-cover";
 
     let hash = 0;
+
     for(let i=0;i<title.length;i++){
         hash = title.charCodeAt(i) + ((hash<<5)-hash);
     }
@@ -43,7 +44,9 @@ function createGeneratedCover(title){
     const hue = 220 + (Math.abs(hash)%60);
 
     div.style.background =
-        `linear-gradient(135deg,hsl(${hue},60%,60%),hsl(${hue+15},65%,45%))`;
+        `linear-gradient(135deg,
+        hsl(${hue},60%,60%),
+        hsl(${hue+15},65%,45%))`;
 
     return div;
 
