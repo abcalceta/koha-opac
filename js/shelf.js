@@ -28,6 +28,9 @@ export async function loadRandomBooks(){
 			data-title="${title_short}"
 	    	data-subtitle="${subtitle_short}"
 	     	data-author="${author}">
+	     	<p class="cover-title">${title_short}<p>
+	     	<p class="cover-author">${author}<p>
+
 	     </div>
 		<span class="booktitle">${title} ${subtitle}</span>
 		</a>
