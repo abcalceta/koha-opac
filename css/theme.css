@@ -18,6 +18,8 @@ width:120px;
 text-decoration:none;
 }
 
+
+
 .generated-cover{
 width:120px;
 height:180px;
@@ -43,7 +45,11 @@ display:none;
 position:relative;
 }
 
-.generated-cover{
+#opac-search .generated-cover{
 position:absolute;
 inset:0;
+}
+
+#opac-main .generated-cover{
+position:relative;
 }
