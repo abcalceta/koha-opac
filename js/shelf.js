@@ -27,7 +27,9 @@ export async function loadRandomBooks(){
 
         const label = document.createElement("span");
         label.className = "booktitle";
-        label.textContent = `${title} ${subtitle} ...`;
+
+        const labelText = subtitle ? `${title}: ${subtitle}` : title;
+        label.textContent = labelText;
 
         link.appendChild(cover);
         link.appendChild(label);
@@ -36,12 +38,17 @@ export async function loadRandomBooks(){
 
     });
 
-    document.querySelector(".scroll-btn.left")?.addEventListener("click",()=>{
-        shelf.scrollBy({left:-400,behavior:"smooth"});
-    });
+    if(!shelf.dataset.scrollInit){
 
-    document.querySelector(".scroll-btn.right")?.addEventListener("click",()=>{
-        shelf.scrollBy({left:400,behavior:"smooth"});
-    });
+        document.querySelector(".scroll-btn.left")?.addEventListener("click",()=>{
+            shelf.scrollBy({left:-400,behavior:"smooth"});
+        });
+
+        document.querySelector(".scroll-btn.right")?.addEventListener("click",()=>{
+            shelf.scrollBy({left:400,behavior:"smooth"});
+        });
+
+        shelf.dataset.scrollInit = "1";
+    }
 
 }
