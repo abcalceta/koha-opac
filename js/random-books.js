@@ -1,34 +1,30 @@
-async function loadRandomBooks(){
+function loadRandomBooks(){
 
-    const container = document.getElementById("random-books");
-    if(!container) return;
+    fetch("/cgi-bin/koha/svc/report?id=6")
+    .then(r => r.json())
+    .then(data => {
 
-    const res = await fetch("/cgi-bin/koha/svc/report?id=6");
-    const data = await res.json();
+        let html = "";
 
-    container.innerHTML = "";
+        data.forEach(row => {
 
-    data.forEach(row => {
+            let biblio = row[0];
+            let title = row[1] || "Book";
 
-        let biblio = row[0];
-        let title = row[1];
+            html += `
+            <a class="random-book"
+               href="/cgi-bin/koha/opac-detail.pl?biblionumber=${biblio}">
+                <div class="bookcover" data-title="${title}"></div>
+                <span class="booktitle">${title}</span>
+            </a>
+            `;
 
-        let card = document.createElement("a");
-        card.href = `/cgi-bin/koha/opac-detail.pl?biblionumber=${biblio}`;
-        card.className = "random-book";
+        });
 
-        let title_truncated = title.substring(0, 10)+'...';
-        card.innerHTML = `
-            <div class="generated-cover" data-title="${title}">
-                ${title_truncated}
-            </div>
-            <span class="booktitle">${title}</span>
-        `;
+        document.querySelector("#random-books").innerHTML = html;
 
-        container.appendChild(card);
+        generateMissingCovers();
 
     });
 
 }
-
-loadRandomBooks();
