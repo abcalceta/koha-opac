@@ -142,3 +142,17 @@ background: transparent;
 #results #search-facets{
     background: var(--pssc-white);
 }
+
+#results .maincontent{
+    background: var(--pssc-purple);
+}
+
+#results main{
+    background: var(--pssc-purple-dark);
+}
+
+
+
+
+
+
