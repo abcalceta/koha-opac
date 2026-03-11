@@ -1,6 +1,6 @@
 
-const VERSION = "1.1.0";
-console.log("MAIN MODULE LOADED: "+VERSION);
+const VERSION = "1.1.0"; 
+console.log("MAIN MODULE VERSION LOADED: "+VERSION);
 
 const { loadShelf } = await import(`./shelf.js?v=${VERSION}`);
 const { homepageHTML } = await import(`./homepage.js?v=${VERSION}`);
