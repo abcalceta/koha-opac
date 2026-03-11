@@ -1,8 +1,11 @@
-window.loadRandomBooks = function(){
+async function loadRandomBooks(){
 
-fetch("/cgi-bin/koha/svc/report?id=6")
-.then(r=>r.json())
-.then(data=>{
+let shelf=document.querySelector("#random-books");
+
+if(!shelf) return;
+
+let data=await fetch("/cgi-bin/koha/svc/report?id=6")
+.then(r=>r.json());
 
 let html="";
 
@@ -21,34 +24,13 @@ href="/cgi-bin/koha/opac-detail.pl?biblionumber=${biblio}">
 
 });
 
-let shelf=document.querySelector("#random-books");
-
-if(!shelf) return;
-
 shelf.innerHTML=html;
 
-generateMissingCovers();
+ensureCovers();
 
-});
+}
 
-};
-
-
-document.addEventListener("DOMContentLoaded",()=>{
-
-if(document.body.id==="opac-main"){
-
-fetch("https://abcalceta.github.io/koha-opac/html/homepage.html")
-.then(r=>r.text())
-.then(html=>{
-
-let container=document.querySelector("#OpacMainUserBlock");
-
-if(!container) return;
-
-container.innerHTML=html;
-
-/* now elements exist */
+/* enable scroll buttons */
 
 document.querySelector(".scroll-btn.left")?.addEventListener("click",()=>{
 document.querySelector(".discover-shelf").scrollBy({left:-400,behavior:"smooth"});
@@ -58,12 +40,6 @@ document.querySelector(".scroll-btn.right")?.addEventListener("click",()=>{
 document.querySelector(".discover-shelf").scrollBy({left:400,behavior:"smooth"});
 });
 
-/* load shelf */
+/* run when shelf exists */
 
-loadRandomBooks();
-
-});
-
-}
-
-});
+document.addEventListener("DOMContentLoaded",loadRandomBooks);
