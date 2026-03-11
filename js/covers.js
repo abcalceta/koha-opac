@@ -87,9 +87,15 @@ export function refreshGeneratedCovers(){
 
     document.querySelectorAll(".generated-cover").forEach(el => {
 
-        const title = el.dataset.title || "";
-        const author = el.dataset.author || "";
+        const bookcover = el.closest(".bookcover");
 
+        const title = bookcover?.dataset.title || "";
+        const author = bookcover?.dataset.author || "";
+
+        let titleEl = el.querySelector(".cover-title");
+        let authorEl = el.querySelector(".cover-author");
+
+        // colors
         let hash = 0;
         for(let i = 0; i < title.length; i++){
             hash = title.charCodeAt(i) + ((hash << 5) - hash);
@@ -102,14 +108,6 @@ export function refreshGeneratedCovers(){
             hsl(${hue},60%,30%),
             hsl(${hue+5},65%,35%))`;
 
-
-        const bookcover = el.closest(".bookcover");
-
-        const title = bookcover?.dataset.title || "";
-        const author = bookcover?.dataset.author || "";
-
-        let titleEl = el.querySelector(".cover-title");
-        let authorEl = el.querySelector(".cover-author");
 
         if(!titleEl){
             titleEl = document.createElement("div");
