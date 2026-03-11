@@ -173,6 +173,11 @@ background: transparent;
     color: var(--pssc-white);
 }
 
+#breadcrumbs{
+    background: none;
+    color: var(--pssc-white);
+}
+
 
 
 #opac-detail main{
