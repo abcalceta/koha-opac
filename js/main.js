@@ -14,8 +14,6 @@ console.log("covers module loaded");
 function init(){
 
     loadCSS();
-    /* covers everywhere */
-    ensureCovers();
 
     console.log("Creating homepage");
 
