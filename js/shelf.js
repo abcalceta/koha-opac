@@ -24,13 +24,7 @@ export async function loadRandomBooks(){
 		html+=`
 		<a class="random-book"
 		href="/cgi-bin/koha/opac-detail.pl?biblionumber=${biblio}">
-		<div class="bookcover" 	
-			data-title="${title_short}"
-	    	data-subtitle="${subtitle_short}"
-	     	data-author="${author}">
-
-
-	     </div>
+	
 		<span class="booktitle">${title} ${subtitle}</span>
 		</a>
 		`;
