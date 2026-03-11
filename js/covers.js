@@ -44,11 +44,11 @@ hsl(${hue},60%,60%),
 hsl(${hue+15},65%,45%)
 )`;
 
-const short = shortTitle(title);
+const short = title.substring(0,30);
 
 div.innerHTML = `
 <div class="cover-title">${short}</div>
-<div class="cover-author">author</div>
+<div class="cover-author">${author}</div>
 `;
 
 return div;
