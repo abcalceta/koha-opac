@@ -1,5 +1,5 @@
 import { ensureCovers } from "./covers.js";
-import { loadRandomBooks } from "./random-books.js";
+import { loadRandomBooks } from "./shelf.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
