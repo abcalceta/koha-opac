@@ -34,3 +34,13 @@ display:-webkit-box;
 -webkit-line-clamp:4;        /* number of lines */
 -webkit-box-orient:vertical;
 }
+
+
+.bookcover{
+position:relative;
+}
+
+.generated-cover{
+position:absolute;
+inset:0;
+}

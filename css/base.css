@@ -132,3 +132,13 @@ background: transparent;
 #opac-main main{
     background: var(--pssc-white);
 }
+
+
+
+#results main{
+    border: 0px;
+}
+
+#results #search-facets{
+    background: var(--pssc-white);
+}
