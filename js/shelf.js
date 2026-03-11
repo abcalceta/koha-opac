@@ -36,4 +36,23 @@ export async function loadShelf(shelfId, reportId){
 
     });
 
+	const wrapper = shelf.closest(".discover-wrapper");
+	if(!wrapper) return;
+
+	const leftBtn = wrapper.querySelector(".scroll-btn.left");
+	const rightBtn = wrapper.querySelector(".scroll-btn.right");
+
+	if(!shelf.dataset.scrollInit){
+
+	    leftBtn?.addEventListener("click", () => {
+	        shelf.scrollBy({ left: -400, behavior: "smooth" });
+	    });
+
+	    rightBtn?.addEventListener("click", () => {
+	        shelf.scrollBy({ left: 400, behavior: "smooth" });
+	    });
+
+	    shelf.dataset.scrollInit = "1";
+	}
+
 }

@@ -26,24 +26,6 @@ function init(){
         loadShelf("random-books", 6);     // report id for random books
         loadShelf("anthro-books", 7);     // report id for anthropology
 
-        const wrapper = shelf.closest(".discover-wrapper");
-
-        const leftBtn = wrapper.querySelector(".scroll-btn.left");
-        const rightBtn = wrapper.querySelector(".scroll-btn.right");
-
-        if(!shelf.dataset.scrollInit){
-
-            leftBtn?.addEventListener("click",()=>{
-                shelf.scrollBy({ left:-400, behavior:"smooth" });
-            });
-
-            rightBtn?.addEventListener("click",()=>{
-                shelf.scrollBy({ left:400, behavior:"smooth" });
-            });
-
-            shelf.dataset.scrollInit = "1";
-        }
-
     } else{
         ensureCovers();
     }
