@@ -1,4 +1,3 @@
-import "./random-books.js";
 
 
 document.querySelector(".scroll-btn.left")?.addEventListener("click",()=>{
