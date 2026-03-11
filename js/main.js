@@ -2,6 +2,9 @@ import { homepageHTML } from "./homepage.js";
 import { loadRandomBooks } from "./shelf.js";
 import { ensureCovers } from "./covers.js";
 
+loadCSS();
+console.log("MAIN MODULE LOADED");
+
 document.addEventListener("DOMContentLoaded", () => {
 
     /* covers everywhere */
@@ -37,4 +40,5 @@ document.head.appendChild(css);
 
 }
 
-loadCSS();
+
+
