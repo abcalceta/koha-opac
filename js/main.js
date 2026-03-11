@@ -1,22 +1,40 @@
-[
-"https://abcalceta.github.io/koha-opac/js/generated-covers.js",
-"https://abcalceta.github.io/koha-opac/js/shelf.js"
-].forEach(src=>{
-    let s=document.createElement("script");
-    s.src=src;
-    document.head.appendChild(s);
-});
-
-
-
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("Koha OPAC enhancements loaded");
+
+  if (document.body.id !== "opac-main") return;
+
+  fetch("https://abcalceta.github.io/koha-opac/html/homepage.html")
+    .then(r => r.text())
+    .then(html => {
+
+      const container = document.querySelector("#OpacMainUserBlock");
+      if (!container) return;
+
+      container.innerHTML = html;
+
+      /* wait for DOM to update before initializing */
+      requestAnimationFrame(() => {
+
+        initShelf();
+
+      });
+
+    });
+
 });
 
-let url = "https://abcalceta.github.io/koha-opac/html/homepage.html?v=" + Date.now();
+function initShelf(){
 
-fetch(url)
-.then(r=>r.text())
-.then(html=>{
-document.querySelector("#OpacMainUserBlock").innerHTML = html;
-});
+  const shelf = document.querySelector("#random-books");
+  if(!shelf) return;
+
+  loadRandomBooks();
+
+  document.querySelector(".scroll-btn.left")?.addEventListener("click",()=>{
+    shelf.scrollBy({left:-400,behavior:"smooth"});
+  });
+
+  document.querySelector(".scroll-btn.right")?.addEventListener("click",()=>{
+    shelf.scrollBy({left:400,behavior:"smooth"});
+  });
+
+}
