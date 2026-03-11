@@ -173,7 +173,7 @@ background: transparent;
     color: var(--pssc-white);
 }
 
-#breadcrumbs{
+#breadcrumbs>ol{
     background: none;
     color: var(--pssc-white);
 }
