@@ -30,8 +30,6 @@ data.forEach(row=>{
 
 	const hue = 220 + (Math.abs(hash)%60);
 
-let hue = 220 + (Math.abs(hash) % 60);
-
 	html+=`
 	<a class="random-book"
 	href="/cgi-bin/koha/opac-detail.pl?biblionumber=${biblio}">
