@@ -5,8 +5,9 @@ console.log("homepage module loaded");
 
 import { loadRandomBooks } from "./shelf.js";
 console.log("shelf module loaded");
-import { ensureCovers, watchResults, refreshGeneratedCovers } from "./covers.js";
 
+import { ensureCovers, watchResults, refreshGeneratedCovers } from "./covers.js";
+console.log("covers module loaded");
 
 
 function init(){
@@ -23,31 +24,31 @@ function init(){
 
         if(!container) return;
 
-        console.log("homepageHTML:", homepageHTML);
-
         container.innerHTML = homepageHTML;
 
         loadRandomBooks();
 
     } else{
-        /* covers everywhere else */
         ensureCovers();
     }
 
 }
 
+
 document.addEventListener("DOMContentLoaded", () => {
-    applyGeneratedCovers();
-    watchResults();
+
+    if(document.body.id !== "opac-main"){
+        ensureCovers();
+        watchResults();
+    }
+
 });
 
-import { refreshGeneratedCovers } from "./covers.js";
 
 window.addEventListener("load", () => {
     refreshGeneratedCovers();
 });
 
-/* run immediately if DOM already loaded */
 
 if(document.readyState !== "loading"){
     init();
@@ -58,12 +59,11 @@ if(document.readyState !== "loading"){
 
 function loadCSS(){
 
-const css=document.createElement("link");
+    const css=document.createElement("link");
 
-css.rel="stylesheet";
-css.href="https://abcalceta.github.io/koha-opac/css/theme.css";
+    css.rel="stylesheet";
+    css.href="https://abcalceta.github.io/koha-opac/css/theme.css";
 
-document.head.appendChild(css);
+    document.head.appendChild(css);
 
 }
-
