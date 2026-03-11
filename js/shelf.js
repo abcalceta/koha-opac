@@ -51,7 +51,7 @@ shelf.innerHTML=html;
 
 function styleBookCovers(){
 
-document.querySelectorAll(".bookcover").forEach(el=>{
+document.querySelectorAll(".random-book .bookcover").forEach(el=>{
 
     const title = el.dataset.title || "Book";
 
