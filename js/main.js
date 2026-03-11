@@ -1,7 +1,6 @@
 [
 "https://abcalceta.github.io/koha-opac/js/generated-covers.js",
-"https://abcalceta.github.io/koha-opac/js/main.js"
-"https://abcalceta.github.io/koha-opac/js/homepage.js"
+"https://abcalceta.github.io/koha-opac/js/shelf.js"
 ].forEach(src=>{
     let s=document.createElement("script");
     s.src=src;
