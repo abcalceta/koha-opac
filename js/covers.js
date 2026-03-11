@@ -80,7 +80,7 @@ export function watchResults(){
     if(!results) return;
 
     const observer = new MutationObserver(() => {
-        applyGeneratedCovers();
+        ensureCovers();
     });
 
     observer.observe(results,{
