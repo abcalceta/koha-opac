@@ -118,6 +118,7 @@ color:white;
 }
 
 
+
 .card,
 .panel,
 .table{
@@ -191,3 +192,20 @@ display:none;
 }
 
 
+.bookcover{
+position:relative;
+width:120px;
+height:180px;
+}
+
+.bookcover .cover-slider{
+position:absolute;
+inset:0;
+z-index:2;
+}
+
+.bookcover .generated-cover{
+position:absolute;
+inset:0;
+z-index:1;
+}
