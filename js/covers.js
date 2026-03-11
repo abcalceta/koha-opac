@@ -3,7 +3,7 @@ export function ensureCovers(){
 document.querySelectorAll(".bookcover").forEach(el=>{
 
     /* skip homepage shelf */
-    if(el.closest("#random-books")) return;
+    if(el.querySelector("#random-books")) return;
 
     /* skip if real cover image exists */
     if(el.querySelector("img")) return;
