@@ -16,6 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if(!container) return;
 
+        console.log("homepageHTML:", homepageHTML);
+
         container.innerHTML = homepageHTML;
 
         loadRandomBooks();
