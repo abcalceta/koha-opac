@@ -140,14 +140,15 @@ export function refreshGeneratedCovers(){
 }
 
 
-
 export function watchResults(){
+    console.log("observer attached");
 
     const results = document.querySelector("#results");
     if(!results) return;
 
     const observer = new MutationObserver(() => {
         ensureCovers();
+        refreshGeneratedCovers();
     });
 
     observer.observe(results,{
