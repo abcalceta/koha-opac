@@ -2,7 +2,7 @@ const VERSION = "1.1.11";
 console.log("MAIN MODULE VERSION LOADED: "+VERSION);
 
 const { homepageHTML } = await import(`./homepage.js?v=${VERSION}`);
-const { ensureCovers, watchResults, applyGeneratedCovers } =
+const { ensureCovers, watchResults, applyGeneratedCovers, refreshGeneratedCovers } =
   await import(`./covers.js?v=${VERSION}`);
 const { loadShelf } = await import(`./shelf.js?v=${VERSION}`);
 
