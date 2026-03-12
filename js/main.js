@@ -1,4 +1,3 @@
-
 const VERSION = "1.1.10"; 
 console.log("MAIN MODULE VERSION LOADED: "+VERSION);
 
@@ -24,14 +23,11 @@ function init(){
 
         container.innerHTML = homepageHTML;
 
-        loadShelf("random-books", 6);     // report id for random books
-        loadShelf("anthro-books", 7);     // report id for anthropology
+        loadShelf("random-books", 6);
+        loadShelf("anthro-books", 7);
 
     } else{
-        // ensureCovers();
-        // applyGeneratedCovers();
-        refreshGeneratedCovers();
-
+        applyGeneratedCovers();
     }
 
 }
@@ -43,9 +39,12 @@ function runSearchCovers(){
     }
 }
 
+
 if(document.readyState !== "loading"){
+    init();
     runSearchCovers();
 }else{
+    document.addEventListener("DOMContentLoaded", init);
     document.addEventListener("DOMContentLoaded", runSearchCovers);
 }
 
