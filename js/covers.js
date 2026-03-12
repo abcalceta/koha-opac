@@ -133,7 +133,7 @@ export function refreshGeneratedCovers(){
         el.style.background =
             `linear-gradient(135deg,
             hsl(${hue},60%,30%),
-            hsl(${hue+5},65%,35%))`;
+            hsl(${hue+15},65%,25%))`;
 
 
         // remove Koha fallback text
