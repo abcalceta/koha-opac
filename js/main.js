@@ -1,5 +1,5 @@
 
-const VERSION = "1.1.2"; 
+const VERSION = "1.1.10"; 
 console.log("MAIN MODULE VERSION LOADED: "+VERSION);
 
 const { homepageHTML } = await import(`./homepage.js?v=${VERSION}`);
@@ -28,7 +28,9 @@ function init(){
         loadShelf("anthro-books", 7);     // report id for anthropology
 
     } else{
-        ensureCovers();
+        // ensureCovers();
+        applyGeneratedCovers();
+
     }
 
 }
