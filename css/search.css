@@ -7,11 +7,16 @@
 }
 
 #advsearch .main{
-	background: var(--pssc-white);
 	border: 0px;
-	border-radius: 5px;
 }
 
 #advsearch{
 	background: var(--pssc-purple-dark);
+}
+
+#advsearch .main .container-fluid{
+	background: var(--pssc-white);
+	border: 0px;
+	border-radius: 5px;
+	padding: 15px;
 }
