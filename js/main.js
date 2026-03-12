@@ -27,7 +27,7 @@ function init(){
         loadShelf("anthro-books", 7);
 
     } else{
-        applyGeneratedCovers();
+        refreshGeneratedCovers();
     }
 
 }
