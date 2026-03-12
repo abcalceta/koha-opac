@@ -38,16 +38,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if(document.body.id !== "opac-main"){
         ensureCovers();
+        refreshGeneratedCovers();
         watchResults();
     }
 
 });
 
-
-window.addEventListener("load", () => {
-    console.log("load")
-    refreshGeneratedCovers();
-});
 
 
 if(document.readyState !== "loading"){
