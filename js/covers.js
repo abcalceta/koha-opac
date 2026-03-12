@@ -128,6 +128,8 @@ export function refreshGeneratedCovers(){
             el.appendChild(authorEl);
         }
 
+        console.log(title, author);
+
         titleEl.textContent = title.substring(0,60);
         authorEl.textContent = author;
 
