@@ -84,6 +84,22 @@ export function createGeneratedCover(title, author){
 }
 
 
+export function applyGeneratedCovers(){
+
+    document.querySelectorAll(".bookcover").forEach(el => {
+
+        if(el.querySelector(".generated-cover")) return;
+
+        const title = el.dataset.title || "";
+        const author = el.dataset.author || "";
+
+        const cover = createGeneratedCover(title, author);
+        el.appendChild(cover);
+
+    });
+
+}
+
 
 export function refreshGeneratedCovers(){
     console.log("refreshing");

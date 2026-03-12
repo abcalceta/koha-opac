@@ -3,7 +3,7 @@ const VERSION = "1.1.1";
 console.log("MAIN MODULE VERSION LOADED: "+VERSION);
 
 const { homepageHTML } = await import(`./homepage.js?v=${VERSION}`);
-const { ensureCovers, watchResults, refreshGeneratedCovers } =
+const { ensureCovers, watchResults, applyGeneratedCovers } =
   await import(`./covers.js?v=${VERSION}`);
 const { loadShelf } = await import(`./shelf.js?v=${VERSION}`);
 
@@ -37,12 +37,7 @@ function init(){
 document.addEventListener("DOMContentLoaded", () => {
 
     if(document.body.id !== "opac-main"){
-        ensureCovers();
-        refreshGeneratedCovers();
-        watchResults();
-    } else{
-    ensureCovers();
-    refreshGeneratedCovers();
+        applyGeneratedCovers();
     }
 
 });
