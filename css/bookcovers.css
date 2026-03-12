@@ -104,6 +104,17 @@ scroll-behavior:smooth;
 }
 
 
+#opac-detail .generated-cover::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        90deg,
+        rgba(0,0,0,.25),
+        rgba(0,0,0,0) 20%
+    );
+}
+
 
 
 .generated-cover{
