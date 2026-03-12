@@ -1,4 +1,4 @@
-const VERSION = "1.1.11"; 
+const VERSION = "1.1.2"; 
 console.log("MAIN MODULE VERSION LOADED: "+VERSION);
 
 const { homepageHTML } = await import(`./homepage.js?v=${VERSION}`);

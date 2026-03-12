@@ -104,10 +104,6 @@ scroll-behavior:smooth;
 }
 
 
-#opac-detail .generated-cover::before{
-    visibility: none;
-}
-
 
 
 .generated-cover{

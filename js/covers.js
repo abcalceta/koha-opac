@@ -182,3 +182,15 @@ export function watchResults(){
     });
 
 }
+
+
+
+document.querySelectorAll("#opac-detail .bookcover").forEach(el => {
+
+    const img = el.querySelector("img");
+
+    if(!img){
+        el.style.display = "none";
+    }
+
+});
