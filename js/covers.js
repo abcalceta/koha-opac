@@ -90,8 +90,17 @@ export function applyGeneratedCovers(){
 
         if(el.querySelector(".generated-cover")) return;
 
-        const title = el.dataset.title || "";
-        const author = el.dataset.author || "";
+        const row = el.closest("tr");
+
+        const title =
+            el.dataset.title ||
+            row?.querySelector("a.title")?.innerText ||
+            "[NO TITLE]";
+
+        const author =
+            el.dataset.author ||
+            row?.querySelector(".author")?.innerText ||
+            "";
 
         const cover = createGeneratedCover(title, author);
         el.appendChild(cover);
@@ -100,7 +109,7 @@ export function applyGeneratedCovers(){
 
 }
 
-
+/*
 export function refreshGeneratedCovers(){
     console.log("refreshing");
     document.querySelectorAll(".generated-cover").forEach(el => {
@@ -127,7 +136,7 @@ export function refreshGeneratedCovers(){
             hsl(${hue+5},65%,35%))`;
 
 
-        /* remove Koha fallback text */
+        // remove Koha fallback text
         el.childNodes.forEach(n=>{
           if(n.nodeType === Node.TEXT_NODE) n.remove();
         });
@@ -153,7 +162,7 @@ export function refreshGeneratedCovers(){
         if(authorEl) authorEl.textContent = author;
     });
 
-}
+}*/
 
 
 export function watchResults(){
