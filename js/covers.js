@@ -86,7 +86,7 @@ export function createGeneratedCover(title, author){
 
 
 export function refreshGeneratedCovers(){
-
+    console.log("refreshing");
     document.querySelectorAll(".generated-cover").forEach(el => {
 
         const bookcover = el.closest(".bookcover");
