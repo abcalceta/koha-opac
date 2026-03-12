@@ -109,7 +109,7 @@ export function applyGeneratedCovers(){
 
 }
 
-/*
+
 export function refreshGeneratedCovers(){
     console.log("refreshing");
     document.querySelectorAll(".generated-cover").forEach(el => {
@@ -162,7 +162,7 @@ export function refreshGeneratedCovers(){
         if(authorEl) authorEl.textContent = author;
     });
 
-}*/
+}
 
 
 export function watchResults(){

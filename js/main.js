@@ -29,7 +29,8 @@ function init(){
 
     } else{
         // ensureCovers();
-        applyGeneratedCovers();
+        // applyGeneratedCovers();
+        refreshGeneratedCovers();
 
     }
 
