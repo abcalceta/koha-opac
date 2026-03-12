@@ -85,7 +85,7 @@ export function createGeneratedCover(title, author){
 
 
 export function applyGeneratedCovers(){
-
+    console.log("applying")
     document.querySelectorAll(".bookcover").forEach(el => {
 
         if(el.querySelector(".generated-cover")) return;
