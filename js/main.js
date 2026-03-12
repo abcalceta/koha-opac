@@ -34,13 +34,17 @@ function init(){
 }
 
 
-document.addEventListener("DOMContentLoaded", () => {
-
+function runSearchCovers(){
     if(document.body.id !== "opac-main"){
         applyGeneratedCovers();
     }
+}
 
-});
+if(document.readyState !== "loading"){
+    runSearchCovers();
+}else{
+    document.addEventListener("DOMContentLoaded", runSearchCovers);
+}
 
 
 
