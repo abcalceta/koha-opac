@@ -6,6 +6,6 @@
 	visibility: hidden;
 }
 
-#advsearch{
+#advsearch .main{
 	background: var(--pssc-white);
 }
