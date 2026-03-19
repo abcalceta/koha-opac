@@ -7,6 +7,21 @@ const { ensureCovers, watchResults, applyGeneratedCovers, refreshGeneratedCovers
 const { loadShelf } = await import(`./shelf.js?v=${VERSION}`);
 
 
+$(document).ready(function () {
+  $('.searchresults .bibliocol').each(function () {
+    var link = $(this).find('a[href*="/covers/"]').attr('href');
+    if (!link) return;
+
+    var img = $('<img>', {
+      src: link,
+      class: 'custom-cover'
+    });
+
+    $(this).prepend(img);
+  });
+});
+
+
 function init(){
 
     loadCSS();
