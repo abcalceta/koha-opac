@@ -441,6 +441,17 @@ a:hover {
 .scroll-btn.right { right: -14px; }
 
 
+/* Search result thumbnails */
+
+.search-cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: var(--radius);
+}
+
+
 /* --- Shimmer loading placeholders --- */
 
 .shelf-placeholder {
@@ -500,11 +511,25 @@ a:hover {
 #opac-detail .generated-cover { display: none; }
 #opac-detail main             { background: var(--surface); }
 
+/* On the detail page the bookcover floats left beside the metadata.
+   Reset the shelf-card sizing so it doesn't clip or overlap. */
+#opac-detail .bookcover {
+    width: auto;
+    height: auto;
+    position: static;
+    overflow: visible;
+    float: left;
+    margin: 0 20px 16px 0;
+}
+
+#opac-detail .bookcover img,
 .detail-cover-img {
-    display: block;
+    position: static;
+    width: auto;
+    height: auto;
     max-width: 200px;
-    width: 100%;
+    object-fit: unset;
     border-radius: var(--radius);
     box-shadow: var(--shadow-hover);
-    margin: 0 16px 16px 0;
+    display: block;
 }

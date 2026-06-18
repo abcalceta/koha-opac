@@ -4,11 +4,11 @@
    To change homepage shelves, edit config.js — not this file.
    ============================================================ */
 
-const VERSION = "1.3.5";
+const VERSION = "1.3.7";
 
 const { SHELVES }                    = await import(`./config.js?v=${VERSION}`);
 const { buildHomepageHTML }          = await import(`./homepage.js?v=${VERSION}`);
-const { applyCovers, refreshCovers, loadDetailCover } = await import(`./covers.js?v=${VERSION}`);
+const { applyCovers, refreshCovers, loadDetailCover, applySearchCovers } = await import(`./covers.js?v=${VERSION}`);
 const { loadShelf }                  = await import(`./shelf.js?v=${VERSION}`);
 
 
@@ -25,6 +25,7 @@ function init() {
     } else {
         applyCovers();
         refreshCovers();
+        applySearchCovers();
     }
 
 }

@@ -4,7 +4,7 @@
    row of book covers inside the given shelf container.
    ============================================================ */
 
-import { createGeneratedCover } from "./covers.js";
+import { createGeneratedCover, toThumbUrl } from "./covers.js";
 
 const PLACEHOLDER_COUNT = 6; /* shimmer cards shown while loading */
 
@@ -75,18 +75,6 @@ export async function loadShelf(shelfId, reportId) {
 
     attachScrollButtons(shelf);
 
-}
-
-
-/**
- * Derive the thumbnail URL from a full cover URL.
- * Inserts /thumbs/ before the filename.
- * e.g. /covers/cover_1968-1993.jpg → /covers/thumbs/cover_1968-1993.jpg
- */
-function toThumbUrl(url) {
-    const parts    = url.split("/");
-    const filename = parts.pop();
-    return [...parts, "thumbs", filename].join("/");
 }
 
 
