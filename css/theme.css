@@ -454,8 +454,6 @@ body#results #bookbag_form tr {
     transition: box-shadow var(--transition);
 }
 
-body#results #bookbag_form tr:first-child { display: none; } /* hide header row if any */
-
 body#results #bookbag_form tr:hover {
     box-shadow: var(--shadow-hover);
 }
