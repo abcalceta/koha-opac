@@ -6,7 +6,7 @@
 
 import { createGeneratedCover } from "./covers.js";
 
-const PLACEHOLDER_COUNT = 6; /* how many shimmer cards to show while loading */
+const PLACEHOLDER_COUNT = 6; /* shimmer cards shown while loading */
 
 
 /**
@@ -15,7 +15,14 @@ const PLACEHOLDER_COUNT = 6; /* how many shimmer cards to show while loading */
  * @param {string} shelfId  — id of the .discover-shelf container
  * @param {number} reportId — id of the Koha saved report to fetch
  *
- * Expected report columns: biblionumber, title, subtitle, author
+ * Expected report columns:
+ *   [0] biblionumber
+ *   [1] title
+ *   [2] subtitle
+ *   [3] author
+ *   [4] cover_url  ← optional; full URL to the cover image
+ *                     e.g. https://library.pssc.org.ph/covers/cover_1968-1993.jpg
+ *                     Thumbnails are loaded automatically from covers/thumbs/
  */
 export async function loadShelf(shelfId, reportId) {
 
@@ -42,28 +49,68 @@ export async function loadShelf(shelfId, reportId) {
 
     data.forEach(row => {
 
-        const biblio   = row[0];
-        const title    = row[1] || "[NO TITLE]";
-        const subtitle = row[2] || "";
-        const author   = row[3] || "";
+        const biblio    = row[0];
+        const title     = row[1] || "[NO TITLE]";
+        const subtitle  = row[2] || "";
+        const author    = row[3] || "";
+        const coverUrl  = row[4] || "";
 
         const link       = document.createElement("a");
         link.className   = "random-book";
         link.href        = `/cgi-bin/koha/opac-detail.pl?biblionumber=${biblio}`;
 
-        const cover = createGeneratedCover(title.substring(0, 40), author);
+        const coverEl = coverUrl
+            ? createImageCover(toThumbUrl(coverUrl), title, author)
+            : createGeneratedCover(title.substring(0, 40), author);
 
         const label       = document.createElement("span");
         label.className   = "booktitle";
         label.textContent = subtitle ? `${title}: ${subtitle}` : title;
 
-        link.appendChild(cover);
+        link.appendChild(coverEl);
         link.appendChild(label);
         shelf.appendChild(link);
 
     });
 
     attachScrollButtons(shelf);
+
+}
+
+
+/**
+ * Derive the thumbnail URL from a full cover URL.
+ * Inserts /thumbs/ before the filename.
+ * e.g. /covers/cover_1968-1993.jpg → /covers/thumbs/cover_1968-1993.jpg
+ */
+function toThumbUrl(url) {
+    const parts    = url.split("/");
+    const filename = parts.pop();
+    return [...parts, "thumbs", filename].join("/");
+}
+
+
+/**
+ * Create a .bookcover element with a real thumbnail image.
+ * Falls back to a generated cover if the image fails to load.
+ */
+function createImageCover(thumbUrl, title, author) {
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "bookcover";
+
+    const img = document.createElement("img");
+    img.alt   = title;
+    img.src   = thumbUrl;
+
+    /* If thumbnail fails to load, swap in the generated fallback */
+    img.onerror = () => {
+        img.remove();
+        wrapper.appendChild(createGeneratedCover(title.substring(0, 40), author));
+    };
+
+    wrapper.appendChild(img);
+    return wrapper;
 
 }
 

@@ -506,4 +506,5 @@ a:hover {
     width: 100%;
     border-radius: var(--radius);
     box-shadow: var(--shadow-hover);
+    margin: 0 16px 16px 0;
 }
