@@ -57,8 +57,8 @@ export function createGeneratedCover(title, author) {
 
     div.style.background = `linear-gradient(
         135deg,
-        hsl(${hue}, 55%, 28%),
-        hsl(${hue + 12}, 60%, 38%)
+        hsl(${hue}, 35%, 86%),
+        hsl(${hue + 15}, 40%, 91%)
     )`;
 
     const titleEl = document.createElement("div");
@@ -90,7 +90,13 @@ export function applyCovers() {
         const img = el.querySelector("img");
         if (img && img.src && !img.src.includes("no-cover")) return;
 
-        const row = el.closest("tr");
+        const row = el.closest("tr, li, .result");
+
+        /* Skip if a real cover image link exists — it will be loaded separately */
+        const hasCoverLink = row && Array.from(row.querySelectorAll("a")).some(
+            a => a.textContent.trim().toLowerCase() === "cover image"
+        );
+        if (hasCoverLink) return;
 
         const title =
             el.dataset.title                           ||
@@ -129,8 +135,8 @@ export function refreshCovers() {
 
         el.style.background = `linear-gradient(
             135deg,
-            hsl(${hue}, 55%, 28%),
-            hsl(${hue + 12}, 60%, 38%)
+            hsl(${hue}, 35%, 86%),
+            hsl(${hue + 15}, 40%, 91%)
         )`;
 
         el.childNodes.forEach(n => {

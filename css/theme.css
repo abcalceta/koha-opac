@@ -318,12 +318,12 @@ a:hover {
 
     padding: 10px;
     text-align: center;
-    color: var(--text-on-color);
+    color: var(--text);
     border-radius: var(--radius);
 
-    /* spine shading to mimic a real book */
-    box-shadow: inset 8px 0 12px rgba(0, 0, 0, 0.25),
-                inset -3px 0 6px rgba(255, 255, 255, 0.08);
+    /* subtle spine shading */
+    box-shadow: inset 6px 0 10px rgba(0, 0, 0, 0.07),
+                inset -2px 0 4px rgba(255, 255, 255, 0.5);
 }
 
 .cover-title {

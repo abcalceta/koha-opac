@@ -16,7 +16,7 @@
    ============================================================ */
 
 export const SHELVES = [
-    { title: "Featured Collection",     reportId: 6  },
+    { title: "Featured Collection",     reportId: 1  },
     { title: "Anthropology Highlights", reportId: 7  },
     { title: "Discover Books",          reportId: 6  },
 ];
