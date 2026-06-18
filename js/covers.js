@@ -213,34 +213,51 @@ export function loadDetailCover() {
 
 /**
  * For each search result row, find its "Cover image" link
- * (already in the page from the MARC 856 field) and inject
- * a thumbnail image. No API calls needed — URL is in the DOM.
+ * (from the MARC 856 field), hide Koha's inline rendering,
+ * inject a thumbnail on the left, and tint the card using
+ * a color sampled from the cover image.
  */
 export function applySearchCovers() {
 
-    const coverLinks = Array.from(document.querySelectorAll("a")).filter(
-        a => a.textContent.trim().toLowerCase() === "cover image"
+    const rows = document.querySelectorAll(
+        "body#results #bookbag_form > ol > li"
     );
 
-    coverLinks.forEach(link => {
+    rows.forEach(row => {
 
-        const row = link.closest("li, tr, .result");
-        if (!row || row.dataset.coverDone) return;
+        if (row.dataset.coverDone) return;
+
+        const coverLink = Array.from(row.querySelectorAll("a")).find(
+            a => a.textContent.trim().toLowerCase() === "cover image"
+        );
+
+        if (!coverLink) return;
+
         row.dataset.coverDone = "1";
 
-        const fullUrl  = link.href;
+        const fullUrl  = coverLink.href;
         const thumbUrl = toThumbUrl(fullUrl);
+
+        /* Hide Koha's inline rendering (img before the link, or
+           img nested inside it) and the link text itself */
+        const inlinePrev = coverLink.previousElementSibling;
+        if (inlinePrev?.tagName === "IMG") inlinePrev.style.display = "none";
+        const inlineInner = coverLink.querySelector("img");
+        if (inlineInner) inlineInner.style.display = "none";
+        coverLink.style.display = "none";
 
         const img     = document.createElement("img");
         img.className = "search-cover-img";
         img.alt       = "Cover";
         img.src       = thumbUrl;
 
+        img.addEventListener("load", () => tintCard(row, img));
+
         img.onerror = () => {
             if (img.src !== fullUrl) {
                 img.src = fullUrl;
             } else {
-                img.closest(".search-cover-wrapper")?.remove();
+                coverWrapper.remove();
             }
         };
 
@@ -261,6 +278,47 @@ export function applySearchCovers() {
         row.classList.add("search-result-card");
 
     });
+
+}
+
+
+/**
+ * Sample the average RGB color from a loaded <img> using an
+ * offscreen canvas, then apply a subtle gradient tint and a
+ * matching left border to the result card.
+ *
+ * Works for same-origin images without needing CORS headers.
+ * Silently skips if canvas is blocked for any reason.
+ */
+function tintCard(card, img) {
+
+    try {
+
+        const canvas  = document.createElement("canvas");
+        canvas.width  = 8;
+        canvas.height = 8;
+        const ctx     = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, 8, 8);
+
+        const data   = ctx.getImageData(0, 0, 8, 8).data;
+        const pixels = data.length / 4;
+        let r = 0, g = 0, b = 0;
+
+        for (let i = 0; i < data.length; i += 4) {
+            r += data[i];
+            g += data[i + 1];
+            b += data[i + 2];
+        }
+
+        r = Math.round(r / pixels);
+        g = Math.round(g / pixels);
+        b = Math.round(b / pixels);
+
+        card.style.background  = `linear-gradient(120deg, rgba(${r},${g},${b},0.13) 0%, #ffffff 50%)`;
+        card.style.borderLeft  = `3px solid rgba(${r},${g},${b},0.45)`;
+        card.style.borderColor = `rgba(${r},${g},${b},0.45)`;
+
+    } catch { /* canvas blocked (CORS) — skip tinting */ }
 
 }
 
