@@ -220,50 +220,46 @@ export function loadDetailCover() {
  */
 export function applySearchCovers() {
 
-    /* Start from the known result rows — avoids closest() ambiguity */
-    const rows = document.querySelectorAll(
-        "#bookbag_form > ol > li, #bookbag_form ol li.item"
-    );
+    /* Results are in a TABLE — rows are <tr>, content is in td.bibliocol */
 
-    rows.forEach(row => {
+    /* Case A: "Cover image" text links (MARC 856) */
+    Array.from(document.querySelectorAll("a"))
+        .filter(a => a.textContent.trim().toLowerCase() === "cover image")
+        .forEach(link => {
 
-        if (row.dataset.coverDone) return;
+            const row = link.closest("tr");
+            if (!row || row.dataset.coverDone) return;
 
-        /* Look for a rendered cover img first (local covers service) */
-        const kohaImg = row.querySelector(
-            "img[src*='/covers/']:not(.search-cover-img)"
-        );
-
-        /* Fall back to a MARC 856 "Cover image" text link */
-        const coverLink = !kohaImg
-            ? Array.from(row.querySelectorAll("a")).find(
-                a => a.textContent.trim().toLowerCase() === "cover image"
-              )
-            : null;
-
-        if (!kohaImg && !coverLink) return;
-
-        const fullUrl = kohaImg ? kohaImg.src : coverLink.href;
-
-        /* Hide the original Koha rendering */
-        if (kohaImg) {
-            kohaImg.style.display = "none";
-            if (kohaImg.parentElement?.tagName === "A") {
-                kohaImg.parentElement.style.display = "none";
+            if (link.previousElementSibling?.tagName === "IMG") {
+                link.previousElementSibling.style.display = "none";
             }
-        }
-        if (coverLink) {
-            if (coverLink.previousElementSibling?.tagName === "IMG") {
-                coverLink.previousElementSibling.style.display = "none";
+            const inner = link.querySelector("img");
+            if (inner) inner.style.display = "none";
+            link.style.display = "none";
+
+            buildCoverCard(row, link.href);
+
+        });
+
+    /* Case B: <img> Koha rendered from the local covers service */
+    Array.from(document.querySelectorAll("img"))
+        .filter(img =>
+            img.src.includes("/covers/") &&
+            !img.closest(".search-cover-wrapper")
+        )
+        .forEach(img => {
+
+            const row = img.closest("tr");
+            if (!row || row.dataset.coverDone) return;
+
+            img.style.display = "none";
+            if (img.parentElement?.tagName === "A") {
+                img.parentElement.style.display = "none";
             }
-            coverLink.querySelector("img") &&
-                (coverLink.querySelector("img").style.display = "none");
-            coverLink.style.display = "none";
-        }
 
-        buildCoverCard(row, fullUrl);
+            buildCoverCard(row, img.src);
 
-    });
+        });
 
     startCoverPolling();
 
@@ -294,6 +290,9 @@ function buildCoverCard(row, fullUrl) {
     if (row.dataset.coverDone) return;
     row.dataset.coverDone = "1";
 
+    /* Content lives in td.bibliocol — make that cell the flex container */
+    const cell = row.querySelector("td.bibliocol") || row.querySelector("td") || row;
+
     const thumbUrl = toThumbUrl(fullUrl);
 
     const img     = document.createElement("img");
@@ -301,7 +300,7 @@ function buildCoverCard(row, fullUrl) {
     img.alt       = "Cover";
     img.src       = thumbUrl;
 
-    img.addEventListener("load", () => tintCard(row, img));
+    img.addEventListener("load", () => tintCard(cell, img));
 
     const coverWrapper     = document.createElement("div");
     coverWrapper.className = "search-cover-wrapper";
@@ -317,13 +316,13 @@ function buildCoverCard(row, fullUrl) {
 
     const contentWrapper     = document.createElement("div");
     contentWrapper.className = "search-content-wrapper";
-    while (row.firstChild) {
-        contentWrapper.appendChild(row.firstChild);
+    while (cell.firstChild) {
+        contentWrapper.appendChild(cell.firstChild);
     }
 
-    row.appendChild(coverWrapper);
-    row.appendChild(contentWrapper);
-    row.classList.add("search-result-card");
+    cell.appendChild(coverWrapper);
+    cell.appendChild(contentWrapper);
+    cell.classList.add("search-result-card");
 
 }
 

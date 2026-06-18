@@ -441,25 +441,32 @@ a:hover {
 .scroll-btn.right { right: -14px; }
 
 
-/* Search results — card layout */
+/* Search results — card layout (results are in a TABLE, rows are <tr>) */
 
-body#results #bookbag_form > ol {
-    list-style: none;
-    padding: 0;
-}
-
-body#results #bookbag_form > ol > li {
+body#results #bookbag_form tr {
+    display: block;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     margin-bottom: 12px;
-    padding: 16px;
+    overflow: hidden;
     transition: box-shadow var(--transition);
 }
 
-body#results #bookbag_form > ol > li:hover {
+body#results #bookbag_form tr:first-child { display: none; } /* hide header row if any */
+
+body#results #bookbag_form tr:hover {
     box-shadow: var(--shadow-hover);
+}
+
+body#results #bookbag_form td {
+    display: block;
+    vertical-align: top;
+}
+
+body#results #bookbag_form td.bibliocol {
+    padding: 16px;
 }
 
 /* Two-column flex layout: [cover] [metadata] */
