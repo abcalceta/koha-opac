@@ -218,14 +218,12 @@ export function loadDetailCover() {
  */
 export function applySearchCovers() {
 
-    /* Find every "Cover image" link on the page */
     const coverLinks = Array.from(document.querySelectorAll("a")).filter(
         a => a.textContent.trim().toLowerCase() === "cover image"
     );
 
     coverLinks.forEach(link => {
 
-        /* Walk up to the result row container */
         const row = link.closest("li, tr, .result");
         if (!row || row.dataset.coverDone) return;
         row.dataset.coverDone = "1";
@@ -238,25 +236,29 @@ export function applySearchCovers() {
         img.alt       = "Cover";
         img.src       = thumbUrl;
 
-        /* Try thumbnail → fall back to full-size → give up */
         img.onerror = () => {
             if (img.src !== fullUrl) {
                 img.src = fullUrl;
             } else {
-                img.remove();
+                img.closest(".search-cover-wrapper")?.remove();
             }
         };
 
-        /* Wrap in a container and place it after the checkbox
-           so it floats beside all the bibliographic metadata */
-        const wrapper     = document.createElement("div");
-        wrapper.className = "search-cover-wrapper";
-        wrapper.appendChild(img);
+        const coverWrapper     = document.createElement("div");
+        coverWrapper.className = "search-cover-wrapper";
+        coverWrapper.appendChild(img);
 
-        const checkbox = row.querySelector('input[type="checkbox"]');
-        checkbox
-            ? checkbox.after(wrapper)
-            : row.prepend(wrapper);
+        /* Move all existing li children into a content wrapper,
+           then rebuild the row as [cover] [content] side by side */
+        const contentWrapper     = document.createElement("div");
+        contentWrapper.className = "search-content-wrapper";
+        while (row.firstChild) {
+            contentWrapper.appendChild(row.firstChild);
+        }
+
+        row.appendChild(coverWrapper);
+        row.appendChild(contentWrapper);
+        row.classList.add("search-result-card");
 
     });
 

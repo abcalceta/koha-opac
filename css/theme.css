@@ -454,8 +454,7 @@ body#results #bookbag_form > ol > li {
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     margin-bottom: 12px;
-    padding: 16px 16px 16px 12px;
-    overflow: hidden; /* contain the floated cover */
+    padding: 16px;
     transition: box-shadow var(--transition);
 }
 
@@ -463,12 +462,22 @@ body#results #bookbag_form > ol > li:hover {
     box-shadow: var(--shadow-hover);
 }
 
-/* Cover thumbnail floated beside metadata */
+/* Two-column flex layout: [cover] [metadata] */
+
+.search-result-card {
+    display: flex !important;
+    align-items: flex-start;
+    gap: 16px;
+}
 
 .search-cover-wrapper {
-    float: left;
-    margin: 2px 16px 8px 0;
     flex-shrink: 0;
+    width: 90px;
+}
+
+.search-content-wrapper {
+    flex: 1;
+    min-width: 0; /* prevent flex overflow */
 }
 
 .search-cover-img {
