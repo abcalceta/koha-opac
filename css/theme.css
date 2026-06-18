@@ -444,26 +444,58 @@ a:hover {
 /* Search results — card layout (results are in a TABLE, rows are <tr>) */
 
 body#results #bookbag_form tr {
-    display: block;
+    display: flex;
+    align-items: stretch;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     margin-bottom: 12px;
     overflow: hidden;
-    transition: box-shadow var(--transition);
+    transition: box-shadow var(--transition), background var(--transition), border-color var(--transition);
 }
 
 body#results #bookbag_form tr:hover {
     box-shadow: var(--shadow-hover);
 }
 
-body#results #bookbag_form td {
-    display: block;
-    vertical-align: top;
+/* Hide the result-number column */
+body#results #bookbag_form td.numcol { display: none; }
+
+/* Checkbox column — narrow accent strip on the left */
+body#results #bookbag_form td.selectcol {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 44px;
+    background: var(--purple-muted);
+    cursor: pointer;
+    transition: background var(--transition);
 }
 
+body#results #bookbag_form td.selectcol input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--purple);
+    cursor: pointer;
+}
+
+/* Highlight entire card when selected */
+body#results #bookbag_form tr:has(td.selectcol input:checked) {
+    background: linear-gradient(120deg, rgba(242, 191, 45, 0.18) 0%, rgba(242, 191, 45, 0.06) 100%) !important;
+    border-color: var(--gold-dark) !important;
+    box-shadow: 0 0 0 2px rgba(190, 139, 44, 0.35), var(--shadow-hover) !important;
+}
+
+body#results #bookbag_form tr:has(td.selectcol input:checked) td.selectcol {
+    background: var(--gold-dark);
+}
+
+/* Main content cell */
 body#results #bookbag_form td.bibliocol {
+    flex: 1;
+    min-width: 0;
     padding: 16px;
 }
 

@@ -300,7 +300,7 @@ function buildCoverCard(row, fullUrl) {
     img.alt       = "Cover";
     img.src       = thumbUrl;
 
-    img.addEventListener("load", () => tintCard(cell, img));
+    img.addEventListener("load", () => tintCard(row, img));
 
     const coverWrapper     = document.createElement("div");
     coverWrapper.className = "search-cover-wrapper";
