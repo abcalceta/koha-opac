@@ -34,13 +34,13 @@
     --gold-dark:    #BE8B2C;   /* darker gold for hover / text on light */
 
     /* Page surfaces */
-    --bg:           #F7F4FC;   /* page background (faint lavender tint) */
+    --bg:           #F4F4F6;   /* page background (neutral light gray) */
     --surface:      #FFFFFF;   /* cards, panels, inputs */
     --border:       #DDD6EE;   /* dividers and outlines */
 
     /* Text */
     --text:         #1E1530;   /* primary body text (dark purple-tinted) */
-    --text-muted:   #6A5F82;   /* secondary / placeholder */
+    --text-muted:   #4E4468;   /* secondary / placeholder */
     --text-on-color:#FFFFFF;   /* text on purple backgrounds */
 
     /* Effects */
@@ -92,7 +92,17 @@ body {
 
 .main { background: var(--bg); }
 
+/* Main content column — white card that lifts off the gray page */
 .maincontent,
+main,
+#content {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px;
+}
+
 .panel,
 .card,
 .well {
@@ -218,6 +228,18 @@ a:hover {
 
 #moresearches a       { color: var(--purple-muted); }
 #moresearches a:hover { color: var(--text-on-color); }
+
+/* Tag cloud — force readable purple, no opacity fading */
+.tag_cloud a,
+.tagCloud a {
+    color: var(--purple);
+    opacity: 1 !important;
+}
+
+.tag_cloud a:hover,
+.tagCloud a:hover {
+    color: var(--gold-dark);
+}
 
 /* Accessible visually-hidden utility */
 

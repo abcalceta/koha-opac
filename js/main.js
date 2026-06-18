@@ -5,7 +5,7 @@
    each page type based on <body id="..."> from Koha.
    ============================================================ */
 
-const VERSION = "1.2.0";
+const VERSION = "1.2.2";
 
 const { homepageHTML }              = await import(`./homepage.js?v=${VERSION}`);
 const { applyCovers, refreshCovers } = await import(`./covers.js?v=${VERSION}`);
