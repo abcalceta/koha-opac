@@ -219,21 +219,21 @@ export function loadDetailCover() {
  */
 export function applySearchCovers() {
 
-    const rows = document.querySelectorAll(
-        "body#results #bookbag_form > ol > li"
+    /* Find every "Cover image" link in the page, then walk up to
+       the containing result row. Works regardless of body id or
+       whether Koha uses a form, table, or plain list. */
+    const coverLinks = Array.from(document.querySelectorAll("a")).filter(
+        a => a.textContent.trim().toLowerCase() === "cover image"
     );
 
-    rows.forEach(row => {
+    coverLinks.forEach(link => {
 
-        if (row.dataset.coverDone) return;
-
-        const coverLink = Array.from(row.querySelectorAll("a")).find(
-            a => a.textContent.trim().toLowerCase() === "cover image"
-        );
-
-        if (!coverLink) return;
+        const row = link.closest("li, tr, .result");
+        if (!row || row.dataset.coverDone) return;
 
         row.dataset.coverDone = "1";
+
+        const coverLink = link;
 
         const fullUrl  = coverLink.href;
         const thumbUrl = toThumbUrl(fullUrl);
