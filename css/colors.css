@@ -1,32 +1,37 @@
 /* ============================================================
-   colors.css — Design tokens
-   All colors, spacing, and visual tokens live here.
-   Never hardcode values elsewhere — reference these variables.
+   colors.css — Design tokens (source of truth for partials)
+   theme.css is the deployed bundle; edit here and copy over.
+   Brand colors provided by design dept:
+     #382564  #6E4D9E  #BE8B2C  #F2BF2D  #FFFFFF
    ============================================================ */
 
 :root {
 
-    /* --- Purple scale --- */
-    --purple:       #6B3FA0;   /* primary actions, links */
-    --purple-dark:  #4A2B72;   /* hover / pressed states */
-    --purple-light: #9B6ED4;   /* decorative accents */
-    --purple-muted: #EDE5FF;   /* subtle tinted backgrounds */
+    /* Purple scale */
+    --purple:       #6E4D9E;   /* primary actions, links */
+    --purple-dark:  #382564;   /* hover / pressed states */
+    --purple-light: #9B7DC4;   /* decorative accents */
+    --purple-muted: #EDE8F7;   /* subtle tinted backgrounds */
 
-    /* --- Page surfaces --- */
-    --bg:           #F8F7FF;   /* page background (faint lavender) */
+    /* Gold scale */
+    --gold:         #F2BF2D;   /* highlight / accent */
+    --gold-dark:    #BE8B2C;   /* hover / text on light */
+
+    /* Page surfaces */
+    --bg:           #F7F4FC;   /* page background (faint lavender) */
     --surface:      #FFFFFF;   /* cards, panels, inputs */
-    --border:       #E2D9F3;   /* dividers and outlines */
+    --border:       #DDD6EE;   /* dividers and outlines */
 
-    /* --- Text --- */
-    --text:         #1E1A2E;   /* primary body text */
-    --text-muted:   #6B6688;   /* secondary / placeholder */
-    --text-on-color:#FFFFFF;   /* text on purple backgrounds */
+    /* Text */
+    --text:         #1E1530;   /* primary body text */
+    --text-muted:   #6A5F82;   /* secondary / placeholder */
+    --text-on-color:#FFFFFF;   /* text placed on purple */
 
-    /* --- Effects --- */
+    /* Effects */
     --radius:       8px;
     --radius-pill:  999px;
-    --shadow:       0 2px 8px  rgba(107, 63, 160, 0.10);
-    --shadow-hover: 0 4px 16px rgba(107, 63, 160, 0.18);
+    --shadow:       0 2px 8px  rgba(56, 37, 100, 0.10);
+    --shadow-hover: 0 4px 16px rgba(56, 37, 100, 0.18);
     --transition:   0.18s ease;
 
 }
