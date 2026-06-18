@@ -4,7 +4,7 @@
    To change homepage shelves, edit config.js — not this file.
    ============================================================ */
 
-const VERSION = "1.5.1";
+const VERSION = "1.5.2";
 
 const { SHELVES }                    = await import(`./config.js?v=${VERSION}`);
 const { buildHomepageHTML }          = await import(`./homepage.js?v=${VERSION}`);
@@ -25,7 +25,9 @@ function init() {
     } else {
         applyCovers();
         refreshCovers();
-        applySearchCovers();
+        if (document.body.id === "results") {
+            applySearchCovers();
+        }
     }
 
 }
