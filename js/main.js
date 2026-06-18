@@ -4,7 +4,7 @@
    To change homepage shelves, edit config.js — not this file.
    ============================================================ */
 
-const VERSION = "1.3.1";
+const VERSION = "1.3.2";
 
 const { SHELVES }                    = await import(`./config.js?v=${VERSION}`);
 const { buildHomepageHTML }          = await import(`./homepage.js?v=${VERSION}`);
@@ -34,7 +34,10 @@ function initHomepage() {
 
     const container =
         document.querySelector("#OpacMainUserBlock .default_body") ||
-        document.querySelector("#OpacMainUserBlock");
+        document.querySelector("#OpacMainUserBlock")             ||
+        document.querySelector("#notloggedin .maincontent")      ||
+        document.querySelector("#loggedin .maincontent")         ||
+        document.querySelector("main .maincontent");
 
     if (!container) return;
 
