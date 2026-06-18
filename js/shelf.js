@@ -59,9 +59,16 @@ export async function loadShelf(shelfId, reportId) {
         link.className   = "random-book";
         link.href        = `/cgi-bin/koha/opac-detail.pl?biblionumber=${biblio}`;
 
+        /* createGeneratedCover returns position:absolute — needs a
+           .bookcover wrapper or it expands to fill the section */
         const coverEl = coverUrl
             ? createImageCover(toThumbUrl(coverUrl), title, author)
-            : createGeneratedCover(title.substring(0, 40), author);
+            : (() => {
+                const bk = document.createElement("div");
+                bk.className = "bookcover";
+                bk.appendChild(createGeneratedCover(title.substring(0, 40), author));
+                return bk;
+            })();
 
         const label       = document.createElement("span");
         label.className   = "booktitle";
