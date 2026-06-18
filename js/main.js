@@ -4,7 +4,7 @@
    To change homepage shelves, edit config.js — not this file.
    ============================================================ */
 
-const VERSION = "1.3.7";
+const VERSION = "1.3.8";
 
 const { SHELVES }                    = await import(`./config.js?v=${VERSION}`);
 const { buildHomepageHTML }          = await import(`./homepage.js?v=${VERSION}`);

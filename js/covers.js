@@ -176,8 +176,8 @@ export function loadDetailCover() {
 
     if (!coverLink) return;
 
-    /* Use the thumbnail, not the full-size image */
-    const thumbUrl = toThumbUrl(coverLink.href);
+    const fullUrl  = coverLink.href;
+    const thumbUrl = toThumbUrl(fullUrl);
 
     const target =
         document.querySelector("#bookcover")  ||
@@ -187,10 +187,19 @@ export function loadDetailCover() {
     if (!target) return;
 
     const img     = document.createElement("img");
-    img.src       = thumbUrl;
     img.alt       = "Book cover";
     img.className = "detail-cover-img";
-    img.onerror   = () => img.remove();
+
+    /* Try thumbnail first; fall back to full-size if thumbs
+       folder hasn't been uploaded yet. */
+    img.src     = thumbUrl;
+    img.onerror = () => {
+        if (img.src !== fullUrl) {
+            img.src = fullUrl;
+        } else {
+            img.remove();
+        }
+    };
 
     target.innerHTML = "";
     target.appendChild(img);
@@ -221,13 +230,22 @@ export async function applySearchCovers() {
         const coverUrl = await fetchMarcCoverUrl(biblionumber);
         if (!coverUrl) return;
 
+        const fullUrl  = coverUrl;
+        const thumbUrl = toThumbUrl(coverUrl);
+
         const img     = document.createElement("img");
-        img.src       = toThumbUrl(coverUrl);
+        img.src       = thumbUrl;
         img.alt       = "";
         img.className = "search-cover-img";
 
-        /* On error just leave the generated cover in place */
-        img.onerror = () => img.remove();
+        /* Try thumbnail; fall back to full-size; then give up */
+        img.onerror = () => {
+            if (img.src !== fullUrl) {
+                img.src = fullUrl;
+            } else {
+                img.remove();
+            }
+        };
 
         /* Clear placeholder/generated cover and show the real image */
         coverEl.innerHTML = "";
