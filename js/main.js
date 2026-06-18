@@ -4,11 +4,11 @@
    To change homepage shelves, edit config.js — not this file.
    ============================================================ */
 
-const VERSION = "1.3.2";
+const VERSION = "1.3.3";
 
 const { SHELVES }                    = await import(`./config.js?v=${VERSION}`);
 const { buildHomepageHTML }          = await import(`./homepage.js?v=${VERSION}`);
-const { applyCovers, refreshCovers } = await import(`./covers.js?v=${VERSION}`);
+const { applyCovers, refreshCovers, loadDetailCover } = await import(`./covers.js?v=${VERSION}`);
 const { loadShelf }                  = await import(`./shelf.js?v=${VERSION}`);
 
 
@@ -20,6 +20,8 @@ function init() {
 
     if (document.body.id === "opac-main") {
         initHomepage();
+    } else if (document.body.id === "opac-detail") {
+        loadDetailCover();
     } else {
         applyCovers();
         refreshCovers();

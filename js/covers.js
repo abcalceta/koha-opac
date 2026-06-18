@@ -146,6 +146,45 @@ export function refreshCovers() {
 
 
 /**
+ * On the detail page, find the "Cover image" link in the
+ * Online resources section and display it as an actual image.
+ * Koha stores the URL in the MARC record (856 field) and
+ * renders it as a link — we just grab it and show the image.
+ */
+export function loadDetailCover() {
+
+    /* Find any link whose visible text is "Cover image" */
+    const coverLink = Array.from(document.querySelectorAll("a")).find(
+        a => a.textContent.trim().toLowerCase() === "cover image"
+    );
+
+    if (!coverLink) return;
+
+    const url = coverLink.href;
+
+    /* Target Koha's book cover placeholder on the detail page */
+    const target =
+        document.querySelector("#bookcover")  ||
+        document.querySelector(".bookcover")  ||
+        document.querySelector("#catalogue_detail_biblio .cover");
+
+    if (!target) return;
+
+    const img = document.createElement("img");
+    img.src   = url;
+    img.alt   = "Book cover";
+    img.className = "detail-cover-img";
+
+    /* If the image fails to load, leave the area empty rather than broken */
+    img.onerror = () => img.remove();
+
+    target.innerHTML = "";
+    target.appendChild(img);
+
+}
+
+
+/**
  * Attach a MutationObserver to #results so generated covers
  * are applied when Koha loads result rows dynamically.
  */

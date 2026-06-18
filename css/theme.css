@@ -496,6 +496,14 @@ a:hover {
    7. Detail page
    ============================================================ */
 
-#opac-detail .title          { color: var(--purple-dark); }
+#opac-detail .title           { color: var(--purple-dark); }
 #opac-detail .generated-cover { display: none; }
-#opac-detail main            { background: var(--surface); }
+#opac-detail main             { background: var(--surface); }
+
+.detail-cover-img {
+    display: block;
+    max-width: 200px;
+    width: 100%;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-hover);
+}
