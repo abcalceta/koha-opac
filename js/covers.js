@@ -212,57 +212,75 @@ export function loadDetailCover() {
    ============================================================ */
 
 /**
- * For each search result row, find its cover — either a "Cover image"
- * text link (MARC 856) or an <img> Koha already rendered from the local
- * covers service. Hides the original, injects a thumbnail on the left,
- * and tints the card with a color sampled from the image.
+ * Walk every known result <li> directly, look for a cover inside it,
+ * hide the original, and rebuild as [cover | content] flex layout.
+ *
+ * Called once at page load, then polled every 500 ms for 4 seconds to
+ * catch covers Koha injects asynchronously after the DOM is ready.
  */
 export function applySearchCovers() {
 
-    const seen = new Set();
+    /* Start from the known result rows — avoids closest() ambiguity */
+    const rows = document.querySelectorAll(
+        "#bookbag_form > ol > li, #bookbag_form ol li.item"
+    );
 
-    /* Case A: "Cover image" text links (MARC 856 with link text) */
-    Array.from(document.querySelectorAll("a"))
-        .filter(a => a.textContent.trim().toLowerCase() === "cover image")
-        .forEach(link => {
-            const row = link.closest("li, tr, .result");
-            if (!row || seen.has(row)) return;
-            seen.add(row);
+    rows.forEach(row => {
 
-            /* Hide inline img before/inside the link and the link itself */
-            if (link.previousElementSibling?.tagName === "IMG") {
-                link.previousElementSibling.style.display = "none";
+        if (row.dataset.coverDone) return;
+
+        /* Look for a rendered cover img first (local covers service) */
+        const kohaImg = row.querySelector(
+            "img[src*='/covers/']:not(.search-cover-img)"
+        );
+
+        /* Fall back to a MARC 856 "Cover image" text link */
+        const coverLink = !kohaImg
+            ? Array.from(row.querySelectorAll("a")).find(
+                a => a.textContent.trim().toLowerCase() === "cover image"
+              )
+            : null;
+
+        if (!kohaImg && !coverLink) return;
+
+        const fullUrl = kohaImg ? kohaImg.src : coverLink.href;
+
+        /* Hide the original Koha rendering */
+        if (kohaImg) {
+            kohaImg.style.display = "none";
+            if (kohaImg.parentElement?.tagName === "A") {
+                kohaImg.parentElement.style.display = "none";
             }
-            const inner = link.querySelector("img");
-            if (inner) inner.style.display = "none";
-            link.style.display = "none";
-
-            buildCoverCard(row, link.href);
-        });
-
-    /* Case B: <img> elements Koha already rendered from the covers server
-       (local cover image feature — shows as a block image in the row) */
-    Array.from(document.querySelectorAll("img"))
-        .filter(img =>
-            img.src.includes("/covers/") &&
-            !img.closest(".search-cover-wrapper")
-        )
-        .forEach(img => {
-            const row = img.closest("li, tr, .result");
-            if (!row || seen.has(row)) return;
-            seen.add(row);
-
-            const fullUrl = img.src;
-            img.style.display = "none";
-
-            /* Hide wrapping <a> if Koha wrapped the img in a link */
-            if (img.parentElement?.tagName === "A") {
-                img.parentElement.style.display = "none";
+        }
+        if (coverLink) {
+            if (coverLink.previousElementSibling?.tagName === "IMG") {
+                coverLink.previousElementSibling.style.display = "none";
             }
+            coverLink.querySelector("img") &&
+                (coverLink.querySelector("img").style.display = "none");
+            coverLink.style.display = "none";
+        }
 
-            buildCoverCard(row, fullUrl);
-        });
+        buildCoverCard(row, fullUrl);
 
+    });
+
+    startCoverPolling();
+
+}
+
+
+/* Poll applySearchCovers a few times after load to catch late-injected
+   images. Stops automatically after ~4 seconds. */
+let _pollStarted = false;
+function startCoverPolling() {
+    if (_pollStarted) return;
+    _pollStarted = true;
+    let ticks = 0;
+    const id = setInterval(() => {
+        applySearchCovers();
+        if (++ticks >= 8) clearInterval(id);
+    }, 500);
 }
 
 
@@ -342,7 +360,7 @@ function tintCard(card, img) {
         g = Math.round(g / pixels);
         b = Math.round(b / pixels);
 
-        card.style.background  = `linear-gradient(120deg, rgba(${r},${g},${b},0.13) 0%, #ffffff 50%)`;
+        card.style.background  = `linear-gradient(to right, rgba(${r},${g},${b},0.18) 0%, rgba(${r},${g},${b},0.06) 100%)`;
         card.style.borderLeft  = `3px solid rgba(${r},${g},${b},0.45)`;
         card.style.borderColor = `rgba(${r},${g},${b},0.45)`;
 
