@@ -1,10 +1,19 @@
-#logo img{
-display:none;
+/* ============================================================
+   logo.css — Site logo in the navbar
+   Hides Koha's default <img> and replaces it with the PSSC
+   logo via a CSS background image.
+   ============================================================ */
+
+/* Hide the default img Koha injects */
+#logo img {
+    display: none;
 }
 
-#logo{
-background:url("../images/logo.jpg") no-repeat left center;
-background-size:contain;
-height:60px;
-width:200px;
+/* Show the custom logo as a background on the link wrapper */
+#logo {
+    background: url("../images/logo.jpg") no-repeat left center;
+    background-size: contain;
+    height: 60px;
+    width: 200px;
+    display: block;
 }

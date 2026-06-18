@@ -1,48 +1,13 @@
+/* ============================================================
+   theme.css — Main entry point
+   Imports all partials in dependency order. Do not add styles
+   here directly; put them in the appropriate partial instead.
+   ============================================================ */
+
 @import 'colors.css';
 @import 'base.css';
 @import 'logo.css';
-@import 'homepage.css';
 @import 'bookcovers.css';
+@import 'homepage.css';
 @import 'search.css';
 @import 'detail.css';
-
-
-.bookcover{
-    width:120px;
-    height:180px;
-    position:relative;
-}
-
-.generated-cover{
-    width:100%;
-    height:100%;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    padding:10px;
-    text-align:center;
-
-    font-weight:600;
-    font-size:14px;
-
-    color:white;
-    border-radius:8px;
-
-    overflow:hidden;
-}
-
-#opac-search .generated-cover{
-position:absolute;
-inset:0;
-}
-
-#opac-main .generated-cover{
-position:relative;
-}
-
-
-#opac-detail .generated-cover {
-    display: none;
-}

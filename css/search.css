@@ -1,22 +1,45 @@
-#advsearch_form{
-	border: 0px;
+/* ============================================================
+   search.css — Search and advanced-search page overrides
+   Koha's search pages have their own background + border
+   rules that conflict with the light theme; we reset them.
+   ============================================================ */
+
+
+/* --- Advanced search page --- */
+
+#advsearch {
+    background: var(--bg);
 }
 
-.sr-only{
-	visibility: hidden;
+/* Remove the default border on the form container */
+#advsearch_form,
+#advsearch .main {
+    border: none;
 }
 
-#advsearch .main{
-	border: 0px;
+/* Give the inner form area a white card feel */
+#advsearch .main .container-fluid {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
 }
 
-#advsearch{
-	background: var(--pssc-purple-dark);
-}
 
-#advsearch .main .container-fluid{
-	background: var(--pssc-white);
-	border: 0px;
-	border-radius: 5px;
-	padding: 15px;
+/* --- Visually hidden labels (keep them accessible) --- */
+/*
+   Koha marks some labels .sr-only; use the proper SR-only
+   technique so screen readers still read them.
+*/
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }

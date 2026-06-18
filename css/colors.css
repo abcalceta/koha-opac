@@ -1,36 +1,32 @@
+/* ============================================================
+   colors.css — Design tokens
+   All colors, spacing, and visual tokens live here.
+   Never hardcode values elsewhere — reference these variables.
+   ============================================================ */
+
 :root {
 
-    /* Primary brand purple */
-    --pssc-purple: #5A3A8D;
+    /* --- Purple scale --- */
+    --purple:       #6B3FA0;   /* primary actions, links */
+    --purple-dark:  #4A2B72;   /* hover / pressed states */
+    --purple-light: #9B6ED4;   /* decorative accents */
+    --purple-muted: #EDE5FF;   /* subtle tinted backgrounds */
 
-    /* Dark purple (text + accents) */
-    --pssc-purple-dark: #3B2A5A;
+    /* --- Page surfaces --- */
+    --bg:           #F8F7FF;   /* page background (faint lavender) */
+    --surface:      #FFFFFF;   /* cards, panels, inputs */
+    --border:       #E2D9F3;   /* dividers and outlines */
 
-    /* Light purple (background accents) */
-    --pssc-purple-light: #7B5FA8;
+    /* --- Text --- */
+    --text:         #1E1A2E;   /* primary body text */
+    --text-muted:   #6B6688;   /* secondary / placeholder */
+    --text-on-color:#FFFFFF;   /* text on purple backgrounds */
 
-    /* Gold from the flame */
-    --pssc-gold: #E5A81C;
-
-    /* Dark gold */
-    --pssc-gold-dark: #C89214;
-
-    /* Light gold highlight */
-    --pssc-gold-light: #F2C94C;
-
-    /* Neutral colors */
-    --pssc-white: #FFFFFF;
-    --pssc-gray-light: #F5F5F5;
-    --pssc-gray: #DADADA;
-
-    /* Theme */
-
-    --bg-dark:#1F1B2E;
-    --bg-panel:#F7F7FA;
-
-    --text-dark:#222222;
-    --text-light:#FFFFFF;
-
-    --border-color:#E3E3EA;
+    /* --- Effects --- */
+    --radius:       8px;
+    --radius-pill:  999px;
+    --shadow:       0 2px 8px  rgba(107, 63, 160, 0.10);
+    --shadow-hover: 0 4px 16px rgba(107, 63, 160, 0.18);
+    --transition:   0.18s ease;
 
 }

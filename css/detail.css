@@ -1,3 +1,21 @@
-#opac-detail .title{
-	color: var(--pssc-purple-dark);
+/* ============================================================
+   detail.css — Bibliographic detail page (opac-detail)
+   Small overrides specific to the single-item record view.
+   ============================================================ */
+
+
+/* Title color */
+#opac-detail .title {
+    color: var(--purple-dark);
+}
+
+/* Detail page never needs a generated cover — it shows the
+   real image or nothing. Hide the fallback entirely. */
+#opac-detail .generated-cover {
+    display: none;
+}
+
+/* White surface for the main content block */
+#opac-detail main {
+    background: var(--surface);
 }

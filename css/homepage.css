@@ -1,59 +1,99 @@
-.discover-wrapper{
-position:relative;
+/* ============================================================
+   homepage.css — Homepage book shelf layout
+   Styles the horizontally-scrollable "Discover" shelves and
+   the navigation arrow buttons that flank them.
+   ============================================================ */
+
+
+/* --- Shelf section heading --- */
+
+.discover-section h2 {
+    color: var(--text);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0 0 8px 0;
 }
 
-.discover-shelf{
-display:flex;
-gap:20px;
 
-overflow-x:auto;
-scroll-behavior:smooth;
+/* --- Wrapper holds the shelf + scroll buttons together --- */
 
-padding:20px 10px;
+.discover-wrapper {
+    position: relative;
+    margin-bottom: 28px;
 }
 
-.discover-shelf::-webkit-scrollbar{
-display:none;
+
+/* --- Scrollable shelf row --- */
+
+.discover-shelf {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 12px 4px 16px;
+    /* hide the scrollbar visually; scrolling still works */
+    scrollbar-width: none;
 }
 
-.random-book{
-flex:0 0 auto;
-width:120px;
-text-decoration:none;
+.discover-shelf::-webkit-scrollbar {
+    display: none;
 }
 
-.scroll-btn{
-position:absolute;
-top:40%;
-z-index:5;
 
-background:var(--pssc-purple);
-color:white;
+/* --- Individual book link inside a shelf --- */
 
-border:none;
-border-radius:50%;
-
-width:36px;
-height:36px;
-
-cursor:pointer;
+.random-book {
+    flex: 0 0 120px;
+    width: 120px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
-.scroll-btn.left{ left:-10px }
-.scroll-btn.right{ right:-10px }
-
-.discover-wrapper{
-    position:relative;
+.random-book:hover {
+    text-decoration: none;
 }
 
-#random-books{
-    display:flex;
-    gap:20px;
-    overflow-x:auto;
-    scroll-behavior:smooth;
-    padding:20px 10px;
+/* Book title label below the cover */
+.random-book .booktitle {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 120px;
 }
 
-.random-book{
-    flex:0 0 120px;
+
+/* --- Scroll arrow buttons --- */
+
+.scroll-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: var(--radius-pill);
+
+    background: var(--purple);
+    color: var(--text-on-color);
+    font-size: 18px;
+    line-height: 1;
+
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: background var(--transition), box-shadow var(--transition);
 }
+
+.scroll-btn:hover {
+    background: var(--purple-dark);
+    box-shadow: var(--shadow-hover);
+}
+
+.scroll-btn.left  { left:  -14px; }
+.scroll-btn.right { right: -14px; }

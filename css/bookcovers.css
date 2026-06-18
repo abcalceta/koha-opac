@@ -1,133 +1,96 @@
-.cover-image img{
-	margin: 0px;
-}
+/* ============================================================
+   bookcovers.css — Book cover components
+   Single source of truth for .bookcover, .generated-cover,
+   .cover-title, and .cover-author. No duplicates elsewhere.
+   ============================================================ */
 
 
-
-.cover-author{
-font-size:.7rem;
-opacity:.85;
-margin-top:auto;
-text-align:center;
-}
-
-.cover-title{
-font-weight:700;
-font-size:.9rem;
-line-height:1.2;
-
-display:-webkit-box;
--webkit-line-clamp:3;
--webkit-box-orient:vertical;
-
-overflow:hidden;
-text-align:center;
-}
-
-.bookcover{
-width:120px;
-height:180px;
-
-border-radius:8px;
-
-display:flex;
-flex-direction:column;
-
-
-color:white;
-
-box-shadow:0 4px 10px rgba(0,0,0,.25);
-}
-
+/* --- Cover container --- */
+/*
+   .bookcover holds either a real <img> (from a cover service)
+   or a .generated-cover fallback. The real image is stacked
+   above the fallback via z-index so it hides it automatically.
+*/
 
 .bookcover {
     width: 120px;
     height: 160px;
     position: relative;
     overflow: hidden;
-    border-radius: 6px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    flex-shrink: 0;
 }
 
-.random-book{
-	width: 120px;
-    height: 160px;
-    position: relative;
+/* Real cover image fills the container */
+.bookcover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+}
+
+/* Hide the generated fallback once a real image loads */
+.bookcover img ~ .generated-cover {
+    display: none;
+}
+
+
+/* --- Generated cover fallback --- */
+/*
+   Used when no real cover image is available.
+   Background color is applied by JS based on a title hash.
+*/
+
+.generated-cover {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
+    padding: 10px;
+    text-align: center;
+    color: var(--text-on-color);
+    border-radius: var(--radius);
+
+    /* spine shading to mimic a real book */
+    box-shadow: inset 8px 0 12px rgba(0, 0, 0, 0.25),
+                inset -3px 0 6px rgba(255, 255, 255, 0.08);
+}
+
+
+/* --- Cover text elements --- */
+
+.cover-title {
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 4px;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
     overflow: hidden;
-    border-radius: 6px;
+}
+
+.cover-author {
+    font-size: 11px;
+    opacity: 0.85;
+    margin-top: auto;
 }
 
 
-.bookcover img{
-    width:150%;
-    height:150%;
-    object-fit:cover;
-    display:block;
+/* --- Cover image wrapper (detail page) --- */
+
+.cover-image img {
+    margin: 0;
+    border-radius: var(--radius);
 }
-
-
-.bookcover{
-    box-shadow:0 4px 10px rgba(0,0,0,0.2);
-}
-
-.discover-shelf{
-display:flex;
-gap:20px;
-
-overflow-x:auto;
-padding:10px;
-
-scroll-behavior:smooth;
-}
-
-
-.generated-cover{
-    position:absolute;
-    inset:0;
-    display:flex;
-    flex-direction:column;
-    justify-content:flex-end;
-    padding:10px;
-    color:white;
-    font-weight:600;
-    background: var(--pssc-purple);
-}
-
-.generated-cover::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:linear-gradient(
-        90deg,
-        rgba(0,0,0,.25),
-        rgba(0,0,0,0) 20%
-    );
-}
-
-
-
-
-.generated-cover{
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    padding:10px;
-    text-align:center;
-    color:white;
-    font-weight:600;
-    border-radius:6px;
-}
-
-.cover-title{
-    font-size:13px;
-    line-height:1.2;
-    margin-bottom:6px;
-}
-
-.cover-author{
-    font-size:11px;
-    opacity:0.9;
-}
-
-
-/**/

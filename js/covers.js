@@ -1,80 +1,53 @@
-export function ensureCovers(){
-
-    document.querySelectorAll(".bookcover").forEach(el => {
-
-        /* already processed */
-        if(el.dataset.coverDone) return;
-
-        /* avoid duplicates */
-        if(el.querySelector(".generated-cover")) return;
-
-        /* skip real covers */
-        const img = el.querySelector("img");
-        if(img && img.src && !img.src.includes("no-cover")) return;
-
-        el.dataset.coverDone = "1";
-
-        const row = el.closest("tr");
-
-        const title =
-            el.dataset.title ||
-            row?.querySelector("a.title")?.innerText ||
-            document.querySelector("#catalogue_detail_biblio h1")?.innerText ||
-            "[NO TITLE]";
-
-        const author =
-            el.dataset.author ||
-            row?.querySelector(".author")?.innerText ||
-            "";
-
-        const cover = createGeneratedCover(title, author);
-
-        el.appendChild(cover);
-
-    });
-
-}
+/* ============================================================
+   covers.js — Procedurally-generated book cover fallbacks
+   Used when no real cover image is available from a cover
+   service. Each cover gets a unique gradient derived from its
+   title so it's consistent across page loads.
+   ============================================================ */
 
 
-export function createGeneratedCover(title, author){
+/* --- Public API ---
+   createGeneratedCover(title, author) → DOM element
+   applyCovers()     — add fallback covers to all .bookcover
+   refreshCovers()   — re-style covers Koha already injected
+   watchResults()    — observe #results for dynamic content
+*/
 
-    title = String(title || "");
+
+/**
+ * Build a .generated-cover <div> for the given title/author.
+ * The background gradient hue is derived from the title string
+ * so the same book always gets the same color.
+ */
+export function createGeneratedCover(title, author) {
+
+    title  = String(title  || "");
     author = String(author || "");
 
     const div = document.createElement("div");
     div.className = "generated-cover";
 
-    div.dataset.title = title;
-    div.dataset.author = author;
-
-    /* hash → color */
+    /* Deterministic hue from title characters — keeps the
+       range in the purple/violet band (240–300°) to match
+       the site palette while still varying per book. */
     let hash = 0;
-    for(let i=0;i<title.length;i++){
-        hash = title.charCodeAt(i) + ((hash<<5)-hash);
+    for (let i = 0; i < title.length; i++) {
+        hash = title.charCodeAt(i) + ((hash << 5) - hash);
     }
+    const hue = 240 + (Math.abs(hash) % 60);
 
-    const hue = Math.abs(hash) % 360;
+    div.style.background = `linear-gradient(
+        135deg,
+        hsl(${hue}, 55%, 28%),
+        hsl(${hue + 12}, 60%, 38%)
+    )`;
 
-    /* richer gradient */
-    div.style.background =
-        `linear-gradient(
-            135deg,
-            hsl(${hue},50%,28%),
-            hsl(${hue+10},55%,38%)
-        )`;
-
-    /* spine shading */
-    div.style.boxShadow =
-        "inset 8px 0 12px rgba(0,0,0,0.25), inset -3px 0 6px rgba(255,255,255,0.08)";
-
-    /* title */
     const titleEl = document.createElement("div");
-    titleEl.className = "cover-title";
-    titleEl.textContent = title.substring(0,60);
+    titleEl.className   = "cover-title";
+    titleEl.textContent = title.substring(0, 50);
 
-    /* author */
     const authorEl = document.createElement("div");
-    authorEl.className = "cover-author";
+    authorEl.className   = "cover-author";
     authorEl.textContent = author;
 
     div.appendChild(titleEl);
@@ -84,113 +57,108 @@ export function createGeneratedCover(title, author){
 }
 
 
-export function applyGeneratedCovers(){
-    console.log("applying")
+/**
+ * Add a generated cover to every .bookcover that doesn't
+ * already have a real image or an existing fallback.
+ * Safe to call multiple times — skips already-processed covers.
+ */
+export function applyCovers() {
+
     document.querySelectorAll(".bookcover").forEach(el => {
 
-        if(el.querySelector(".generated-cover")) return;
+        if (el.querySelector(".generated-cover")) return;
+
+        /* Skip if a real (non-placeholder) image loaded */
+        const img = el.querySelector("img");
+        if (img && img.src && !img.src.includes("no-cover")) return;
 
         const row = el.closest("tr");
 
         const title =
-            el.dataset.title ||
-            row?.querySelector("a.title")?.innerText ||
+            el.dataset.title                              ||
+            row?.querySelector("a.title")?.innerText     ||
             "[NO TITLE]";
 
         const author =
-            el.dataset.author ||
-            row?.querySelector(".author")?.innerText ||
+            el.dataset.author                            ||
+            row?.querySelector(".author")?.innerText    ||
             "";
 
-        const cover = createGeneratedCover(title, author);
-        el.appendChild(cover);
+        el.appendChild(createGeneratedCover(title, author));
 
     });
 
 }
 
 
-export function refreshGeneratedCovers(){
-    console.log("refreshing");
+/**
+ * Re-apply gradient + text to .generated-cover elements that
+ * Koha may have injected with its own placeholder content.
+ * Call this on non-homepage pages where covers already exist.
+ */
+export function refreshCovers() {
+
     document.querySelectorAll(".generated-cover").forEach(el => {
 
         const bookcover = el.closest(".bookcover");
+        const title     = bookcover?.dataset.title  || "";
+        const author    = bookcover?.dataset.author || "";
 
-        const title = bookcover?.dataset.title || "";
-        const author = bookcover?.dataset.author || "";
-
-        let titleEl = el.querySelector(".cover-title");
-        let authorEl = el.querySelector(".cover-author");
-
-        // colors
+        /* Recompute hue with the same algorithm as createGeneratedCover */
         let hash = 0;
-        for(let i = 0; i < title.length; i++){
+        for (let i = 0; i < title.length; i++) {
             hash = title.charCodeAt(i) + ((hash << 5) - hash);
         }
+        const hue = 240 + (Math.abs(hash) % 60);
 
-        const hue = 220 + (Math.abs(hash) % 60);
+        el.style.background = `linear-gradient(
+            135deg,
+            hsl(${hue}, 55%, 28%),
+            hsl(${hue + 12}, 60%, 38%)
+        )`;
 
-        el.style.background =
-            `linear-gradient(135deg,
-            hsl(${hue},60%,30%),
-            hsl(${hue+15},65%,25%))`;
-
-
-        // remove Koha fallback text
-        el.childNodes.forEach(n=>{
-          if(n.nodeType === Node.TEXT_NODE) n.remove();
+        /* Koha sometimes injects raw text nodes — remove them */
+        el.childNodes.forEach(n => {
+            if (n.nodeType === Node.TEXT_NODE) n.remove();
         });
 
-        if(!titleEl){
+        let titleEl  = el.querySelector(".cover-title");
+        let authorEl = el.querySelector(".cover-author");
+
+        if (!titleEl) {
             titleEl = document.createElement("div");
             titleEl.className = "cover-title";
             el.appendChild(titleEl);
         }
 
-        if(!authorEl){
+        if (!authorEl) {
             authorEl = document.createElement("div");
             authorEl.className = "cover-author";
             el.appendChild(authorEl);
         }
 
-        console.log(title, author);
-
-        titleEl.textContent = title.substring(0,60);
+        titleEl.textContent  = title.substring(0, 50);
         authorEl.textContent = author;
 
-        if(titleEl) titleEl.textContent = title.substring(0,30);
-        if(authorEl) authorEl.textContent = author;
     });
 
 }
 
 
-export function watchResults(){
-    console.log("observer attached");
+/**
+ * Attach a MutationObserver to #results so generated covers
+ * are applied when Koha loads result rows dynamically.
+ */
+export function watchResults() {
 
     const results = document.querySelector("#results");
-    if(!results) return;
+    if (!results) return;
 
     const observer = new MutationObserver(() => {
-        ensureCovers();
-        refreshGeneratedCovers();
+        applyCovers();
+        refreshCovers();
     });
 
-    observer.observe(results,{
-        childList: true,
-        subtree: true
-    });
+    observer.observe(results, { childList: true, subtree: true });
 
 }
-
-
-
-document.querySelectorAll("#opac-detail .bookcover").forEach(el => {
-
-    const img = el.querySelector("img");
-
-    if(!img){
-        el.style.display = "none";
-    }
-
-});
