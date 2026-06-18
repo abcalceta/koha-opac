@@ -212,72 +212,100 @@ export function loadDetailCover() {
    ============================================================ */
 
 /**
- * For each search result row, find its "Cover image" link
- * (from the MARC 856 field), hide Koha's inline rendering,
- * inject a thumbnail on the left, and tint the card using
- * a color sampled from the cover image.
+ * For each search result row, find its cover — either a "Cover image"
+ * text link (MARC 856) or an <img> Koha already rendered from the local
+ * covers service. Hides the original, injects a thumbnail on the left,
+ * and tints the card with a color sampled from the image.
  */
 export function applySearchCovers() {
 
-    /* Find every "Cover image" link in the page, then walk up to
-       the containing result row. Works regardless of body id or
-       whether Koha uses a form, table, or plain list. */
-    const coverLinks = Array.from(document.querySelectorAll("a")).filter(
-        a => a.textContent.trim().toLowerCase() === "cover image"
-    );
+    const seen = new Set();
 
-    coverLinks.forEach(link => {
+    /* Case A: "Cover image" text links (MARC 856 with link text) */
+    Array.from(document.querySelectorAll("a"))
+        .filter(a => a.textContent.trim().toLowerCase() === "cover image")
+        .forEach(link => {
+            const row = link.closest("li, tr, .result");
+            if (!row || seen.has(row)) return;
+            seen.add(row);
 
-        const row = link.closest("li, tr, .result");
-        if (!row || row.dataset.coverDone) return;
-
-        row.dataset.coverDone = "1";
-
-        const coverLink = link;
-
-        const fullUrl  = coverLink.href;
-        const thumbUrl = toThumbUrl(fullUrl);
-
-        /* Hide Koha's inline rendering (img before the link, or
-           img nested inside it) and the link text itself */
-        const inlinePrev = coverLink.previousElementSibling;
-        if (inlinePrev?.tagName === "IMG") inlinePrev.style.display = "none";
-        const inlineInner = coverLink.querySelector("img");
-        if (inlineInner) inlineInner.style.display = "none";
-        coverLink.style.display = "none";
-
-        const img     = document.createElement("img");
-        img.className = "search-cover-img";
-        img.alt       = "Cover";
-        img.src       = thumbUrl;
-
-        img.addEventListener("load", () => tintCard(row, img));
-
-        img.onerror = () => {
-            if (img.src !== fullUrl) {
-                img.src = fullUrl;
-            } else {
-                coverWrapper.remove();
+            /* Hide inline img before/inside the link and the link itself */
+            if (link.previousElementSibling?.tagName === "IMG") {
+                link.previousElementSibling.style.display = "none";
             }
-        };
+            const inner = link.querySelector("img");
+            if (inner) inner.style.display = "none";
+            link.style.display = "none";
 
-        const coverWrapper     = document.createElement("div");
-        coverWrapper.className = "search-cover-wrapper";
-        coverWrapper.appendChild(img);
+            buildCoverCard(row, link.href);
+        });
 
-        /* Move all existing li children into a content wrapper,
-           then rebuild the row as [cover] [content] side by side */
-        const contentWrapper     = document.createElement("div");
-        contentWrapper.className = "search-content-wrapper";
-        while (row.firstChild) {
-            contentWrapper.appendChild(row.firstChild);
+    /* Case B: <img> elements Koha already rendered from the covers server
+       (local cover image feature — shows as a block image in the row) */
+    Array.from(document.querySelectorAll("img"))
+        .filter(img =>
+            img.src.includes("/covers/") &&
+            !img.closest(".search-cover-wrapper")
+        )
+        .forEach(img => {
+            const row = img.closest("li, tr, .result");
+            if (!row || seen.has(row)) return;
+            seen.add(row);
+
+            const fullUrl = img.src;
+            img.style.display = "none";
+
+            /* Hide wrapping <a> if Koha wrapped the img in a link */
+            if (img.parentElement?.tagName === "A") {
+                img.parentElement.style.display = "none";
+            }
+
+            buildCoverCard(row, fullUrl);
+        });
+
+}
+
+
+/**
+ * Restructure a result row into a two-column flex card:
+ *   [ cover thumbnail ]  [ all existing content ]
+ * Tries the /thumbs/ path first; falls back to the full-size URL.
+ */
+function buildCoverCard(row, fullUrl) {
+
+    if (row.dataset.coverDone) return;
+    row.dataset.coverDone = "1";
+
+    const thumbUrl = toThumbUrl(fullUrl);
+
+    const img     = document.createElement("img");
+    img.className = "search-cover-img";
+    img.alt       = "Cover";
+    img.src       = thumbUrl;
+
+    img.addEventListener("load", () => tintCard(row, img));
+
+    const coverWrapper     = document.createElement("div");
+    coverWrapper.className = "search-cover-wrapper";
+    coverWrapper.appendChild(img);
+
+    img.onerror = () => {
+        if (img.src !== fullUrl) {
+            img.src = fullUrl;
+        } else {
+            coverWrapper.remove();
         }
+    };
 
-        row.appendChild(coverWrapper);
-        row.appendChild(contentWrapper);
-        row.classList.add("search-result-card");
+    const contentWrapper     = document.createElement("div");
+    contentWrapper.className = "search-content-wrapper";
+    while (row.firstChild) {
+        contentWrapper.appendChild(row.firstChild);
+    }
 
-    });
+    row.appendChild(coverWrapper);
+    row.appendChild(contentWrapper);
+    row.classList.add("search-result-card");
 
 }
 
