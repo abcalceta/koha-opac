@@ -441,17 +441,39 @@ a:hover {
 .scroll-btn.right { right: -14px; }
 
 
-/* Search result thumbnails */
+/* Search results — card layout */
+
+body#results #bookbag_form > ol {
+    list-style: none;
+    padding: 0;
+}
+
+body#results #bookbag_form > ol > li {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 12px;
+    padding: 16px 16px 16px 12px;
+    overflow: hidden; /* contain the floated cover */
+    transition: box-shadow var(--transition);
+}
+
+body#results #bookbag_form > ol > li:hover {
+    box-shadow: var(--shadow-hover);
+}
+
+/* Cover thumbnail floated beside metadata */
 
 .search-cover-wrapper {
     float: left;
-    margin: 0 16px 8px 0;
+    margin: 2px 16px 8px 0;
     flex-shrink: 0;
 }
 
 .search-cover-img {
     display: block;
-    width: 80px;
+    width: 90px;
     height: auto;
     border-radius: var(--radius);
     box-shadow: var(--shadow);

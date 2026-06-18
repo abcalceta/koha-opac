@@ -247,16 +247,15 @@ export function applySearchCovers() {
             }
         };
 
-        /* Wrap in a container and float it left in the result row */
+        /* Wrap in a container and place it after the checkbox
+           so it floats beside all the bibliographic metadata */
         const wrapper     = document.createElement("div");
         wrapper.className = "search-cover-wrapper";
         wrapper.appendChild(img);
 
-        /* Insert before the title element */
-        const title = row.querySelector("a.title, .title, h3");
-        const anchor = title?.closest("div, span, p") || title;
-        anchor
-            ? row.insertBefore(wrapper, anchor)
+        const checkbox = row.querySelector('input[type="checkbox"]');
+        checkbox
+            ? checkbox.after(wrapper)
             : row.prepend(wrapper);
 
     });
