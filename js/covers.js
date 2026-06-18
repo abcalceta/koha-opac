@@ -212,33 +212,33 @@ export function loadDetailCover() {
    ============================================================ */
 
 /**
- * For each result on the search page, fetch its MARC record,
- * extract the 856 $u cover URL, and swap in the thumbnail.
- * Falls back silently to the generated cover if not found.
- * All fetches run in parallel so it's as fast as possible.
+ * For each search result row, find its "Cover image" link
+ * (already in the page from the MARC 856 field) and inject
+ * a thumbnail image. No API calls needed — URL is in the DOM.
  */
-export async function applySearchCovers() {
+export function applySearchCovers() {
 
-    const covers = document.querySelectorAll(".bookcover");
-    if (!covers.length) return;
+    /* Find every "Cover image" link on the page */
+    const coverLinks = Array.from(document.querySelectorAll("a")).filter(
+        a => a.textContent.trim().toLowerCase() === "cover image"
+    );
 
-    await Promise.all([...covers].map(async coverEl => {
+    coverLinks.forEach(link => {
 
-        const biblionumber = getBiblionumber(coverEl);
-        if (!biblionumber) return;
+        /* Walk up to the result row container */
+        const row = link.closest("li, tr, .result");
+        if (!row || row.dataset.coverDone) return;
+        row.dataset.coverDone = "1";
 
-        const coverUrl = await fetchMarcCoverUrl(biblionumber);
-        if (!coverUrl) return;
-
-        const fullUrl  = coverUrl;
-        const thumbUrl = toThumbUrl(coverUrl);
+        const fullUrl  = link.href;
+        const thumbUrl = toThumbUrl(fullUrl);
 
         const img     = document.createElement("img");
-        img.src       = thumbUrl;
-        img.alt       = "";
         img.className = "search-cover-img";
+        img.alt       = "Cover";
+        img.src       = thumbUrl;
 
-        /* Try thumbnail; fall back to full-size; then give up */
+        /* Try thumbnail → fall back to full-size → give up */
         img.onerror = () => {
             if (img.src !== fullUrl) {
                 img.src = fullUrl;
@@ -247,51 +247,19 @@ export async function applySearchCovers() {
             }
         };
 
-        /* Clear placeholder/generated cover and show the real image */
-        coverEl.innerHTML = "";
-        coverEl.appendChild(img);
+        /* Wrap in a container and float it left in the result row */
+        const wrapper     = document.createElement("div");
+        wrapper.className = "search-cover-wrapper";
+        wrapper.appendChild(img);
 
-    }));
+        /* Insert before the title element */
+        const title = row.querySelector("a.title, .title, h3");
+        const anchor = title?.closest("div, span, p") || title;
+        anchor
+            ? row.insertBefore(wrapper, anchor)
+            : row.prepend(wrapper);
 
-}
-
-
-/* Extract biblionumber from a .bookcover element. */
-function getBiblionumber(coverEl) {
-
-    /* Koha sometimes puts it as a data attribute */
-    if (coverEl.dataset.biblionumber) return coverEl.dataset.biblionumber;
-
-    /* Otherwise pull it from the title link href in the same row */
-    const row       = coverEl.closest("tr, li, .searchresults");
-    const titleLink = row?.querySelector("a.title, a[href*='biblionumber']");
-    const match     = titleLink?.href.match(/biblionumber=(\d+)/);
-
-    return match?.[1] || null;
-
-}
-
-
-/**
- * Fetch MARCXML for a biblio and return the first 856 $u value.
- * Uses Koha's public SVC endpoint — no auth required.
- */
-async function fetchMarcCoverUrl(biblionumber) {
-
-    try {
-        const res  = await fetch(`/cgi-bin/koha/svc/bib/${biblionumber}`);
-        const text = await res.text();
-        const xml  = new DOMParser().parseFromString(text, "text/xml");
-
-        for (const field of xml.querySelectorAll('datafield[tag="856"]')) {
-            const u = field.querySelector('subfield[code="u"]');
-            if (u?.textContent) return u.textContent;
-        }
-    } catch {
-        return null;
-    }
-
-    return null;
+    });
 
 }
 
