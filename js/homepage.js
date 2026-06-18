@@ -1,27 +1,32 @@
 /* ============================================================
-   homepage.js — Homepage HTML template
-   Injected into #OpacMainUserBlock by main.js.
-   Each .discover-shelf is populated dynamically by shelf.js.
+   homepage.js — Generates homepage HTML from shelf config
+   Don't edit this to change shelves — edit config.js instead.
    ============================================================ */
 
-export const homepageHTML = `
-<section class="discover-section">
+/**
+ * Build the full homepage HTML from a SHELVES array.
+ * Each shelf gets a unique container id of "shelf-{reportId}-{index}"
+ * so duplicate report IDs (e.g. two shelves from the same report)
+ * don't collide.
+ */
+export function buildHomepageHTML(shelves) {
 
-    <h2>Discover Books</h2>
+    const sections = shelves.map((shelf, i) => {
 
-    <div class="discover-wrapper">
-        <button class="scroll-btn left" aria-label="Scroll left">&#8249;</button>
-        <div id="random-books" class="discover-shelf"></div>
-        <button class="scroll-btn right" aria-label="Scroll right">&#8250;</button>
-    </div>
+        const id = `shelf-${shelf.reportId}-${i}`;
 
-    <h2>Anthropology Highlights</h2>
+        return `
+        <div class="discover-section">
+            <h2>${shelf.title}</h2>
+            <div class="discover-wrapper">
+                <button class="scroll-btn left" aria-label="Scroll left">&#8249;</button>
+                <div id="${id}" class="discover-shelf"></div>
+                <button class="scroll-btn right" aria-label="Scroll right">&#8250;</button>
+            </div>
+        </div>`;
 
-    <div class="discover-wrapper">
-        <button class="scroll-btn left" aria-label="Scroll left">&#8249;</button>
-        <div id="anthro-books" class="discover-shelf"></div>
-        <button class="scroll-btn right" aria-label="Scroll right">&#8250;</button>
-    </div>
+    });
 
-</section>
-`;
+    return sections.join("\n");
+
+}

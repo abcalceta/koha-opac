@@ -1,15 +1,15 @@
 /* ============================================================
    main.js — Application entry point
    Injected via Koha's OPACUserJS system preference.
-   Loads the CSS, then bootstraps the correct behavior for
-   each page type based on <body id="..."> from Koha.
+   To change homepage shelves, edit config.js — not this file.
    ============================================================ */
 
-const VERSION = "1.2.2";
+const VERSION = "1.3.1";
 
-const { homepageHTML }              = await import(`./homepage.js?v=${VERSION}`);
+const { SHELVES }                    = await import(`./config.js?v=${VERSION}`);
+const { buildHomepageHTML }          = await import(`./homepage.js?v=${VERSION}`);
 const { applyCovers, refreshCovers } = await import(`./covers.js?v=${VERSION}`);
-const { loadShelf }                 = await import(`./shelf.js?v=${VERSION}`);
+const { loadShelf }                  = await import(`./shelf.js?v=${VERSION}`);
 
 
 /* --- Entry point --- */
@@ -21,7 +21,6 @@ function init() {
     if (document.body.id === "opac-main") {
         initHomepage();
     } else {
-        /* On search/results/detail pages: style any existing covers */
         applyCovers();
         refreshCovers();
     }
@@ -39,19 +38,17 @@ function initHomepage() {
 
     if (!container) return;
 
-    container.innerHTML = homepageHTML;
+    container.innerHTML = buildHomepageHTML(SHELVES);
 
-    /* Report IDs correspond to saved Koha reports */
-    loadShelf("random-books", 6);
-    loadShelf("anthro-books", 7);
+    /* Load each shelf in order using the same index used to build its id */
+    SHELVES.forEach((shelf, i) => {
+        loadShelf(`shelf-${shelf.reportId}-${i}`, shelf.reportId);
+    });
 
 }
 
 
-/* --- CSS injection ---
-   The stylesheet lives on GitHub Pages so it's loaded here
-   rather than being bundled. Cache-busted by VERSION.
-*/
+/* --- CSS injection --- */
 
 function loadCSS() {
 
