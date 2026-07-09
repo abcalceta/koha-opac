@@ -82,7 +82,7 @@
 }
 
 .cover-author {
-    font-size: 11px;
+    font-size: 13px; /* matches caption text size below shelf covers */
     opacity: 0.85;
     margin-top: auto;
 }
@@ -93,4 +93,42 @@
 .cover-image img {
     margin: 0;
     border-radius: var(--radius);
+}
+
+
+/* --- Generated avatar (headshot placeholder) --- */
+/*
+   Same idea as .generated-cover, sized/shaped for a person
+   instead of a book: a hue-hashed gradient with initials,
+   used when a pioneer has no photo configured yet (or the
+   configured photo 404s).
+*/
+
+.generated-avatar-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.generated-avatar-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.generated-avatar {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 2.25rem;
+    letter-spacing: 0.02em;
 }

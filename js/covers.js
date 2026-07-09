@@ -37,6 +37,19 @@ export function toThumbUrl(url) {
    ============================================================ */
 
 /**
+ * Deterministically hash a string to a hue in the purple/violet
+ * band (240–300°), so the same title/name always gets the same
+ * color. Shared by generated covers and generated avatars.
+ */
+function hashHue(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return 240 + (Math.abs(hash) % 60);
+}
+
+/**
  * Build a .generated-cover <div> for the given title/author.
  * Hue is derived from the title so the same book always gets
  * the same color, locked to the purple/violet band (240–300°).
@@ -49,11 +62,7 @@ export function createGeneratedCover(title, author) {
     const div = document.createElement("div");
     div.className = "generated-cover";
 
-    let hash = 0;
-    for (let i = 0; i < title.length; i++) {
-        hash = title.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    const hue = 240 + (Math.abs(hash) % 60);
+    const hue = hashHue(title);
 
     div.style.background = `linear-gradient(
         135deg,
@@ -73,6 +82,92 @@ export function createGeneratedCover(title, author) {
     div.appendChild(authorEl);
 
     return div;
+
+}
+
+/**
+ * Build a .bookcover element for a book: a real thumbnail image
+ * if coverUrl is given (falls back to a generated cover if the
+ * image 404s), otherwise a generated cover right away.
+ *
+ * Shared by the homepage shelves, the hero floaters, and the
+ * Pioneer Papers shelf (treating a paper's first-page thumbnail
+ * like a book cover, title = pioneer name).
+ */
+export function createBookCover(title, author, coverUrl) {
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "bookcover";
+
+    if (!coverUrl) {
+        wrapper.appendChild(createGeneratedCover(title, author));
+        return wrapper;
+    }
+
+    const img = document.createElement("img");
+    img.alt = title;
+    img.src = toThumbUrl(coverUrl);
+    img.onerror = () => {
+        img.remove();
+        wrapper.appendChild(createGeneratedCover(title, author));
+    };
+    wrapper.appendChild(img);
+    return wrapper;
+
+}
+
+/**
+ * Build a rounded-rect initials avatar for a person, used when no
+ * headshot photo is available. Hue is hashed from the name so the
+ * same person always gets the same color, same idea as the
+ * generated book cover.
+ */
+export function createInitialsAvatar(name) {
+
+    name = String(name || "");
+    const hue = hashHue(name);
+
+    const div = document.createElement("div");
+    div.className = "generated-avatar";
+    div.style.background = `linear-gradient(135deg, hsl(${hue}, 35%, 86%), hsl(${hue + 15}, 40%, 91%))`;
+
+    const initials = name
+        .split(/\s+/)
+        .filter(Boolean)
+        .map((w) => w[0])
+        .slice(0, 2)
+        .join("")
+        .toUpperCase();
+
+    div.textContent = initials || "?";
+    return div;
+
+}
+
+/**
+ * Build a .generated-avatar-wrapper element for a person: a real
+ * photo if given (falls back to a generated initials avatar if
+ * it 404s), otherwise the avatar right away.
+ */
+export function createAvatarCover(name, photoUrl) {
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "generated-avatar-wrapper";
+
+    if (!photoUrl) {
+        wrapper.appendChild(createInitialsAvatar(name));
+        return wrapper;
+    }
+
+    const img = document.createElement("img");
+    img.alt = name;
+    img.src = photoUrl;
+    img.onerror = () => {
+        img.remove();
+        wrapper.appendChild(createInitialsAvatar(name));
+    };
+    wrapper.appendChild(img);
+    return wrapper;
 
 }
 
@@ -127,11 +222,7 @@ export function refreshCovers() {
         const title     = bookcover?.dataset.title  || "";
         const author    = bookcover?.dataset.author || "";
 
-        let hash = 0;
-        for (let i = 0; i < title.length; i++) {
-            hash = title.charCodeAt(i) + ((hash << 5) - hash);
-        }
-        const hue = 240 + (Math.abs(hash) % 60);
+        const hue = hashHue(title);
 
         el.style.background = `linear-gradient(
             135deg,

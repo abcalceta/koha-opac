@@ -1,6 +1,9 @@
 /* ============================================================
-   config.js — Homepage shelf configuration
-   This is the only file you need to edit to change the homepage.
+   config.js — Homepage configuration
+   This is the only file you need to edit to change the shelves,
+   the hero text, and the "Visit the Library" panel. To change
+   the Social Science Pioneers carousel, see pioneers-config.js
+   instead.
 
    HOW TO ADD A SHELF:
      1. Go to Koha → Reports → Saved reports
@@ -20,3 +23,43 @@ export const SHELVES = [
     { title: "Anthropology Highlights", reportId: 7  },
     { title: "Discover Books",          reportId: 6  },
 ];
+
+
+/* ---- Front page settings ----
+
+   searchPlacement: where the search box appears —
+     "hero"   — large, centered search below the headline (default)
+     "navbar" — small search box in the top navbar instead
+     "both"   — both at once
+
+   heroTinted: whether the hero gets the drifting tinted
+     background, or a plain one.
+*/
+export const SITE = {
+
+    motto: "One Social Science in solidarity with other disciplines for Filipinos and the global community.",
+    established: 1968,
+
+    searchPlacement: "hero",
+    heroTinted: true,
+
+    address: {
+        lines: [
+            "2nd Floor, Philippine Social Science Center",
+            "372-C Commonwealth Avenue, Brgy. UP Campus",
+            "Diliman, Quezon City, Philippines 1101",
+        ],
+        mapQuery: "Philippine Social Science Center, Commonwealth Avenue, Diliman, Quezon City",
+    },
+
+    hours: [
+        { days: "Monday – Friday",   time: "8:00 AM – 5:00 PM" },
+        { days: "Saturday – Sunday", time: "Closed" },
+    ],
+    hoursNote: "Closed on public holidays · edit hours to confirm",
+
+    /* Kept as an honest placeholder until access rules are set —
+       swap this for the real eligibility/registration copy. */
+    access: "Access requirements to be finalized — outline eligibility, registration, and what to bring here.",
+
+};

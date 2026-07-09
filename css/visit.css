@@ -1,0 +1,133 @@
+/* ============================================================
+   visit.css — "Visit the Library" section + page footer
+   ============================================================ */
+
+.pssc-visit {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 64px 32px 8px;
+}
+
+.pssc-visit-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 24px;
+    align-items: stretch;
+}
+
+.pssc-visit-map {
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    min-height: 340px;
+}
+
+.pssc-visit-map iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 340px;
+    border: 0;
+    display: block;
+}
+
+.pssc-visit-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.pssc-visit-card,
+.pssc-visit-access {
+    border-radius: var(--radius);
+    padding: 24px;
+    border: 1px solid var(--border);
+}
+
+.pssc-visit-card {
+    background: var(--surface);
+    box-shadow: var(--shadow);
+}
+
+.pssc-visit-access {
+    background: var(--purple-muted);
+}
+
+.pssc-visit-card-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: var(--purple-dark);
+    margin-bottom: 12px;
+}
+
+.pssc-visit-card-body {
+    font-size: 0.875rem;
+    color: var(--text);
+    line-height: 1.6;
+}
+
+.pssc-italic {
+    font-style: italic;
+    color: var(--text-muted);
+}
+
+.pssc-hours-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    color: var(--text);
+    padding: 4px 0;
+}
+
+.pssc-hours-row:nth-of-type(n+2) {
+    color: var(--text-muted);
+}
+
+.pssc-hours-note {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 10px;
+    font-style: italic;
+}
+
+.pssc-footer {
+    margin-top: 64px;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+}
+
+.pssc-footer-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 40px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.pssc-footer-logo {
+    height: 36px;
+    width: auto;
+}
+
+.pssc-footer-motto {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    text-align: right;
+    max-width: 420px;
+}
+
+@media (max-width: 780px) {
+    .pssc-visit-grid {
+        grid-template-columns: 1fr;
+    }
+    .pssc-footer-motto {
+        text-align: left;
+        max-width: none;
+    }
+}

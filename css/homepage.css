@@ -1,17 +1,18 @@
 /* ============================================================
    homepage.css — Homepage book shelf layout
    Styles the horizontally-scrollable "Discover" shelves and
-   the navigation arrow buttons that flank them.
+   the navigation arrow buttons that flank them. Section
+   headings use the shared .pssc-section-title/-sub classes
+   from base.css instead of a local rule.
    ============================================================ */
 
 
-/* --- Shelf section heading --- */
+/* --- Shelf section --- */
 
-.discover-section h2 {
-    color: var(--text);
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin: 0 0 8px 0;
+.discover-section {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 64px 32px 8px;
 }
 
 

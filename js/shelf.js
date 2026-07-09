@@ -4,7 +4,7 @@
    row of book covers inside the given shelf container.
    ============================================================ */
 
-import { createGeneratedCover, toThumbUrl } from "./covers.js";
+import { createBookCover } from "./covers.js";
 
 const PLACEHOLDER_COUNT = 6; /* shimmer cards shown while loading */
 
@@ -14,6 +14,12 @@ const PLACEHOLDER_COUNT = 6; /* shimmer cards shown while loading */
  *
  * @param {string} shelfId  — id of the .discover-shelf container
  * @param {number} reportId — id of the Koha saved report to fetch
+ * @param {object} [options]
+ * @param {(books: object[]) => void} [options.onLoaded] — called
+ *   once with the parsed book list (possibly empty) after the
+ *   shelf renders, whether from a successful fetch or a fetch
+ *   error/empty report. Used by hero.js to feed the floating
+ *   covers from whichever shelf's data comes back first.
  *
  * Expected report columns:
  *   [0] biblionumber
@@ -24,7 +30,7 @@ const PLACEHOLDER_COUNT = 6; /* shimmer cards shown while loading */
  *                     e.g. https://library.pssc.org.ph/covers/cover_1968-1993.jpg
  *                     Thumbnails are loaded automatically from covers/thumbs/
  */
-export async function loadShelf(shelfId, reportId) {
+export async function loadShelf(shelfId, reportId, { onLoaded } = {}) {
 
     const shelf = document.querySelector(`#${shelfId}`);
     if (!shelf) return;
@@ -37,75 +43,50 @@ export async function loadShelf(shelfId, reportId) {
         data = await res.json();
     } catch {
         showEmpty(shelf);
+        onLoaded?.([]);
         return;
     }
 
     if (!data || data.length === 0) {
         showEmpty(shelf);
+        onLoaded?.([]);
         return;
     }
 
     shelf.innerHTML = "";
 
-    data.forEach(row => {
+    const books = data.map(row => ({
+        biblio:   row[0],
+        title:    row[1] || "[NO TITLE]",
+        subtitle: row[2] || "",
+        author:   row[3] || "",
+        coverUrl: row[4] || "",
+    }));
 
-        const biblio    = row[0];
-        const title     = row[1] || "[NO TITLE]";
-        const subtitle  = row[2] || "";
-        const author    = row[3] || "";
-        const coverUrl  = row[4] || "";
+    books.forEach(book => {
 
         const link       = document.createElement("a");
         link.className   = "random-book";
-        link.href        = `/cgi-bin/koha/opac-detail.pl?biblionumber=${biblio}`;
+        link.href        = `/cgi-bin/koha/opac-detail.pl?biblionumber=${book.biblio}`;
 
-        /* createGeneratedCover returns position:absolute — needs a
-           .bookcover wrapper or it expands to fill the section */
-        const coverEl = coverUrl
-            ? createImageCover(toThumbUrl(coverUrl), title, author)
-            : (() => {
-                const bk = document.createElement("div");
-                bk.className = "bookcover";
-                bk.appendChild(createGeneratedCover(title.substring(0, 40), author));
-                return bk;
-            })();
+        link.appendChild(createBookCover(book.title.substring(0, 40), book.author, book.coverUrl));
 
-        const label       = document.createElement("span");
-        label.className   = "booktitle";
-        label.textContent = subtitle ? `${title}: ${subtitle}` : title;
+        /* A generated cover already shows the title inside the
+           pastel box — only real cover images need the caption
+           repeated below. */
+        if (book.coverUrl) {
+            const label       = document.createElement("span");
+            label.className   = "booktitle";
+            label.textContent = book.subtitle ? `${book.title}: ${book.subtitle}` : book.title;
+            link.appendChild(label);
+        }
 
-        link.appendChild(coverEl);
-        link.appendChild(label);
         shelf.appendChild(link);
 
     });
 
     attachScrollButtons(shelf);
-
-}
-
-
-/**
- * Create a .bookcover element with a real thumbnail image.
- * Falls back to a generated cover if the image fails to load.
- */
-function createImageCover(thumbUrl, title, author) {
-
-    const wrapper = document.createElement("div");
-    wrapper.className = "bookcover";
-
-    const img = document.createElement("img");
-    img.alt   = title;
-    img.src   = thumbUrl;
-
-    /* If thumbnail fails to load, swap in the generated fallback */
-    img.onerror = () => {
-        img.remove();
-        wrapper.appendChild(createGeneratedCover(title.substring(0, 40), author));
-    };
-
-    wrapper.appendChild(img);
-    return wrapper;
+    onLoaded?.(books);
 
 }
 

@@ -1,25 +1,115 @@
-<h2>Discover Random Books</h2>
+<!--
+  This file is a REFERENCE only — a plain-HTML mirror of what
+  main.js actually generates on the live homepage, kept here so a
+  human can see the structure without reading JS. It is not
+  fetched or loaded by any code; nothing breaks if it drifts, but
+  please keep it mirroring homepage.js/hero.js/pioneers.js when
+  you change the generated structure.
 
-<div class="discover-wrapper">
+  Real content (shelves, hero copy, hours/address, pioneers)
+  comes from config.js and pioneers-config.js, not from this file.
+-->
 
-    <button class="scroll-btn left">‹</button>
-
-    <div id="random-books" class="discover-shelf"></div>
-
-    <button class="scroll-btn right">›</button>
-
+<!-- ============ NAVBAR (navbar.js, homepage-only) ============ -->
+<div class="pssc-navbar">
+    <div class="pssc-navbar-inner">
+        <a href="/cgi-bin/koha/opac-main.pl"><img class="pssc-navbar-logo" src="../images/logo.jpg" alt="Philippine Social Science Council" /></a>
+        <nav class="pssc-navbar-nav">
+            <a href="/cgi-bin/koha/opac-main.pl" class="pssc-nav-active">Home</a>
+            <a href="/cgi-bin/koha/opac-search-advanced.pl">Advanced Search</a>
+            <a href="/cgi-bin/koha/opac-shelves.pl">Lists</a>
+            <a href="/cgi-bin/koha/opac-user.pl">Log in</a>
+        </nav>
+    </div>
 </div>
 
-<h2>Anthropology Highlights</h2>
-
-<div class="discover-wrapper">
-
-    <button class="scroll-btn left">‹</button>
-
-    <div id="anthro-books" class="discover-shelf"></div>
-
-    <button class="scroll-btn right">›</button>
-
+<!-- ============ HERO (hero.js) ============ -->
+<div class="pssc-hero pssc-hero-tinted">
+    <div class="pssc-hero-floaters"><!-- floating book covers, populated once a shelf loads --></div>
+    <div class="pssc-hero-content">
+        <div class="pssc-hero-kicker">Philippine Social Science Council &middot; established 1968</div>
+        <h1 class="pssc-hero-title">PSSC Library</h1>
+        <p class="pssc-hero-quote">&ldquo;One Social Science in solidarity with other disciplines for Filipinos and the global community.&rdquo;</p>
+        <form class="pssc-hero-search">
+            <input type="search" placeholder="Search the catalog — titles, authors, subjects" />
+            <button type="submit" class="btn-primary pssc-btn-lg">Search</button>
+        </form>
+    </div>
 </div>
 
-<!-- mirror this in homepage.js -->
+<!-- ============ SOCIAL SCIENCE PIONEERS (pioneers.js) ============ -->
+<div class="pssc-pioneers">
+    <h2 class="pssc-section-title">Social Science Pioneers</h2>
+    <p class="pssc-section-sub">Founders and fellows of the PSSC network — browse their profiles and collected papers.</p>
+
+    <div class="pssc-carousel-wrap">
+        <button class="scroll-btn left" aria-label="Previous pioneer">&#8249;</button>
+        <div class="pssc-carousel-card">
+            <div class="pssc-carousel-photo"><!-- headshot or generated avatar --></div>
+            <div class="pssc-carousel-info">
+                <div class="pssc-carousel-name">Pioneer Name</div>
+                <div class="pssc-carousel-affiliation">Affiliation</div>
+                <p class="pssc-carousel-quote">&ldquo;Quote&rdquo;</p>
+                <p class="pssc-carousel-bio">Bio.</p>
+                <a href="#" class="pssc-carousel-link">Read the full essay &rarr;</a>
+            </div>
+        </div>
+        <button class="scroll-btn right" aria-label="Next pioneer">&#8250;</button>
+    </div>
+
+    <div class="pssc-dots"><!-- one .pssc-dot button per pioneer --></div>
+
+    <div class="pssc-papers-label">Pioneer Papers</div>
+    <div class="pssc-papers-wrap">
+        <button class="scroll-btn left" aria-label="Scroll left">&#8249;</button>
+        <div class="discover-shelf pssc-papers-shelf"><!-- one .pssc-paper per pioneer --></div>
+        <button class="scroll-btn right" aria-label="Scroll right">&#8250;</button>
+    </div>
+</div>
+
+<!-- ============ SHELVES (homepage.js, one per config.js SHELVES entry) ============ -->
+<div class="discover-section">
+    <h2 class="pssc-section-title">Featured Collection</h2>
+    <div class="discover-wrapper">
+        <button class="scroll-btn left" aria-label="Scroll left">&#8249;</button>
+        <div id="shelf-1-0" class="discover-shelf"></div>
+        <button class="scroll-btn right" aria-label="Scroll right">&#8250;</button>
+    </div>
+</div>
+<!-- mirror additional SHELVES entries the same way -->
+
+<!-- ============ VISIT THE LIBRARY (homepage.js) ============ -->
+<div class="pssc-visit">
+    <h2 class="pssc-section-title">Visit the Library</h2>
+    <p class="pssc-section-sub">2nd Floor, Philippine Social Science Center &middot; Diliman, Quezon City, Philippines 1101</p>
+
+    <div class="pssc-visit-grid">
+        <div class="pssc-visit-map">
+            <iframe title="PSSC Library location" src="https://www.google.com/maps?q=...&output=embed" loading="lazy"></iframe>
+        </div>
+        <div class="pssc-visit-cards">
+            <div class="pssc-visit-card">
+                <div class="pssc-visit-card-title">Address</div>
+                <div class="pssc-visit-card-body">2nd Floor, Philippine Social Science Center<br />372-C Commonwealth Avenue, Brgy. UP Campus<br />Diliman, Quezon City, Philippines 1101</div>
+            </div>
+            <div class="pssc-visit-card">
+                <div class="pssc-visit-card-title">Hours</div>
+                <div class="pssc-hours-row"><span>Monday – Friday</span><span>8:00 AM – 5:00 PM</span></div>
+                <div class="pssc-hours-row"><span>Saturday – Sunday</span><span>Closed</span></div>
+                <div class="pssc-hours-note">Closed on public holidays · edit hours to confirm</div>
+            </div>
+            <div class="pssc-visit-access">
+                <div class="pssc-visit-card-title">Access</div>
+                <div class="pssc-visit-card-body pssc-italic">Access requirements to be finalized — outline eligibility, registration, and what to bring here.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ FOOTER (homepage.js) ============ -->
+<div class="pssc-footer">
+    <div class="pssc-footer-inner">
+        <img src="../images/logo.jpg" alt="Philippine Social Science Council" class="pssc-footer-logo" />
+        <div class="pssc-footer-motto">One Social Science in solidarity with other disciplines for Filipinos and the global community.</div>
+    </div>
+</div>

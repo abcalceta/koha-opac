@@ -1,0 +1,137 @@
+/* ============================================================
+   hero.css — Front page hero
+   Motto + prominent search + gently drifting background, with
+   a handful of floating book covers behind the text (see
+   hero.js — which book fills each floater is decided at runtime
+   from real shelf data, not a fixed image list).
+   ============================================================ */
+
+.pssc-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 72px 32px 64px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+}
+
+.pssc-hero-tinted {
+    background: linear-gradient(120deg, var(--purple-muted) 0%, var(--bg) 35%, #E4DBF3 65%, var(--bg) 100%);
+    background-size: 260% 260%;
+    animation: pssc-hero-drift 22s ease infinite;
+}
+
+.pssc-hero-floaters {
+    position: absolute;
+    inset: 0;
+}
+
+.pssc-hero-floater {
+    position: absolute;
+    display: block;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.pssc-hero-floater-sheen {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.4);
+    pointer-events: none;
+    transition: opacity var(--transition);
+}
+
+.pssc-hero-floater:hover .pssc-hero-floater-sheen {
+    opacity: 0.65;
+}
+
+.pssc-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.pssc-hero-kicker {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin-bottom: 14px;
+}
+
+.pssc-hero-title {
+    font-family: var(--font-display);
+    font-size: 2.75rem;
+    line-height: 1.15;
+    font-weight: 700;
+    color: var(--purple-dark);
+    margin: 0 0 16px;
+}
+
+.pssc-hero-quote {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0 auto 36px;
+    max-width: 560px;
+}
+
+.pssc-hero-search {
+    display: flex;
+    gap: 10px;
+    max-width: 560px;
+    margin: 0 auto;
+}
+
+.pssc-hero-search input {
+    flex: 1;
+    font-family: var(--font-body);
+    font-size: 15px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    color: var(--text);
+    padding: 16px 24px;
+    outline: none;
+    box-sizing: border-box;
+    box-shadow: var(--shadow);
+}
+
+.pssc-hero-search input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(242, 191, 45, 0.22);
+}
+
+@keyframes pssc-hero-drift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes pssc-float-a {
+    0%, 100% { transform: translate(0, 0) rotate(-6deg); }
+    50%      { transform: translate(10px, -18px) rotate(-3deg); }
+}
+
+@keyframes pssc-float-b {
+    0%, 100% { transform: translate(0, 0) rotate(5deg); }
+    50%      { transform: translate(-12px, 16px) rotate(8deg); }
+}
+
+@keyframes pssc-float-c {
+    0%, 100% { transform: translate(0, 0) rotate(-3deg); }
+    50%      { transform: translate(8px, 14px) rotate(-7deg); }
+}
+
+@media (max-width: 640px) {
+    .pssc-hero { padding: 48px 20px 40px; }
+    .pssc-hero-title { font-size: 2rem; }
+    /* Keep the small-screen hero focused — floaters add clutter
+       at a width where they'd overlap the text anyway. */
+    .pssc-hero-floaters { display: none; }
+}

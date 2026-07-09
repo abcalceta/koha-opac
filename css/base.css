@@ -201,3 +201,45 @@ a:hover {
 #moresearches a:hover {
     color: var(--text-on-color);
 }
+
+
+/* --- Shared front-page primitives --- */
+/*
+   Reused across navbar.css, hero.css, pioneers.css, visit.css,
+   and the shelf sections built by homepage.js, so section
+   headings and button sizing stay consistent without repeating
+   the same rules per component.
+*/
+
+.pssc-section-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 6px;
+    padding-left: 12px;
+    border-left: 3px solid var(--gold-dark);
+}
+
+.pssc-section-sub {
+    margin: 0 0 32px;
+    padding-left: 15px;
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+}
+
+.pssc-btn-sm,
+.pssc-btn-lg {
+    border: none;
+    cursor: pointer;
+}
+
+.pssc-btn-sm { padding: 8px 18px;  font-size: 13px; }
+.pssc-btn-lg { padding: 14px 28px; font-size: 15px; }
+
+/* Hides Koha's real header on the homepage without removing it
+   from the DOM — any Koha script that expects it to exist still
+   finds it, it's just not shown. See navbar.js. */
+.pssc-header-hidden {
+    display: none !important;
+}
