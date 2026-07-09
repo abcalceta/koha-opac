@@ -7,10 +7,12 @@
 
 const SEARCH_PATH = "/cgi-bin/koha/opac-search.pl";
 
-export function goToSearch(query) {
+export function goToSearch(query, index) {
     const q = String(query || "").trim();
     if (!q) return;
-    window.location.href = `${SEARCH_PATH}?q=${encodeURIComponent(q)}`;
+    const idx = String(index || "").trim();
+    const indexParam = idx ? `&idx=${encodeURIComponent(idx)}` : "";
+    window.location.href = `${SEARCH_PATH}?q=${encodeURIComponent(q)}${indexParam}`;
 }
 
 /**
@@ -18,10 +20,11 @@ export function goToSearch(query) {
  * Safe to call with missing elements (e.g. a search box that's
  * configured off) — it's just a no-op.
  */
-export function initSearchForm(form, input) {
+export function initSearchForm(form, input, indexSelect) {
     if (!form || !input) return;
     form.addEventListener("submit", (e) => {
         e.preventDefault();
-        goToSearch(input.value);
+        const index = indexSelect?.value || "";
+        goToSearch(input.value, index);
     });
 }

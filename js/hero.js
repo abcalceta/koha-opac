@@ -42,7 +42,15 @@ export function buildHeroHTML(site) {
             <p class="pssc-hero-quote">&ldquo;${site.motto}&rdquo;</p>
             ${showSearch ? `
             <form class="pssc-hero-search" id="pssc-hero-search-form">
-                <input type="search" id="pssc-hero-search-input" placeholder="Search the catalog — titles, authors, subjects" />
+                <select id="pssc-hero-search-index" class="pssc-hero-search-index">
+                    <option value="">Library Catalog</option>
+                    <option value="ti">Title</option>
+                    <option value="au">Author</option>
+                    <option value="su">Subject</option>
+                    <option value="isbn">ISBN</option>
+                    <option value="issn">ISSN</option>
+                </select>
+                <input type="search" id="pssc-hero-search-input" placeholder="Search the catalog" />
                 <button type="submit" class="btn-primary pssc-btn-lg">Search</button>
             </form>` : ""}
         </div>
@@ -53,7 +61,8 @@ export function buildHeroHTML(site) {
 export function initHero() {
     initSearchForm(
         document.querySelector("#pssc-hero-search-form"),
-        document.querySelector("#pssc-hero-search-input")
+        document.querySelector("#pssc-hero-search-input"),
+        document.querySelector("#pssc-hero-search-index")
     );
 }
 

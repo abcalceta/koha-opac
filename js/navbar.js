@@ -47,6 +47,14 @@ export function initNavbar(site) {
             <a href="/cgi-bin/koha/opac-main.pl"><img class="pssc-navbar-logo" src="${LOGO_URL}" alt="Philippine Social Science Council" /></a>
             ${showSearch ? `
             <form class="pssc-navbar-search" id="pssc-navbar-search-form">
+                <select id="pssc-navbar-search-index" class="pssc-search-index">
+                    <option value="">Library Catalog</option>
+                    <option value="ti">Title</option>
+                    <option value="au">Author</option>
+                    <option value="su">Subject</option>
+                    <option value="isbn">ISBN</option>
+                    <option value="issn">ISSN</option>
+                </select>
                 <input type="search" id="pssc-navbar-search-input" placeholder="Search the catalog" />
                 <button type="submit" class="btn-primary pssc-btn-sm">Search</button>
             </form>` : ""}
@@ -61,7 +69,8 @@ export function initNavbar(site) {
     if (showSearch) {
         initSearchForm(
             document.querySelector("#pssc-navbar-search-form"),
-            document.querySelector("#pssc-navbar-search-input")
+            document.querySelector("#pssc-navbar-search-input"),
+            document.querySelector("#pssc-navbar-search-index")
         );
     }
 

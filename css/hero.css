@@ -84,12 +84,36 @@
 .pssc-hero-search {
     display: flex;
     gap: 10px;
-    max-width: 560px;
+    max-width: 680px;
     margin: 0 auto;
+    align-items: center;
+}
+
+.pssc-hero-search-index {
+    font-family: var(--font-body);
+    font-size: 15px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    color: var(--text);
+    padding: 16px 24px;
+    outline: none;
+    box-sizing: border-box;
+    box-shadow: var(--shadow);
+    flex-shrink: 0;
+    min-width: 160px;
+    cursor: pointer;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.pssc-hero-search-index:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(242, 191, 45, 0.22);
 }
 
 .pssc-hero-search input {
     flex: 1;
+    min-width: 0;
     font-family: var(--font-body);
     font-size: 15px;
     background: var(--surface);
@@ -134,4 +158,12 @@
     /* Keep the small-screen hero focused — floaters add clutter
        at a width where they'd overlap the text anyway. */
     .pssc-hero-floaters { display: none; }
+    .pssc-hero-search {
+        max-width: none;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .pssc-hero-search-index {
+        min-width: auto;
+    }
 }

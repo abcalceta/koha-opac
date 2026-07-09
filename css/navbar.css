@@ -30,11 +30,34 @@
     flex: 1;
     display: flex;
     gap: 8px;
-    max-width: 400px;
+    max-width: 500px;
+    align-items: center;
+}
+
+.pssc-search-index {
+    font-family: var(--font-body);
+    font-size: 13px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    color: var(--text);
+    padding: 8px 16px;
+    outline: none;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    min-width: 140px;
+    cursor: pointer;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.pssc-search-index:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(242, 191, 45, 0.22);
 }
 
 .pssc-navbar-search input {
     flex: 1;
+    min-width: 0;
     font-family: var(--font-body);
     font-size: 13px;
     background: var(--bg);
@@ -70,6 +93,11 @@
     color: var(--purple);
 }
 
+/* Hide the login/account link on homepage */
+.pssc-navbar-nav a:last-child {
+    display: none;
+}
+
 @media (max-width: 640px) {
     /* Horizontal gutter at this width comes from layout.css's own
        .pssc-navbar-inner responsive rule — only this component's
@@ -82,6 +110,11 @@
         order: 3;
         max-width: none;
         flex-basis: 100%;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .pssc-search-index {
+        min-width: auto;
     }
     .pssc-navbar-nav {
         gap: 14px;
