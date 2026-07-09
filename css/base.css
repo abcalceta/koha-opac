@@ -13,6 +13,43 @@ body {
 }
 
 
+/* --- Homepage: let the custom front page fill the viewport ----
+   Koha's .maincontent gives every page a white card with a
+   border/shadow/padding — right for search/detail/account pages,
+   wrong for the homepage's own full-bleed design. Scoped to
+   body#opac-main only, so every other page keeps the card look
+   untouched (this is the ONLY place this theme overrides Koha's
+   layout, and it's additive — Koha's own grid/columns are still
+   there in the DOM, just not visually constraining what we hide
+   behind them). The actual full-viewport-width mechanics live in
+   layout.css (.pssc-full-bleed and the selectors grouped with
+   it) — this just strips the card chrome so the page's own
+   background shows through edge to edge.
+
+   Same selector list as main.js's own container lookup (see
+   initHomepage) — kept in sync deliberately, since both are
+   guessing at the same uncertain piece of Koha's template output.
+*/
+
+body#opac-main #OpacMainUserBlock,
+body#opac-main #notloggedin .maincontent,
+body#opac-main #loggedin .maincontent,
+body#opac-main main .maincontent {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+}
+
+/* The 100vw breakout above can be a hair wider than the visible
+   viewport once a scrollbar is present (100vw includes it in most
+   browsers) — scoped to the homepage only, not a global reset. */
+body#opac-main {
+    overflow-x: hidden;
+}
+
+
 /* --- Navigation bar --- */
 
 .navbar,

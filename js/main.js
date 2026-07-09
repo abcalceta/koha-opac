@@ -15,6 +15,7 @@ const REPO_BASE = new URL("../", import.meta.url).href;
    the tokens every other file reads via var(). */
 const CSS_FILES = [
     "colors.css",
+    "layout.css",
     "base.css",
     "navbar.css",
     "logo.css",

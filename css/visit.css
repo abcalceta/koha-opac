@@ -1,12 +1,12 @@
 /* ============================================================
    visit.css — "Visit the Library" section + page footer
+   .pssc-visit's width/centering/vertical spacing come entirely
+   from layout.css (grouped into .pssc-container and
+   .pssc-section there). .pssc-footer-inner's width/centering
+   also come from layout.css — its vertical padding stays here
+   since 40px top/bottom is footer's own rhythm, not the shared
+   64/8 section pattern.
    ============================================================ */
-
-.pssc-visit {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 64px 32px 8px;
-}
 
 .pssc-visit-grid {
     display: grid;
@@ -98,9 +98,8 @@
 }
 
 .pssc-footer-inner {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 40px 32px;
+    padding-top: 40px;
+    padding-bottom: 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;

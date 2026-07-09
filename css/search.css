@@ -1,11 +1,30 @@
 /* ============================================================
-   search.css — Search and advanced-search page overrides
-   Koha's search pages have their own background + border
-   rules that conflict with the light theme; we reset them.
+   search.css — Search results, advanced search, and the search
+   box, styled to match the homepage's design language (colors,
+   spacing, radius, shadows, typography) without touching Koha's
+   underlying markup/behavior.
+
+   REGRESSION NOTE: sections 2-6 below (search-result cards,
+   availability, facets, pagination, sort, record actions) were
+   missing entirely until this refactor. They used to exist only
+   inside the old hand-bundled theme.css, which this theme no
+   longer builds (main.js loads each partial file directly now —
+   see main.js's CSS_FILES comment) — theme.css had drifted ahead
+   of the separate source partials at some point, and when the
+   bundle was retired, this content wasn't in any partial file to
+   carry forward. Section 2 is restored verbatim from the last
+   known-working bundle; sections 3-6 are new, built to match the
+   same design language, using Koha's commonly-documented OPAC
+   class names. Koha's exact markup varies by version — anything
+   below flagged "verify against your live OPAC" should be
+   checked against the actual rendered HTML and adjusted if a
+   class name doesn't match.
    ============================================================ */
 
 
-/* --- Advanced search page --- */
+/* ============================================================
+   1. Search box (all pages) + advanced search
+   ============================================================ */
 
 #advsearch {
     background: var(--bg);
@@ -25,12 +44,318 @@
     padding: 20px;
 }
 
+/* Index/operator selects and text inputs inside advanced search —
+   generic enough to be low-risk, scoped to #advsearch so nothing
+   leaks outside it. Verify against your live OPAC: some Koha
+   versions render the index/operator pickers as <select>, others
+   as button-dropdowns. */
+#advsearch select,
+#advsearch input[type="text"] {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--text);
+    padding: 6px 10px;
+}
 
-/* --- Visually hidden labels (keep them accessible) --- */
-/*
+#advsearch fieldset {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+#advsearch legend {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: var(--purple-dark);
+    width: auto;
+    padding: 0 8px;
+    border: none;
+}
+
+
+/* ============================================================
+   2. Search results — result cards (RESTORED — see note above)
+   Results render as a <table> with one <tr> per record inside
+   #bookbag_form; restyled here as stacked cards rather than
+   table rows.
+   ============================================================ */
+
+body#results #bookbag_form tr {
+    display: flex;
+    align-items: stretch;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+/* Hide the result-number column */
+body#results #bookbag_form td.numcol {
+    display: none;
+}
+
+/* Checkbox column — narrow accent strip on the left */
+body#results #bookbag_form td.selectcol {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 44px;
+    background: var(--purple-muted);
+    cursor: pointer;
+}
+
+body#results #bookbag_form td.selectcol input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--purple);
+    cursor: pointer;
+}
+
+/* Highlight the whole card when its checkbox is selected */
+body#results #bookbag_form tr:has(td.selectcol input:checked) {
+    background: linear-gradient(120deg, rgba(242, 191, 45, 0.18) 0%, rgba(242, 191, 45, 0.06) 100%);
+    border-color: var(--gold-dark);
+    box-shadow: 0 0 0 2px rgba(190, 139, 44, 0.35), var(--shadow-hover);
+}
+
+body#results #bookbag_form tr:has(td.selectcol input:checked) td.selectcol {
+    background: var(--gold-dark);
+}
+
+/* Main content cell */
+body#results #bookbag_form td.bibliocol {
+    flex: 1;
+    min-width: 0;
+    padding: 16px;
+}
+
+/* Two-column flex layout built by covers.js's applySearchCovers():
+   [ cover thumbnail ] [ metadata ] */
+.search-result-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.search-cover-wrapper {
+    flex-shrink: 0;
+    width: 90px;
+}
+
+.search-cover-img {
+    display: block;
+    width: 90px;
+    height: auto;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.search-content-wrapper {
+    flex: 1;
+    min-width: 0; /* prevent flex overflow from a long title */
+}
+
+
+/* ============================================================
+   3. Titles / authors / metadata
+   Scoped to td.bibliocol, not .search-content-wrapper — that
+   wrapper is only added by covers.js when a record actually has
+   a cover image (see buildCoverCard() in covers.js). A record
+   with no cover at all never gets wrapped, but td.bibliocol
+   exists on every row either way, cover or not.
+   .results_summary is Koha's standard wrapper for each metadata
+   line under a result title (author, published by, format, ...).
+   ============================================================ */
+
+body#results #bookbag_form td.bibliocol a.title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--purple-dark);
+}
+
+body#results #bookbag_form td.bibliocol .author {
+    font-size: 0.875rem;
+    color: var(--text);
+    margin-top: 2px;
+}
+
+/* Verify against your live OPAC — .results_summary is a common
+   Koha class for metadata rows (format, published by, edition,
+   subjects, ...) but the exact set of rows rendered varies. */
+.results_summary {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+.results_summary .label {
+    color: var(--text);
+    font-weight: 600;
+}
+
+
+/* ============================================================
+   4. Availability labels
+   Koha's Bootstrap OPAC theme commonly marks item status with
+   .available / .unavailable classes. Verify against your live
+   OPAC — some versions use .item-status or per-branch summary
+   spans instead; adjust the selectors below to match if so.
+   ============================================================ */
+
+.available,
+.unavailable,
+.onhold,
+.lost {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+}
+
+.available {
+    color: var(--status-available);
+    background: var(--status-available-bg);
+}
+
+.unavailable,
+.lost {
+    color: var(--status-unavailable);
+    background: var(--status-unavailable-bg);
+}
+
+.onhold {
+    color: var(--status-hold);
+    background: var(--status-hold-bg);
+}
+
+
+/* ============================================================
+   5. Facets / filter sidebar
+   Base card look (background/border/radius/padding) already
+   lives in base.css (#opac-facets, #facet-container,
+   #search-facets — untouched by this refactor). This adds
+   typography to match the rest of the site. Verify against your
+   live OPAC for the exact facet-group/heading class names.
+   ============================================================ */
+
+#search-facets h4,
+#facet-container h4,
+#opac-facets h4 {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--purple-dark);
+    margin: 0 0 8px;
+}
+
+#search-facets ul,
+#facet-container ul,
+#opac-facets ul {
+    list-style: none;
+    margin: 0 0 16px;
+    padding: 0;
+}
+
+#search-facets li,
+#facet-container li,
+#opac-facets li {
+    font-size: 0.8125rem;
+    padding: 3px 0;
+}
+
+#search-facets li a,
+#facet-container li a,
+#opac-facets li a {
+    color: var(--text);
+}
+
+#search-facets li a:hover,
+#facet-container li a:hover,
+#opac-facets li a:hover {
+    color: var(--gold-dark);
+}
+
+
+/* ============================================================
+   6. Pagination + sort controls
+   Koha renders pagination as a standard Bootstrap ul.pagination;
+   sort is typically a <select id="sort_by">. Verify against your
+   live OPAC if either selector doesn't match.
+   ============================================================ */
+
+.pagination {
+    display: flex;
+    gap: 6px;
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.pagination li a,
+.pagination li span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    height: 34px;
+    padding: 0 10px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+}
+
+.pagination li.active a,
+.pagination li.active span {
+    background: var(--purple);
+    border-color: var(--purple-dark);
+    color: var(--text-on-color);
+}
+
+#sort_by,
+select[name="sort_by"] {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--text);
+    padding: 6px 10px;
+}
+
+
+/* ============================================================
+   7. Record actions (place hold / add to cart / add to list)
+   Scoped to td.bibliocol for the same reason as section 3 above
+   — cover-less records never get wrapped in .search-content-
+   wrapper, but td.bibliocol is there either way. Verify against
+   your live OPAC — the exact actions wrapper class varies by
+   Koha version; this targets the common .actions pattern.
+   ============================================================ */
+
+body#results #bookbag_form td.bibliocol .actions a {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--purple);
+    margin-right: 12px;
+}
+
+body#results #bookbag_form td.bibliocol .actions a:hover {
+    color: var(--gold-dark);
+}
+
+
+/* ============================================================
+   8. Visually hidden labels (keep them accessible)
    Koha marks some labels .sr-only; use the proper SR-only
    technique so screen readers still read them.
-*/
+   ============================================================ */
 
 .sr-only {
     position: absolute;

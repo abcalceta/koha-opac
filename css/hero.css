@@ -45,11 +45,11 @@
     opacity: 0.65;
 }
 
+/* Width/centering (760px, the "narrow" container) comes from
+   layout.css — grouped with .pssc-container-narrow there. */
 .pssc-hero-content {
     position: relative;
     z-index: 1;
-    max-width: 760px;
-    margin: 0 auto;
 }
 
 .pssc-hero-kicker {

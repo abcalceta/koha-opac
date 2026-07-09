@@ -1,14 +1,10 @@
 /* ============================================================
    pioneers.css — Social Science Pioneers carousel + the
    Pioneer Papers shelf underneath it. Content comes from
-   pioneers-config.js; this file only styles it.
+   pioneers-config.js; this file only styles it. .pssc-pioneers'
+   width/centering/vertical spacing come entirely from layout.css
+   (grouped into .pssc-container and .pssc-section there).
    ============================================================ */
-
-.pssc-pioneers {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 64px 32px 8px;
-}
 
 .pssc-carousel-wrap {
     position: relative;

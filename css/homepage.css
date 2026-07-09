@@ -3,17 +3,11 @@
    Styles the horizontally-scrollable "Discover" shelves and
    the navigation arrow buttons that flank them. Section
    headings use the shared .pssc-section-title/-sub classes
-   from base.css instead of a local rule.
+   from base.css instead of a local rule. .discover-section's
+   width/centering/vertical spacing come entirely from layout.css
+   (it's grouped into .pssc-container and .pssc-section there) —
+   there's nothing left to declare for it in this file.
    ============================================================ */
-
-
-/* --- Shelf section --- */
-
-.discover-section {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 64px 32px 8px;
-}
 
 
 /* --- Wrapper holds the shelf + scroll buttons together --- */

@@ -41,4 +41,17 @@
     --font-display: 'Source Serif 4', Georgia, serif;
     --font-body:    'Source Sans 3', -apple-system, 'Segoe UI', Roboto, sans-serif;
 
+    /* Status colors (search-result availability) — deliberately
+       NOT part of the purple/gold brand scale. Availability is a
+       scan-for-it signal where conventional green/red reads
+       faster than a brand-consistent color would; kept muted so
+       they still feel like they belong next to the rest of the
+       palette rather than looking like alert banners. */
+    --status-available:      #2E7D46;
+    --status-available-bg:   #EAF6EE;
+    --status-unavailable:    #A33B3B;
+    --status-unavailable-bg: #FBEAEA;
+    --status-hold:           #9A6B12;
+    --status-hold-bg:        #FBF3DF;
+
 }

@@ -1,0 +1,151 @@
+/* ============================================================
+   layout.css — Layout layer
+   Single source of truth for page/section widths, horizontal
+   gutters, vertical section spacing, and full-viewport-width
+   backgrounds. Component files (navbar.css, homepage.css,
+   pioneers.css, visit.css, hero.css, ...) style what their
+   component LOOKS like; they don't declare max-width/margin:auto/
+   viewport-breakout themselves — they list their selector here
+   instead, alongside the .pssc-container* utilities.
+
+   To build a new full-width-background section with centered
+   content (the Stripe/Apple/Linear pattern this site follows):
+
+     <div class="my-new-section pssc-full-bleed">   (or rely on
+                                                       an already
+                                                       full-bleed
+                                                       ancestor)
+       <div class="pssc-container"> ...content... </div>
+     </div>
+
+   my-new-section.css then only needs background/border/padding-Y
+   — width and horizontal centering come from pssc-container.
+   ============================================================ */
+
+
+/* ---- 1. Layout tokens ---- */
+
+:root {
+    --container-width:        1180px;
+    --container-width-narrow: 760px;
+    --container-width-wide:   1400px;
+    --gutter:                 32px;
+    --gutter-sm:               16px;
+    --section-spacing-top:     64px;
+    --section-spacing-bottom:   8px;
+}
+
+
+/* ---- 2. Containers ----
+   .pssc-container is the default (1180px) — use it for any new
+   section. -narrow (760px) is for prose/hero-copy-width content.
+   -wide (1400px) is available for a section that wants more room
+   than the default without going full-bleed; nothing uses it yet.
+
+   The existing per-component selectors are grouped in here too
+   (rather than duplicating the same three declarations in their
+   own files) — that's the "move duplicated max-width/margin:auto
+   rules into layout.css" part of the refactor. Each component
+   file keeps only ITS OWN styling (colors, flex arrangement,
+   gaps between its children, etc.).
+*/
+
+.pssc-container,
+.pssc-navbar-inner,
+.discover-section,
+.pssc-pioneers,
+.pssc-visit,
+.pssc-footer-inner {
+    max-width: var(--container-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
+    box-sizing: border-box;
+}
+
+.pssc-container-narrow,
+.pssc-hero-content {
+    max-width: var(--container-width-narrow);
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+}
+
+.pssc-container-wide {
+    max-width: var(--container-width-wide);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
+    box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+    .pssc-container,
+    .pssc-navbar-inner,
+    .discover-section,
+    .pssc-pioneers,
+    .pssc-visit,
+    .pssc-footer-inner,
+    .pssc-container-wide {
+        padding-left: var(--gutter-sm);
+        padding-right: var(--gutter-sm);
+    }
+}
+
+
+/* ---- 3. Section vertical spacing ----
+   The "64px on top, 8px on the bottom" rhythm shared by every
+   homepage section (shelves, pioneers, visit). Footer uses its
+   own symmetric spacing (see visit.css) since it isn't part of
+   this repeating rhythm.
+*/
+
+.pssc-section,
+.discover-section,
+.pssc-pioneers,
+.pssc-visit {
+    padding-top: var(--section-spacing-top);
+    padding-bottom: var(--section-spacing-bottom);
+}
+
+
+/* ---- 4. Full-bleed breakout ----
+   Lets an element's BACKGROUND span the full viewport width even
+   though it's nested inside a narrower ancestor (Koha's own
+   Bootstrap grid/column) — without touching that ancestor's
+   markup or classes. Standard technique; needs a positioned
+   element and no overflow-x:hidden ancestor between it and the
+   viewport (that would clip the negative margins).
+
+   Apply this ONCE per breakout chain. Everything homepage.js
+   builds (hero, pioneers, shelves, visit, footer) lives inside
+   #OpacMainUserBlock and relies on the single breakout below —
+   those sections themselves must stay width:auto/100% and must
+   NOT also get .pssc-full-bleed, or the math double-compounds.
+   .pssc-navbar is a separate case (it's inserted as a sibling of
+   Koha's own header, outside #OpacMainUserBlock entirely) so it
+   gets its own independent breakout here.
+
+   The #OpacMainUserBlock/.maincontent selector list mirrors the
+   fallback chain main.js itself uses to find the homepage
+   container, since this theme doesn't have access to Koha's
+   actual template markup to know which one applies. See the
+   audit notes on fragility if you're reading this after a Koha
+   upgrade and something looks boxed-in again.
+*/
+
+.pssc-full-bleed,
+.pssc-navbar,
+body#opac-main #OpacMainUserBlock,
+body#opac-main #notloggedin .maincontent,
+body#opac-main #loggedin .maincontent,
+body#opac-main main .maincontent {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}

@@ -2,6 +2,9 @@
    navbar.css — Custom front-page navbar
    Only active on the homepage (see navbar.js) — Koha's real
    header/search/login stays untouched on every other page.
+   Width/centering (.pssc-navbar-inner) and the full-viewport
+   background breakout (.pssc-navbar) live in layout.css — this
+   file only styles what's inside.
    ============================================================ */
 
 .pssc-navbar {
@@ -11,9 +14,6 @@
 }
 
 .pssc-navbar-inner {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 14px 32px;
     display: flex;
     align-items: center;
     gap: 28px;
@@ -71,9 +71,11 @@
 }
 
 @media (max-width: 640px) {
+    /* Horizontal gutter at this width comes from layout.css's own
+       .pssc-navbar-inner responsive rule — only this component's
+       own flex behavior lives here. */
     .pssc-navbar-inner {
         flex-wrap: wrap;
-        padding: 12px 16px;
         gap: 12px;
     }
     .pssc-navbar-search {
