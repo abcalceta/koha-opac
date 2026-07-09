@@ -217,7 +217,7 @@ a:hover {
     font-weight: 700;
     color: var(--text);
     margin: 0 0 6px;
-    padding-left: 12px;
+    padding-left: 12px; 
     border-left: 3px solid var(--gold-dark);
 }
 
