@@ -4,9 +4,34 @@
    ============================================================ */
 
 
+/* Darken navigation/search text at top of page */
+#opac-detail #moresearches,
+#opac-detail #moresearches a {
+    color: var(--text);
+}
+
 /* Title color */
 #opac-detail .title {
     color: var(--purple-dark);
+}
+
+/* Center the cover image in its container */
+#opac-detail .cover-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#opac-detail .cover-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Add space between cover image and text content */
+#opac-detail .cover-image {
+    margin-right: 24px;
+    margin-bottom: 16px;
 }
 
 /* Detail page never needs a generated cover — it shows the
