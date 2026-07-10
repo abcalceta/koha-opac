@@ -47,6 +47,11 @@ body#opac-main #header-region + .container-fluid {
     display: none;
 }
 
+/* Hide login element (visibility hidden keeps space, unlike display: none) */
+body#opac-main #login {
+    visibility: hidden;
+}
+
 /* The 100vw breakout above can be a hair wider than the visible
    viewport once a scrollbar is present (100vw includes it in most
    browsers) — scoped to the homepage only, not a global reset. */
