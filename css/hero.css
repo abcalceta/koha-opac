@@ -12,6 +12,8 @@
     padding: 72px 32px 64px;
     text-align: center;
     border-bottom: 1px solid var(--border);
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
 }
 
 .pssc-hero-tinted {
