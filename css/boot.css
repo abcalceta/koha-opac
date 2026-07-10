@@ -74,6 +74,16 @@ body {
     color: var(--text);
 }
 
+/* Hide login element on homepage */
+body#opac-main #login {
+    visibility: hidden;
+}
+
+/* Hide Koha's main container on homepage (before JS loads) */
+body#opac-main #header-region + .container-fluid {
+    display: none;
+}
+
 
 /* ---- 4. Site logo ----
    Absolute URL, not the theme's relative "../images/logo.jpg" —
