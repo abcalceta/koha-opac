@@ -133,3 +133,8 @@
     font-size: 2.25rem;
     letter-spacing: 0.02em;
 }
+
+/* extras */
+.bookcover img {
+    margin: 0em;
+}

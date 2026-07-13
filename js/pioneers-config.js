@@ -44,7 +44,6 @@
      pdfThumb    optional.  Path/URL to a first-page thumbnail
                  image for the Pioneer Papers shelf.
    ============================================================ */
-
 export const PIONEERS = [
     { name: "Alfredo Lagmay",
       photo: "https://pssc.org.ph/wp-content/uploads/2020/07/Alfredo-Lagmay.jpg",
