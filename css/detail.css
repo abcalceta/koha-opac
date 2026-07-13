@@ -21,15 +21,18 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    margin-right: 24px;
+    margin-bottom: 16px;
 }
 
 #opac-detail .cover-image img {
     max-width: 100%;
     height: auto;
+    display: block;
 }
 
-/* Add space between cover image and text content */
-#opac-detail .cover-image {
+/* Ensure bookcover has spacing */
+#opac-detail .bookcover {
     margin-right: 24px;
     margin-bottom: 16px;
 }

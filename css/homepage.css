@@ -44,10 +44,17 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
+    align-items: center;
 }
 
 .random-book:hover {
     text-decoration: none;
+}
+
+/* Center book cover image in shelf */
+.random-book .bookcover {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Book title label below the cover */
