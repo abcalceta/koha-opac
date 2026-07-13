@@ -11,19 +11,22 @@
      until you fill it in — nothing breaks with just a name.
 
    HOW TO ADD A PHOTO / PAPER THUMBNAIL:
-     Drop image files into images/pioneers/, named after the
-     pioneer's slug (auto-generated from their name — e.g.
-     "Alfredo Lagmay" -> "alfredo-lagmay"), then reference them:
+     Use external URLs directly (recommended):
+
+       { name: "Emma Porio",
+         photo: "https://pssc.org.ph/wp-content/uploads/2022/10/Porio.png",
+         pdfHref: "https://example.com/porio.pdf",
+         pdfThumb: "https://example.com/porio-cover.jpg" }
+
+     Or use local files in images/pioneers/:
 
        { name: "Alfredo Lagmay",
-         photo:    "images/pioneers/alfredo-lagmay.jpg",
-         pdfHref:  "pdfs/alfredo-lagmay.pdf",
+         photo: "images/pioneers/alfredo-lagmay.jpg",
+         pdfHref: "pdfs/alfredo-lagmay.pdf",
          pdfThumb: "images/pioneers/alfredo-lagmay-paper.jpg" }
 
-     A missing or broken image path falls back automatically to
-     a generated placeholder (same idea as book covers with no
-     cover image) — full external URLs work here too, not just
-     local files.
+     Missing or broken images fall back to generated placeholders
+     (same idea as book covers with no image).
 
    HOW TO REORDER / REMOVE:
      Same as config.js — move or delete lines (mind trailing commas).
@@ -50,7 +53,8 @@ export const PIONEERS = [
     { name: "Bonifacio Sibayan" },
     { name: "Dominador Rosell" },
     { name: "Domingo Salita" },
-    { name: "Emma Porio" },
+    { name: "Emma Porio",
+      photo: "https://pssc.org.ph/wp-content/uploads/2022/10/Porio.png" },
     { name: "Felipe Miranda" },
     { name: "Florangel Braid" },
     { name: "Francis Maigan" },
