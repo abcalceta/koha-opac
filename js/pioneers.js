@@ -1,10 +1,11 @@
 /* ============================================================
-   pioneers.js — Social Science Pioneers carousel + Pioneer
-   Papers shelf. Content comes from pioneers-config.js — this
-   file only wires up the interaction.
+   pioneers.js — Social Science Pioneers carousel (name/photo/
+   affiliation) with a list of that pioneer's papers below it.
+   Content comes from pioneers-config.js — this file only wires
+   up the interaction.
    ============================================================ */
 
-import { createAvatarCover, createBookCover } from "./covers.js";
+import { createAvatarCover } from "./covers.js";
 
 let pioneers = [];
 let currentIndex = 0;
@@ -27,6 +28,7 @@ function withDefaults(p) {
         photo: p.photo || "",
         pdfHref: p.pdfHref || "",
         pdfThumb: p.pdfThumb || "",
+        papers: p.papers || [],
     };
 }
 
@@ -38,12 +40,6 @@ export function buildPioneersHTML(list) {
     const dots = pioneers.map((p, i) =>
         `<button class="pssc-dot" data-index="${i}" aria-label="Go to ${p.name}"></button>`
     ).join("");
-
-    const papers = pioneers.map((p, i) => `
-        <div class="pssc-paper" data-index="${i}">
-            <div class="pssc-paper-thumb" id="pssc-paper-thumb-${i}"></div>
-            <span class="pssc-paper-name">${p.name}</span>
-        </div>`).join("");
 
     return `
     <div class="pssc-pioneers" data-screen-label="Featured Voices">
@@ -67,12 +63,8 @@ export function buildPioneersHTML(list) {
 
         <div class="pssc-dots" id="pssc-dots">${dots}</div>
 
-        <div class="pssc-papers-label">Pioneer Papers</div>
-        <div class="pssc-papers-wrap">
-            <button class="scroll-btn left" id="pssc-papers-prev" aria-label="Scroll left">&#8249;</button>
-            <div class="discover-shelf pssc-papers-shelf" id="pssc-papers-shelf">${papers}</div>
-            <button class="scroll-btn right" id="pssc-papers-next" aria-label="Scroll right">&#8250;</button>
-        </div>
+        <div class="pssc-papers-label" id="pssc-papers-label">Papers</div>
+        <div class="pssc-papers-list" id="pssc-papers-list"></div>
     </div>`;
 
 }
@@ -81,13 +73,6 @@ export function initPioneers() {
 
     if (!pioneers.length) return;
 
-    /* Paper thumbnails render up front — generated fallback shows
-       instantly, a real pdfThumb image swaps in if/when it loads. */
-    pioneers.forEach((p, i) => {
-        const thumbSlot = document.querySelector(`#pssc-paper-thumb-${i}`);
-        thumbSlot?.appendChild(createBookCover(p.name, "", p.pdfThumb));
-    });
-
     document.querySelector("#pssc-carousel-prev")?.addEventListener("click", () => goTo(currentIndex - 1));
     document.querySelector("#pssc-carousel-next")?.addEventListener("click", () => goTo(currentIndex + 1));
 
@@ -95,15 +80,6 @@ export function initPioneers() {
         const btn = e.target.closest("[data-index]");
         if (btn) goTo(Number(btn.dataset.index));
     });
-
-    document.querySelector("#pssc-papers-shelf")?.addEventListener("click", (e) => {
-        const card = e.target.closest("[data-index]");
-        if (card) goTo(Number(card.dataset.index));
-    });
-
-    const shelf = document.querySelector("#pssc-papers-shelf");
-    document.querySelector("#pssc-papers-prev")?.addEventListener("click", () => shelf?.scrollBy({ left: -400, behavior: "smooth" }));
-    document.querySelector("#pssc-papers-next")?.addEventListener("click", () => shelf?.scrollBy({ left: 400, behavior: "smooth" }));
 
     render();
 
@@ -150,11 +126,18 @@ function render() {
         dot.classList.toggle("active", i === currentIndex);
     });
 
-    document.querySelectorAll(".pssc-paper").forEach((card, i) => {
-        card.classList.toggle("active", i === currentIndex);
-    });
+    const label = document.querySelector("#pssc-papers-label");
+    if (label) label.textContent = `Papers by ${p.name}`;
 
-    document.querySelector(`.pssc-paper[data-index="${currentIndex}"]`)
-        ?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    const papersList = document.querySelector("#pssc-papers-list");
+    if (papersList) {
+        papersList.innerHTML = p.papers.length
+            ? p.papers.map(paper => `
+                <a href="${paper.href}" class="pssc-paper-row" target="_blank" rel="noopener">
+                    <span class="pssc-paper-icon" aria-hidden="true">&#128196;</span>
+                    <span class="pssc-paper-title">${paper.title}</span>
+                </a>`).join("")
+            : `<p class="pssc-papers-empty">No papers on file for ${p.name} yet.</p>`;
+    }
 
 }
