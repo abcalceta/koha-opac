@@ -320,7 +320,7 @@ export const PIONEERS = [
     // folder/file names on the server say "Francis Madigan" — kept the
     // display name as-is to match your existing config, hrefs point to
     // the real "Madigan" folder.
-    name: "Francis Maigan",
+    name: "Francis Madigan",
     papers: [
       { title: "A New Approach to Rural Development in the Phils (PSR)", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Francis%20Madigan/A%20New%20Approach%20to%20Rural%20Development%20in%20the%20Phils%20(PSR).pdf.pdf" },
       { title: "Birth and Death Rates from a Dual-Records System (PSR)", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Francis%20Madigan/Birth%20and%20Death%20Rates%20from%20a%20Dual-Records%20System%20(PSR).pdf.pdf" },
