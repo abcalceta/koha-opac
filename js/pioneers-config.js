@@ -55,6 +55,9 @@ export const PIONEERS = [
   {
     name: "Alfredo Lagmay",
     photo: "https://pssc.org.ph/wp-content/uploads/2020/07/Alfredo-Lagmay.jpg",
+    affiliation: "Psychology",
+    quote: "That within the culture, bahala na is a positive, functional response to uncertainty, not submission, surrender, retreat, or cessation of effort.",
+    bio: "Alfredo V. Lagmay was a pioneering Filipino psychologist whose work helped establish scientific psychology in the Philippines. His research on experimental and clinical psychology, Filipino values, and indigenous psychology shaped generations of scholars and elevated the study of Filipino culture in psychological research.",
     papers: [
       { title: "A Logical Analysis of the Concept of Existence Involved in Existence Propositions", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Alfredo%20Lagmay/A%20Logical%20Analysis%20of%20the%20Concept%20of%20Existence%20Involved%20in%20Existence%20Propositions.pdf" },
       { title: "Bahala Na (PJP)", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Alfredo%20Lagmay/Bahala%20Na%20(PJP).pdf" },
@@ -67,6 +70,9 @@ export const PIONEERS = [
   {
     name: "Amaryllis Torres",
     photo: "https://pssc.org.ph/wp-content/uploads/2022/04/Amaryllis-Torres.jpg",
+    affiliation: "Psychology",
+    quote: "In sum, what needs to be re-defined are social expectations of masculine and feminine roles, so that marital and family relations will be characterized not only by sanctity, harmony, and respect, but also by equity and equality between women and men across generations.",
+    bio: "Amaryllis T. Torres is an educator, researcher, and advocate for gender and development. Her scholarship examines women's experiences across family life, work, institutions, literature, and Philippine society, making lasting contributions to feminist scholarship and gender studies.",
     papers: [
       { title: "A Study of People's Power, Bangus Fry Catchers in Control of Production", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Amaryllis%20Torres/A%20Study%20of%20People_s%20Power,%20Bangus%20Fry%20Catchers%20in%20Control%20of%20Production.pdf" },
       { title: "Documentation of Specific Area Experiences in Primary Health Care", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Amaryllis%20Torres/Documentation%20of%20Specific%20Area%20Experiences%20in%20Primary%20Health%20Care.pdf" },
@@ -95,6 +101,9 @@ export const PIONEERS = [
   {
     name: "Andrew Gonzalez",
     photo: "https://pssc.org.ph/wp-content/uploads/2020/07/Andrew-Gonzalez.jpg",
+    affiliation: "Education & Linguistics",
+    quote: "The process, not the product, is important for our efforts, for the product will arise from the process quite naturally and spontaneously.",
+    bio: "Br. Andrew Gonzalez, FSC devoted his life to Christian education and Philippine linguistics. His extensive work spans descriptive, historical, psycho-, socio-, and applied linguistics, helping shape language education and policy in the Philippines.",
     papers: [
       { title: "Acquiring Pilipino as a first language – two case studies", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Andrew%20Gonzalez/Acquiring%20Pilipino%20as%20a%20first%20language%20-%20two%20case%20studies.pdf" },
       { title: "An unfinished symphony – 934 days at DECS", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Andrew%20Gonzalez/An%20unfinished%20symphony%20-%20934%20days%20at%20DECS.pdf" },
@@ -128,6 +137,9 @@ export const PIONEERS = [
   {
     name: "Arsenio Balisacan",
     photo: "https://www.phcc.gov.ph/file-manager/1/Photo%20Gallery/Photos/balisacan-1.png",
+    affiliation: "Economics",
+    quote: "Thus, while poverty in the Philippines responds elastically to growth, the economy's ability to translate growth to poverty reduction appears weaker than for the average developing country.",
+    bio: "Arsenio M. Balisacan is an economist recognized internationally for his work on economic development, poverty, inequality, and policy reform. His research and public service have significantly influenced poverty reduction and agricultural policy in the Philippines.",
     papers: [
       { title: "Agrarian Reform and Poverty Reduction in the Philippines", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Arsenio%20Balisacan/Agrarian_Reform_and_Poverty_Reduction_in_the_Philippines.pdf" },
       { title: "Agricultural Growth Employment Growth and Rural Poverty", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Arsenio%20Balisacan/Agricultural_Growth_Employment_Growth_and_Rural_Poverty.pdf" },
@@ -206,6 +218,9 @@ export const PIONEERS = [
   {
     name: "Bonifacio Sibayan",
     photo: "https://pssc.org.ph/wp-content/uploads/2022/10/Sibayan.png",
+    affiliation: "Education & Sociolinguistics",
+    quote: "It is needless to elucidate the proposition that a people constituting one nationality and one state should possess a language spoken and understood by all.",
+    bio: "Bonifacio P. Sibayan was a leading Filipino sociolinguist whose research on language planning, bilingualism, and education greatly influenced language policy and linguistic scholarship in the Philippines.",
     papers: [
       { title: "Imperatives of change and tomorrow's teachers", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Bonifacio%20Sibayan/Imperatives%20of%20change%20and%20tomorrow_s%20teachers.pdf" },
       { title: "The Intellectualization of Filipino and education essays. Manila", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Bonifacio%20Sibayan/The%20Intellectualization%20of%20Filipino%20and%20education%20essays.%20Manila.pdf" },
@@ -216,6 +231,9 @@ export const PIONEERS = [
 
   {
     name: "Dominador Rosell",
+    affiliation: "Geography",
+    quote: "Everybody scratches his head about food and population problems while the answer is only behind the house where the research biological and agricultural scientists live.",
+    bio: "Prof. Dominador Z. Rosell played a central role in the Philippine Geographical Society, helping expand the discipline's influence while promoting geographic research and education across the country.",
     papers: [
       { title: "22nd International Geographical Congress", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Dominador%20Rosell/22nd%20International%20Geographical%20Congress.pdf" },
       { title: "Conservation of Natural Resources: A Vital Environmental Issue in the Phil", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Dominador%20Rosell/Conservation%20of%20Natural%20Resources_A%20Vital%20Environmental%20Issue%20in%20the%20Phil.pdf" },
@@ -241,6 +259,9 @@ export const PIONEERS = [
 
   {
     name: "Domingo Salita",
+    affiliation: "Geography & Economics",
+    quote: "While every subject gives some aspects of environmental study, the fact remains that Geography has the most contribution as a single discipline in the broad spectrum of environmental education.",
+    bio: "Dr. Domingo C. Salita is a geographer, economist, engineer, lawyer, and educator whose interdisciplinary career advanced geography, environmental education, and regional development studies.",
     papers: [
       { title: "25 Years of the Philippine Geographical Society", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Domingo%20Salita/25%20Years%20of%20the%20Philippine%20Geographical%20Society.pdf" },
       { title: "Educational Programs in Environmental Sciences at the University of the Philippines System", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Domingo%20Salita/Educational%20Programs%20in%20Enironmental%20Sciences%20at%20the%20Unicersity%20of%20the%20Philippins%20System.pdf" },
@@ -261,6 +282,9 @@ export const PIONEERS = [
   {
     name: "Emma Porio",
     photo: "https://pssc.org.ph/wp-content/uploads/2022/10/Porio.png",
+    affiliation: "Sociology",
+    quote: "Thus, urban design and landscape of the capital city reflect the socio-political and economic relations of the rulers and the ruled, between the center and the peripheral areas of the country.",
+    bio: "Emma E. Porio is a sociologist whose research focuses on urban development, governance, gender, climate vulnerability, resilience, and the lives of marginalized communities in rapidly changing cities.",
     papers: [
       { title: "An Assessment of Education and the Worst Forms of Child Labour", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Emma%20Porio/An_Assessment_of_Education_and_the_Worst_Forms_of_Child_Labour.pdf" },
       { title: "Children of the Streets: Socialization and Formation of the Self in Rapidly Urbanizing Context", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Emma%20Porio/Children%20of%20the%20Streets_%20Socialization%20and%20Formation%20of%20the%20Self%20in%20Rapidly%20Urbanizing%20Context.pdf" },
@@ -282,6 +306,9 @@ export const PIONEERS = [
   {
     name: "Felipe Miranda",
     photo: "https://pssc.org.ph/wp-content/uploads/2022/10/Miranda.png",
+    affiliation: "Political Science",
+    quote: "When Filipinos are down, they refuse to stay down and be counted out.",
+    bio: "Felipe B. Miranda is a political scientist, educator, and public opinion expert whose work on governance, democracy, political behavior, and civil-military relations has shaped political science research in the Philippines.",
     papers: [
       { title: "Filipino Public Opinion on the issue of American Military Facilities in the Phils", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Felipe%20Miranda/Filipino%20Public%20Opinion%20on%20the%20issue%20of%20American%20Military%20Facilities%20in%20the%20Phils.pdf" },
       { title: "Philippine Defense Expenditures and Threat Perceptions", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Felipe%20Miranda/Philippine%20Defense%20Expenditures%20and%20Threat%20Perceptions.pdf" },
@@ -307,6 +334,9 @@ export const PIONEERS = [
   {
     name: "Florangel Braid",
     photo: "https://pssc.org.ph/wp-content/uploads/2022/10/Braid.png",
+    affiliation: "Journalism & Communication",
+    quote: "The courage and objectivity of broadcast journalists deserve the accolade given to them by a grateful nation.",
+    bio: "Dr. Florangel Rosario-Braid is a scholar, communication expert, and advocate whose work spans journalism, broadcasting, information technology, continuing education, cooperatives, and sustainable development.",
     papers: [
       { title: "Children in the Information Age", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Florangel%20Braid/Children%20in%20the%20%20Information%20Age.pdf" },
       { title: "Communication Education and Training", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Florangel%20Braid/Communication%20Education%20and%20Training.pdf" },
@@ -321,11 +351,10 @@ export const PIONEERS = [
   },
 
   {
-    // NOTE: the site's tab label reads "Francis Maigan" but the actual
-    // folder/file names on the server say "Francis Madigan" — kept the
-    // display name as-is to match the existing config, hrefs point to
-    // the real "Madigan" folder.
     name: "Francis Maigan",
+    affiliation: "Sociology",
+    quote: "We social scientists protest that we and our activities are relevant to life in terms of our research findings, hypotheses, and insights into Philippine culture and social organization.",
+    bio: "Rev. Francis C. Madigan, SJ founded the Research Institute for Mindanao Culture and devoted his career to studying Philippine society, culture, and development, particularly in Mindanao.",
     papers: [
       { title: "A New Approach to Rural Development in the Phils (PSR)", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Francis%20Madigan/A%20New%20Approach%20to%20Rural%20Development%20in%20the%20Phils%20(PSR).pdf.pdf" },
       { title: "Birth and Death Rates from a Dual-Records System (PSR)", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Francis%20Madigan/Birth%20and%20Death%20Rates%20from%20a%20Dual-Records%20System%20(PSR).pdf.pdf" },
@@ -346,6 +375,9 @@ export const PIONEERS = [
   {
     name: "Francisco Nemenzo",
     photo: "https://pssc.org.ph/wp-content/uploads/2020/07/Francisco-Nemenzo.jpg",
+    affiliation: "Political Science",
+    quote: "Even if our universities remain a factory for the mass production of marketable skills, we can create enclaves of innovation within the system.",
+    bio: "Dr. Francisco 'Dodong' Nemenzo was one of the Philippines' foremost political scientists. A professor, dean, chancellor, and University of the Philippines president, he championed critical scholarship, democratic engagement, and transformative education.",
     papers: [
       { title: "A Season of Coups – Reflections on the Role of the Military in Politics", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Francisco%20Nemenzo/A%20Season%20of%20Coups%20-%20Reflections%20on%20the%20Role%20of%20the%20Military%20in%20Politics.pdf" },
       { title: "Beyond February – The Task of Socialist", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Francisco%20Nemenzo/Beyond%20February%20-%20The%20Task%20of%20Socialist.pdf" },
@@ -360,6 +392,9 @@ export const PIONEERS = [
 
   {
     name: "Frank X. Lynch",
+    affiliation: "Anthropology & Sociology",
+    quote: "One is surrounded at every moment, in other words, by people who are potentially or in fact his allies, people he can count on to a greater or smaller degree.",
+    bio: "Fr. Frank X. Lynch, SJ was a pioneering social anthropologist whose influential studies of Filipino values, culture, and society helped establish Philippine anthropology and social science research.",
     papers: [
       { title: "A Bittersweet Taste of Sugar", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Frank%20X.%20Lynch/A%20Bittersweet%20Taste%20of%20Sugar.pdf" },
       { title: "A Family-Planning Acceptor Study", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Frank%20X.%20Lynch/A%20Family-Planning%20Acceptor%20Study.pdf" },
@@ -403,4 +438,6 @@ export const PIONEERS = [
       { title: "Who Get the Jobs – The Old or the Educated", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Frank%20X.%20Lynch/Who%20Get%20the%20Jobs%20-%20The%20Old%20or%20the%20Educated.pdf" },
     ],
   },
+
+
 ];
