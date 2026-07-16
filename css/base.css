@@ -52,6 +52,11 @@ body#opac-main #login {
     visibility: hidden;
 }
 
+/* Hide breadcrumbs on homepage — the custom nav replaces them */
+body#opac-main #breadcrumbs {
+    display: none;
+}
+
 /* The 100vw breakout above can be a hair wider than the visible
    viewport once a scrollbar is present (100vw includes it in most
    browsers) — scoped to the homepage only, not a global reset. */

@@ -95,6 +95,10 @@
     margin-top: 64px;
     border-top: 1px solid var(--border);
     background: var(--surface);
+    position: relative;
+    width: 110vw;
+    margin-left: calc(-55vw + 50%);
+    margin-right: calc(-55vw + 50%);
 }
 
 .pssc-footer-inner {
