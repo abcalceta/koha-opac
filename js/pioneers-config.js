@@ -46,7 +46,6 @@
                    title  required.  Display title of the paper.
                    href   required.  Link to the PDF.
    ============================================================ */
-
 export const PIONEERS = [
   {
     name: "Alfredo Lagmay",
