@@ -11,9 +11,9 @@
     overflow: visible;
     padding: 72px 32px 64px;
     text-align: center;
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
-    margin-right: calc(-50vw + 50%);
+    width: 110vw;
+    margin-left: calc(-55vw + 50%);
+    margin-right: calc(-55vw + 50%);
 }
 
 .pssc-hero-tinted {
