@@ -13,10 +13,14 @@
    HOW TO ADD A PHOTO:
      Use external URLs directly (recommended):
        { name: "Emma Porio",
-         photo: "https://pssc.org.ph/wp-content/uploads/2022/10/Porio.png" }
+         photo: "https://pssc.org.ph/wp-content/uploads/2022/10/Porio.png",
+         pdfHref: "https://example.com/porio.pdf",
+         pdfThumb: "https://example.com/porio-cover.jpg" }
      Or use local files in images/pioneers/:
        { name: "Alfredo Lagmay",
-         photo: "images/pioneers/alfredo-lagmay.jpg" }
+         photo: "images/pioneers/alfredo-lagmay.jpg",
+         pdfHref: "pdfs/alfredo-lagmay.pdf",
+         pdfThumb: "images/pioneers/alfredo-lagmay-paper.jpg" }
      Missing or broken images fall back to generated placeholders
      (same idea as book covers with no image).
 
@@ -44,9 +48,12 @@
      photo       optional.  Path/URL to a headshot image.
      pdfHref     optional.  Link to the full paper/essay. The
                  "Read the full essay" link is hidden if omitted.
+     pdfThumb    optional.  Path/URL to a first-page thumbnail
+                 image for the Pioneer Papers shelf.
      papers      optional.  Array of { title, href } objects —
-                 the full list of that pioneer's papers, shown
-                 in the lower box. Each entry:
+                 the full list of that pioneer's papers, used to
+                 populate a "More by this author" list/shelf.
+                 Each entry:
                    title  required.  Display title of the paper.
                    href   required.  Link to the PDF.
    ============================================================ */
@@ -351,10 +358,7 @@ export const PIONEERS = [
   },
 
   {
-    name: "Francis Maigan",
-    affiliation: "Sociology",
-    quote: "We social scientists protest that we and our activities are relevant to life in terms of our research findings, hypotheses, and insights into Philippine culture and social organization.",
-    bio: "Rev. Francis C. Madigan, SJ founded the Research Institute for Mindanao Culture and devoted his career to studying Philippine society, culture, and development, particularly in Mindanao.",
+    name: "Francis Madigan",
     papers: [
       { title: "A New Approach to Rural Development in the Phils (PSR)", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Francis%20Madigan/A%20New%20Approach%20to%20Rural%20Development%20in%20the%20Phils%20(PSR).pdf.pdf" },
       { title: "Birth and Death Rates from a Dual-Records System (PSR)", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Francis%20Madigan/Birth%20and%20Death%20Rates%20from%20a%20Dual-Records%20System%20(PSR).pdf.pdf" },
@@ -371,7 +375,6 @@ export const PIONEERS = [
       { title: "Where Trees are Fewer (PSR)", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Francis%20Madigan/Where%20Trees%20are%20Fewer%20(PSR).pdf.pdf" },
     ],
   },
-
   {
     name: "Francisco Nemenzo",
     photo: "https://pssc.org.ph/wp-content/uploads/2020/07/Francisco-Nemenzo.jpg",
@@ -438,6 +441,4 @@ export const PIONEERS = [
       { title: "Who Get the Jobs – The Old or the Educated", href: "https://pssc.org.ph/wp-content/uploads/2026/07/../../../pssc-archives/Works/Frank%20X.%20Lynch/Who%20Get%20the%20Jobs%20-%20The%20Old%20or%20the%20Educated.pdf" },
     ],
   },
-
-
 ];
