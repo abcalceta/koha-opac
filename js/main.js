@@ -31,7 +31,7 @@ const CSS_FILES = [
 const { SHELVES, SITE }              = await import(`./config.js?v=${VERSION}`);
 const { PIONEERS }                   = await import(`./pioneers-config.js?v=${VERSION}`);
 const { buildHomepageHTML, initHero, populateHeroFloaters, initPioneers } = await import(`./homepage.js?v=${VERSION}`);
-const { applyCovers, refreshCovers, loadDetailCover, applySearchCovers } = await import(`./covers.js?v=${VERSION}`);
+const { applyCovers, refreshCovers, loadDetailCover, applySearchCovers, relabelOnlineAvailability } = await import(`./covers.js?v=${VERSION}`);
 const { loadShelf }                  = await import(`./shelf.js?v=${VERSION}`);
 const { initNavbar }                 = await import(`./navbar.js?v=${VERSION}`);
 
@@ -47,11 +47,13 @@ function init() {
         initHomepage();
     } else if (document.body.id === "opac-detail") {
         loadDetailCover();
+        relabelOnlineAvailability();
     } else {
         applyCovers();
         refreshCovers();
         if (document.body.id === "results") {
             applySearchCovers();
+            relabelOnlineAvailability();
         }
     }
 

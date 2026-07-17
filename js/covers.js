@@ -372,6 +372,7 @@ function startCoverPolling() {
     let ticks = 0;
     const id = setInterval(() => {
         applySearchCovers();
+        relabelOnlineAvailability();
         if (++ticks >= 8) clearInterval(id);
     }, 500);
 }
@@ -461,6 +462,46 @@ function tintCard(card, img) {
         card.style.borderColor = `rgba(${r},${g},${b},0.45)`;
 
     } catch { /* canvas blocked (CORS) — skip tinting */ }
+
+}
+
+
+/* ============================================================
+   Online-only availability relabeling
+   ============================================================ */
+
+/**
+ * Swap "Available" badges to "Available Online" for records that
+ * have no physical copy to borrow — an "Online resources" line
+ * (Koha's standard label for a MARC 856 full-text/URL link) is
+ * the signal that a record is online-only, since "for loan"
+ * phrasing doesn't apply to something with no physical item.
+ * Works on both search-result rows and the detail page; safe to
+ * call repeatedly (marks each badge once it's checked).
+ */
+export function relabelOnlineAvailability() {
+
+    document.querySelectorAll(".available").forEach(badge => {
+
+        if (badge.dataset.onlineChecked) return;
+        badge.dataset.onlineChecked = "1";
+
+        const scope =
+            badge.closest("tr, li, .result") ||
+            document.querySelector("#catalogue_detail_biblio") ||
+            document.querySelector("main");
+
+        const isOnlineOnly = scope
+            ?.textContent
+            .toLowerCase()
+            .includes("online resources");
+
+        if (isOnlineOnly) {
+            badge.textContent = "Available Online";
+            badge.classList.add("available-online");
+        }
+
+    });
 
 }
 
