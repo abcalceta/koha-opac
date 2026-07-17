@@ -271,14 +271,28 @@ a:hover {
 }
 
 
-/* --- "More searches" link bar --- */
+/* --- "More searches" link bar ---
+   Was color: var(--purple-muted) / hover: var(--text-on-color) —
+   both far too light against this theme's white/light-gray page
+   background (that combination reads fine on a dark bar, which
+   isn't what this page has). Same !important justification as
+   the breadcrumbs above: Koha's own stylesheet sets a competing
+   color here too.
+*/
+
+#moresearches {
+    padding: 10px 0;
+}
 
 #moresearches a {
-    color: var(--purple-muted);
+    color: var(--text-muted) !important;
+    font-size: 0.8125rem;
+    transition: color var(--transition);
 }
 
 #moresearches a:hover {
-    color: var(--text-on-color);
+    color: var(--purple) !important;
+    text-decoration: underline;
 }
 
 
