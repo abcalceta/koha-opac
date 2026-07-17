@@ -85,15 +85,42 @@ body#opac-main {
 .dropdown-item { color: var(--text); }
 
 
-/* --- Breadcrumbs --- */
+/* --- Breadcrumbs ---
+   !important is used deliberately here: Koha's own stylesheet
+   loads after ours and sets a pale gray (~#ccc) breadcrumb color
+   with a selector we can't reliably out-specificity without
+   knowing the exact markup depth, so this is the one place in
+   the theme that overrides rather than out-scopes Koha's CSS.
+*/
 
-#breadcrumbs > ol {
-    background: transparent;
+#breadcrumbs {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
 }
 
-#breadcrumbs > ol > li,
-#breadcrumbs > ol > li a {
-    color: var(--text-muted);
+#breadcrumbs > ol,
+#breadcrumbs ol {
+    background: transparent;
+    margin: 0;
+}
+
+#breadcrumbs li,
+#breadcrumbs li a,
+#breadcrumbs a {
+    color: var(--text-muted) !important;
+    font-size: 0.8125rem;
+    transition: color var(--transition);
+}
+
+#breadcrumbs a:hover {
+    color: var(--purple) !important;
+}
+
+/* Current page (last crumb, not a link) reads as the strongest item */
+#breadcrumbs li:last-child,
+#breadcrumbs li:last-child a {
+    color: var(--text) !important;
+    font-weight: 600;
 }
 
 

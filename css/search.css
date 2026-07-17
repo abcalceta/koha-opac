@@ -236,6 +236,15 @@ body#results #bookbag_form td.bibliocol .author {
     background: var(--status-hold-bg);
 }
 
+/* Online-only records (no physical copy to borrow) — set by
+   covers.js's relabelOnlineAvailability(). Purple instead of
+   green so it reads as a different kind of "available", not a
+   loanable-item status. */
+.available.available-online {
+    color: var(--purple);
+    background: var(--purple-muted);
+}
+
 
 /* ============================================================
    5. Facets / filter sidebar
