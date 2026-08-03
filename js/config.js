@@ -19,9 +19,9 @@
    ============================================================ */
 
 export const SHELVES = [
-    { title: "Featured Collection",     reportId: 1  },
-    { title: "Anthropology Highlights", reportId: 7  },
-    { title: "Discover Books",          reportId: 6  },
+    { title: "Physical Collection",     reportId: 8  },
+    { title: "Digital Collection", reportId: 9 },
+    { title: "Discover Books",          reportId: 1  },
 ];
 
 
@@ -53,10 +53,10 @@ export const SITE = {
     },
 
     hours: [
-        { days: "Monday – Friday",   time: "8:00 AM – 5:00 PM" },
+        { days: "Monday – Friday",   time: "10:00 AM – 4:30 PM" },
         { days: "Saturday – Sunday", time: "Closed" },
     ],
-    hoursNote: "Closed on public holidays · edit hours to confirm",
+    hoursNote: "Closed on public holidays · Please call to confirm if visiting.",
 
     /* Kept as an honest placeholder until access rules are set —
        swap this for the real eligibility/registration copy. */

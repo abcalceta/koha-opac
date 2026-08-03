@@ -38,7 +38,7 @@ export function buildHeroHTML(site) {
         <div class="pssc-hero-floaters">${floaters}</div>
         <div class="pssc-hero-content">
             <div class="pssc-hero-kicker">Philippine Social Science Council &middot; established ${site.established}</div>
-            <h1 class="pssc-hero-title">PSSC Library</h1>
+            <h1 class="pssc-hero-title">Frank X. Lynch Library</h1>
             <p class="pssc-hero-quote">&ldquo;${site.motto}&rdquo;</p>
             ${showSearch ? `
             <form class="pssc-hero-search" id="pssc-hero-search-form">
