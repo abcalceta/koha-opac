@@ -19,8 +19,9 @@
    ============================================================ */
 
 export const SHELVES = [
-    { title: "Physical Collection",     reportId: 8  },
-    { title: "Digital Collection", reportId: 9 },
+    { title: "Social Science Information Collection", reportId: 10 },
+    { title: "Digital Collection: Random List",     reportId: 9  },
+    { title: "Physical Collection: Random List",     reportId: 8  },
     { title: "Discover Books",          reportId: 1  },
 ];
 
