@@ -10,7 +10,7 @@ import { initSearchForm } from "./search.js";
 
 const NAV_LINKS = [
     { label: "Home",            href: "/cgi-bin/koha/opac-main.pl",             active: true  },
-    { label: "Advanced Search", href: "/cgi-bin/koha/opac-search-advanced.pl",  active: false },
+    { label: "Advanced Search", href: "/cgi-bin/koha/opac-search.pl",  active: false },
     { label: "Lists",           href: "/cgi-bin/koha/opac-shelves.pl",          active: false },
 ];
 

@@ -16,6 +16,9 @@
 */
 
 
+import { enhanceBookCover } from "./assets.js";
+
+
 /* ============================================================
    Shared utility
    ============================================================ */
@@ -204,6 +207,17 @@ export function applyCovers() {
             "";
 
         el.appendChild(createGeneratedCover(title, author));
+
+        /* No real cover from Koha — try TKL before settling for
+           the generated placeholder. Biblionumber comes from the
+           row's own detail link, same URL contract the detail
+           page uses; silently skipped if none is found (e.g. the
+           homepage's pioneer/hero cards, which aren't bib records). */
+        const bibLink = row?.querySelector('a[href*="biblionumber="]');
+        if (bibLink) {
+            const biblionumber = new URL(bibLink.href, location.href).searchParams.get("biblionumber");
+            if (biblionumber) enhanceBookCover(el, biblionumber);
+        }
 
     });
 

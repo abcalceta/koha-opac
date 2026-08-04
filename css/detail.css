@@ -47,3 +47,123 @@
 #opac-detail main {
     background: var(--surface);
 }
+
+
+/* ============================================================
+   Advanced View dropdown (detail.js)
+   Hides the redundant "Normal view" label and groups MARC/ISBD
+   view links behind a single toggle.
+   ============================================================ */
+
+#opac-detail .pssc-view-hidden {
+    display: none;
+}
+
+#opac-detail .pssc-advanced-view {
+    position: relative;
+}
+
+#opac-detail .pssc-advanced-view-toggle {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: inherit;
+    font-size: inherit;
+    color: var(--purple);
+    cursor: pointer;
+}
+
+#opac-detail .pssc-advanced-view-toggle:hover {
+    color: var(--purple-dark);
+}
+
+#opac-detail .pssc-advanced-view-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 20;
+    margin-top: 8px;
+    min-width: 160px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-hover);
+    padding: 6px;
+}
+
+#opac-detail .pssc-advanced-view.open .pssc-advanced-view-menu {
+    display: flex;
+    flex-direction: column;
+}
+
+#opac-detail .pssc-advanced-view-menu a {
+    padding: 8px 10px;
+    border-radius: var(--radius);
+    white-space: nowrap;
+}
+
+#opac-detail .pssc-advanced-view-menu a:hover {
+    background: var(--purple-muted);
+}
+
+
+/* ============================================================
+   Browse Results — open by default
+   Koha hides the numbered results strip behind a "Browse
+   results" click; the Previous/Back/Next row stays untouched
+   (already visible by default). Specificity beats Koha's own
+   .results-pagination rule without !important, so the existing
+   toggle can still close/reopen it afterward.
+   ============================================================ */
+
+#opac-detail .nav_results .results-pagination {
+    display: block;
+}
+
+
+/* ============================================================
+   Subjects — bigger, clickable chips
+   ============================================================ */
+
+#opac-detail .subjects .label {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+#opac-detail .subjects .resource_list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+}
+
+#opac-detail .subjects .resource_list li {
+    display: contents;
+}
+
+/* Koha renders a "|" separator via li::after for its default
+   inline layout — display:contents keeps it alive as a stray
+   flex item, so it needs an explicit kill. */
+#opac-detail .subjects .resource_list li::after {
+    content: none;
+    display: none;
+}
+
+#opac-detail .subject {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--purple-dark);
+    background: var(--purple-muted);
+    border-radius: var(--radius-pill);
+    padding: 6px 16px;
+    transition: background var(--transition), color var(--transition);
+}
+
+#opac-detail .subject:hover {
+    background: var(--purple);
+    color: var(--text-on-color);
+}

@@ -5,6 +5,7 @@
    ============================================================ */
 
 import { createBookCover } from "./covers.js";
+import { enhanceBookCover } from "./assets.js";
 
 const PLACEHOLDER_COUNT = 6; /* shimmer cards shown while loading */
 
@@ -79,6 +80,10 @@ export async function loadShelf(shelfId, reportId, { onLoaded } = {}) {
             label.className   = "booktitle";
             label.textContent = book.subtitle ? `${book.title}: ${book.subtitle}` : book.title;
             link.appendChild(label);
+        } else {
+            /* No report-provided cover — try TKL before settling
+               for the generated gradient placeholder. */
+            enhanceBookCover(link.querySelector(".bookcover"), book.biblio);
         }
 
         shelf.appendChild(link);
