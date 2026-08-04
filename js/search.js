@@ -28,3 +28,18 @@ export function initSearchForm(form, input, indexSelect) {
         goToSearch(input.value, index);
     });
 }
+
+/**
+ * Build a link to full catalog search results restricted to a
+ * publication-year range, using Koha's own "Date of publication"
+ * range syntax (the same `limit=yr,st-numeric=FROM-TO` a librarian
+ * gets from the advanced search date-range field) — no custom
+ * search endpoint needed. Shared by any visualization that offers
+ * a "View all N books" link out to the real catalog (currently
+ * publication-timeline.js; reusable by future date-based views).
+ */
+export function buildPublicationYearSearchUrl(fromYear, toYear) {
+    const params = new URLSearchParams();
+    params.set("limit", `yr,st-numeric=${fromYear}-${toYear}`);
+    return `${SEARCH_PATH}?${params.toString()}`;
+}

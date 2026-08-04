@@ -1,0 +1,352 @@
+/* ============================================================
+   publication-timeline.css — "Browse by Publication Decade"
+   Styled to feel like a museum placard or archive shelf label,
+   not an analytics dashboard: soft neutral surfaces, generous
+   whitespace, serif numerals, restrained motion. Section
+   width/centering/vertical spacing come from .pssc-viz-section
+   in layout.css, same as every other homepage section — this
+   file only styles what's inside it.
+   ============================================================ */
+
+.pt-viz {
+    position: relative;
+}
+
+
+/* ---- Chart ---- */
+
+.pt-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    height: 220px;
+    padding: 8px 4px 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.pt-chart::-webkit-scrollbar {
+    display: none;
+}
+
+.pt-bar-btn {
+    flex: 1 1 0;
+    min-width: 46px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 0 2px 14px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.pt-bar {
+    display: block;
+    width: 100%;
+    height: var(--pt-bar-height, 10%);
+    border-radius: 5px 5px 2px 2px;
+    background: linear-gradient(180deg, var(--purple-light), var(--purple));
+    box-shadow: var(--shadow);
+    transition: background var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+
+.pt-bar-btn:hover .pt-bar,
+.pt-bar-btn:focus-visible .pt-bar {
+    background: linear-gradient(180deg, var(--purple), var(--purple-dark));
+    box-shadow: var(--shadow-hover);
+}
+
+.pt-bar-btn.pt-bar-selected .pt-bar {
+    background: linear-gradient(180deg, var(--gold), var(--gold-dark));
+}
+
+.pt-bar-btn:focus-visible {
+    outline: 2px solid var(--purple);
+    outline-offset: 2px;
+    border-radius: var(--radius);
+}
+
+.pt-bar-label {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.pt-bar-btn.pt-bar-selected .pt-bar-label {
+    color: var(--gold-dark);
+    font-weight: 600;
+}
+
+
+/* ---- Loading skeleton ---- */
+
+.pt-chart-loading {
+    align-items: flex-end;
+}
+
+.pt-skeleton-bar {
+    flex: 1 1 0;
+    min-width: 46px;
+    height: var(--pt-h, 40%);
+    border-radius: 5px 5px 2px 2px;
+    background: var(--purple-muted);
+    animation: pt-pulse 1.4s ease-in-out infinite;
+}
+
+
+/* ---- Tooltip ---- */
+
+.pt-tooltip {
+    position: absolute;
+    z-index: 10;
+    transform: translate(-50%, calc(-100% - 12px));
+    min-width: 180px;
+    max-width: 240px;
+    pointer-events: none;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-hover);
+    padding: 14px 16px;
+}
+
+.pt-tooltip-decade {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--purple-dark);
+    font-size: 1.0625rem;
+    margin-bottom: 2px;
+}
+
+.pt-tooltip-count {
+    font-size: 0.8125rem;
+    color: var(--text);
+    margin-bottom: 2px;
+}
+
+.pt-tooltip-range {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.pt-tooltip-subjects-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.pt-tooltip-subjects {
+    list-style: none;
+    margin: 0 0 10px;
+    padding: 0;
+    font-size: 0.8125rem;
+    color: var(--text);
+    line-height: 1.5;
+}
+
+.pt-tooltip-subjects li::before {
+    content: "· ";
+    color: var(--gold-dark);
+}
+
+.pt-tooltip-cta {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--gold-dark);
+}
+
+
+/* ---- Expanded book-preview panel ----
+   Faded/slid-up by default; JS adds .pt-panel-visible one frame
+   after content lands so the transition actually plays instead of
+   snapping straight to the end state. */
+
+.pt-panel {
+    margin-top: 20px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.pt-panel-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.pt-panel-heading {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.pt-panel-decade {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--purple-dark);
+}
+
+.pt-panel-range {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+}
+
+.pt-panel-empty {
+    font-size: 0.875rem;
+    font-style: italic;
+    color: var(--text-muted);
+    padding: 12px 0;
+}
+
+
+/* ---- Book cards ---- */
+
+.pt-books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 20px 16px;
+}
+
+.pt-book-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.pt-book-card:hover .pt-book-title {
+    color: var(--purple);
+}
+
+.pt-book-card .bookcover {
+    width: 100%;
+    height: 160px;
+}
+
+/* Every card already prints its own title/author/year line below
+   the cover (year has nowhere else to go), so suppress the text
+   createGeneratedCover() bakes into a placeholder cover here to
+   avoid showing the title twice — the hue is still derived from
+   the real title, just the printed text is hidden. Scoped to this
+   component only; covers.js/bookcovers.css stay untouched since
+   the homepage shelves rely on that baked-in text when they have
+   no separate caption (see shelf.js). */
+.pt-book-card .generated-cover .cover-title,
+.pt-book-card .generated-cover .cover-author {
+    display: none;
+}
+
+.pt-book-info {
+    min-width: 0;
+}
+
+.pt-book-title {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: color var(--transition);
+}
+
+.pt-book-author,
+.pt-book-year {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pt-book-card-loading {
+    height: 160px;
+    border-radius: var(--radius);
+    background: var(--purple-muted);
+    animation: pt-pulse 1.4s ease-in-out infinite;
+}
+
+
+/* ---- View all link ---- */
+
+.pt-view-all {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gold-dark);
+}
+
+.pt-view-all:hover {
+    color: var(--purple-dark);
+}
+
+
+/* ---- Empty state (no report data at all) ---- */
+
+.pt-empty {
+    font-size: 0.9375rem;
+    font-style: italic;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 40px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+
+/* ---- Motion ---- */
+
+@keyframes pt-pulse {
+    0%, 100% { opacity: 0.55; }
+    50%      { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pt-skeleton-bar,
+    .pt-book-card-loading {
+        animation: none;
+    }
+    .pt-panel {
+        transition: none;
+    }
+}
+
+
+/* ---- Mobile ---- */
+
+@media (max-width: 640px) {
+    .pt-chart {
+        height: 180px;
+    }
+    .pt-books-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 16px 12px;
+    }
+    .pt-book-card .bookcover {
+        height: 130px;
+    }
+}

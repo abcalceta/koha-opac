@@ -6,6 +6,7 @@
 
 import { buildHeroHTML, initHero, populateHeroFloaters } from "./hero.js";
 import { buildPioneersHTML, initPioneers } from "./pioneers.js";
+import { buildVisualizationSectionsHTML } from "./visualization-loader.js";
 
 /* Re-exported so main.js gets these from the SAME module instance
    that buildHomepageHTML() populated (pioneers.js keeps carousel
@@ -78,12 +79,16 @@ function buildFooterHTML(site) {
 }
 
 /**
- * Build the full homepage HTML from config.js's SHELVES/SITE and
- * pioneers-config.js's PIONEERS. Each shelf gets a unique
- * container id of "shelf-{reportId}-{index}" so duplicate report
- * IDs (e.g. two shelves from the same report) don't collide.
+ * Build the full homepage HTML from config.js's SHELVES/SITE/
+ * VISUALIZATIONS and pioneers-config.js's PIONEERS. Each shelf
+ * gets a unique container id of "shelf-{reportId}-{index}" so
+ * duplicate report IDs (e.g. two shelves from the same report)
+ * don't collide. Visualization sections (empty at this point —
+ * their data loads separately, see initVisualizations() in
+ * main.js) come from visualization-loader.js so this file stays
+ * unaware of what any individual visualization looks like.
  */
-export function buildHomepageHTML(shelves, site, pioneers) {
+export function buildHomepageHTML(shelves, site, pioneers, visualizations) {
 
     const sections = shelves.map((shelf, i) => buildShelfSectionHTML(shelf, `shelf-${shelf.reportId}-${i}`));
 
@@ -91,6 +96,7 @@ export function buildHomepageHTML(shelves, site, pioneers) {
         buildHeroHTML(site),
         buildPioneersHTML(pioneers),
         ...sections,
+        buildVisualizationSectionsHTML(visualizations),
         buildVisitHTML(site),
         buildFooterHTML(site),
     ].join("\n");

@@ -5,7 +5,7 @@
    pioneers-config.js — not this file.
    ============================================================ */
 
-const VERSION = "2.4.0";
+const VERSION = "2.5.0";
 const REPO_BASE = new URL("../", import.meta.url).href;
 
 /* Loaded as separate stylesheets (not a single bundled theme.css)
@@ -23,16 +23,18 @@ const CSS_FILES = [
     "homepage.css",
     "hero.css",
     "pioneers.css",
+    "publication-timeline.css",
     "visit.css",
     "search.css",
     "detail.css",
 ];
 
-const { SHELVES, SITE }              = await import(`./config.js?v=${VERSION}`);
+const { SHELVES, SITE, VISUALIZATIONS } = await import(`./config.js?v=${VERSION}`);
 const { PIONEERS }                   = await import(`./pioneers-config.js?v=${VERSION}`);
 const { buildHomepageHTML, initHero, populateHeroFloaters, initPioneers } = await import(`./homepage.js?v=${VERSION}`);
 const { applyCovers, refreshCovers, loadDetailCover, applySearchCovers, relabelOnlineAvailability } = await import(`./covers.js?v=${VERSION}`);
 const { loadShelf }                  = await import(`./shelf.js?v=${VERSION}`);
+const { initVisualizations }         = await import(`./visualization-loader.js?v=${VERSION}`);
 const { initNavbar }                 = await import(`./navbar.js?v=${VERSION}`);
 const { enhanceWithAssets }          = await import(`./assets.js?v=${VERSION}`);
 const { enhanceDetailViews, enhanceBrowseResults } = await import(`./detail.js?v=${VERSION}`);
@@ -80,10 +82,11 @@ function initHomepage() {
 
     initNavbar(SITE);
 
-    container.innerHTML = buildHomepageHTML(SHELVES, SITE, PIONEERS);
+    container.innerHTML = buildHomepageHTML(SHELVES, SITE, PIONEERS, VISUALIZATIONS);
 
     initHero();
     initPioneers();
+    initVisualizations(VISUALIZATIONS);
 
     /* Feed the hero's floating covers from whichever configured
        shelf's Koha report data comes back first — no separate

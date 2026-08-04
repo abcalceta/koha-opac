@@ -26,6 +26,50 @@ export const SHELVES = [
 ];
 
 
+/* ---- Homepage visualizations ----
+
+   Data-driven homepage features bigger than a shelf — charts,
+   clouds, browsable views — built from Koha saved reports the
+   same way SHELVES is. See sql/ for the report SQL and
+   js/visualization-loader.js for how this list becomes sections
+   on the page.
+
+   HOW TO ADD ONE:
+     1. Create/save the report(s) it needs in Koha → Reports.
+     2. Add an entry below with its report ID(s).
+     3. Set enabled: false instead of deleting an entry to turn a
+        visualization off without losing its configuration.
+
+   Fields (exact set depends on "type" — see each renderer's file
+   for what it expects):
+     type             required. Which renderer draws this section —
+                       must match a key in visualization-loader.js's
+                       RENDERERS map.
+     title             required. Section heading shown on the page.
+     reportId          required. Koha saved report ID for the main
+                       chart/view data.
+     previewReportId    Koha saved report ID for on-demand detail
+                       data (e.g. the books behind one bar of a
+                       chart), if the visualization has one.
+     enabled           optional, defaults to true.
+
+   "publicationTimeline" (js/publication-timeline.js) — a bar
+   chart of the collection by publication decade, expanding into a
+   12-book preview shelf per decade on click:
+     reportId          sql/publication-decade-timeline.sql
+     previewReportId    sql/publication-decade-books.sql
+*/
+export const VISUALIZATIONS = [
+    {
+        type: "publicationTimeline",
+        title: "Browse by Publication Decade",
+        reportId: 21,
+        previewReportId: 22,
+        enabled: true,
+    },
+];
+
+
 /* ---- Front page settings ----
 
    searchPlacement: where the search box appears —

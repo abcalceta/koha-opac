@@ -54,6 +54,7 @@
 .pssc-navbar-inner,
 .discover-section,
 .pssc-pioneers,
+.pssc-viz-section,
 .pssc-visit,
 .pssc-footer-inner {
     max-width: var(--container-width);
@@ -86,6 +87,7 @@
     .pssc-navbar-inner,
     .discover-section,
     .pssc-pioneers,
+    .pssc-viz-section,
     .pssc-visit,
     .pssc-footer-inner,
     .pssc-container-wide {
@@ -105,6 +107,7 @@
 .pssc-section,
 .discover-section,
 .pssc-pioneers,
+.pssc-viz-section,
 .pssc-visit {
     padding-top: var(--section-spacing-top);
     padding-bottom: var(--section-spacing-bottom);
