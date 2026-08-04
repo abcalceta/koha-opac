@@ -36,12 +36,34 @@
     border: none;
 }
 
-/* Give the inner form area a white card feel */
+/* Give the inner form area a white card feel — the ONE elevated
+   surface for the whole page (see the fieldset/#booleansearch
+   notes below for why nothing inside also gets its own card). */
 #advsearch .main .container-fluid {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 20px;
+    box-shadow: var(--shadow);
+    padding: 32px;
+}
+
+/* #booleansearch also matches the sitewide .maincontent card rule
+   in base.css, which put a second white/bordered box directly
+   inside the one above — same background color, so it read as a
+   redundant border line rather than an intentional division.
+   Strip it here so the outer card is the only surface. */
+#advsearch #booleansearch {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+}
+
+#advsearch h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--purple-dark);
+    margin-bottom: 20px;
 }
 
 /* Index/operator selects and text inputs inside advanced search —
@@ -56,23 +78,118 @@
     background: var(--surface);
     color: var(--text);
     padding: 6px 10px;
+    transition: border-color var(--transition), box-shadow var(--transition);
 }
 
+#advsearch input[type="text"]:focus,
+#advsearch select:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(242, 191, 45, 0.22);
+    outline: none;
+}
+
+/* Every fieldset (Search for / Item type / Availability / Sort by
+   / Publication date / Language) used to get its own bordered box
+   too — three layers of nested boxes for the same white
+   background. The legend alone is enough of a section marker;
+   fieldsets just contribute spacing now. Cards that SHOULD look
+   distinct (the four limit boxes) get their own treatment below,
+   on the wrapper div instead of the fieldset. */
 #advsearch fieldset {
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px;
-    margin-bottom: 16px;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    margin-bottom: 28px;
+}
+
+#advsearch fieldset:last-child {
+    margin-bottom: 0;
 }
 
 #advsearch legend {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 0.9375rem;
+    font-size: 1.0625rem;
     color: var(--purple-dark);
     width: auto;
-    padding: 0 8px;
+    padding: 0;
+    margin-bottom: 12px;
     border: none;
+}
+
+#advsearch .search-term-row {
+    margin-bottom: 10px;
+}
+
+/* "More options" / "New search" — Bootstrap's plain gray default,
+   restyled as a ghost button matching .btn-primary's pill shape. */
+#advsearch .btn-default {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    color: var(--purple-dark);
+    transition: background var(--transition), border-color var(--transition);
+}
+
+#advsearch .btn-default:hover {
+    background: var(--purple-muted);
+    border-color: var(--purple-light);
+}
+
+/* "Item type" tab strip */
+#advsearches .nav-tabs {
+    border-bottom: 1px solid var(--border);
+}
+
+#advsearches .nav-link {
+    color: var(--text-muted);
+    font-weight: 600;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+}
+
+#advsearches .nav-link.active {
+    color: var(--purple-dark);
+    background: transparent;
+    border-bottom-color: var(--purple);
+}
+
+#advsearches_content {
+    border: none;
+    padding-top: 20px;
+}
+
+/* Item type checkboxes */
+.adv-search-grid {
+    gap: 6px 16px !important;
+}
+
+.adv-search-item {
+    padding: 8px 10px;
+    border-radius: var(--radius);
+    transition: background var(--transition);
+}
+
+.adv-search-item:hover {
+    background: var(--purple-muted);
+}
+
+.adv-search-item input[type="checkbox"] {
+    accent-color: var(--purple);
+    width: 16px;
+    height: 16px;
+}
+
+/* Availability / Sort by / Publication date / Language — light
+   tinted cards instead of thin gray boxes, same height in a row. */
+#advsearch .advsearch_limit {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    height: 100%;
+    box-sizing: border-box;
 }
 
 
