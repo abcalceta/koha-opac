@@ -63,8 +63,8 @@ export const VISUALIZATIONS = [
     {
         type: "publicationTimeline",
         title: "Browse by Publication Decade",
-        reportId: 21,
-        previewReportId: 22,
+        reportId: 11,
+        previewReportId: 12,
         enabled: true,
     },
 ];
