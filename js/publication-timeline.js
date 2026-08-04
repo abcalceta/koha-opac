@@ -31,6 +31,16 @@ const PREVIEW_LIMIT = 12;        /* book cards shown before "View all" */
 const SKELETON_BAR_COUNT = 10;   /* shimmer bars shown while loading */
 const PANEL_TRANSITION_MS = 200; /* keep in sync with publication-timeline.css */
 
+/* How many TKL cover lookups run at once for a single panel. These
+   books are a random sample across the whole catalog (not a
+   curated shelf), so TKL often has nothing for most of them —
+   firing all 12 at once was blowing through the browser's ~6
+   same-host connection limit and queuing out the *next* report
+   fetch behind a pile of slow 404s. Covers still fade in
+   progressively (see enhanceCoversThrottled) — this only limits
+   how many are in flight together. */
+const COVER_LOOKUP_CONCURRENCY = 3;
+
 
 /**
  * Entry point — called by visualization-loader.js with an empty
@@ -294,8 +304,15 @@ function buildChart(mount, decades, vizConfig) {
 
             const grid = document.createElement("div");
             grid.className = "pt-books-grid";
-            books.slice(0, PREVIEW_LIMIT).forEach(book => grid.appendChild(buildBookCard(book)));
+            const shownBooks = books.slice(0, PREVIEW_LIMIT);
+            const cards = shownBooks.map(buildBookCard);
+            cards.forEach(card => grid.appendChild(card));
             panel.appendChild(grid);
+
+            /* Placeholders are already in the DOM above — this
+               fills in real covers progressively, a few at a time,
+               without delaying anything the user can already see. */
+            enhanceCoversThrottled(shownBooks, cards);
 
             if (decade.count > PREVIEW_LIMIT && decade.earliestYear && decade.latestYear) {
                 const link = document.createElement("a");
@@ -396,11 +413,11 @@ function buildBookCard(book) {
     link.href = `/cgi-bin/koha/opac-detail.pl?biblionumber=${book.biblionumber}`;
 
     /* Same cover contract as the homepage shelves: report data has
-       no cover URL, so start with a generated placeholder and let
-       enhanceBookCover() swap in a real one from Koha's existing
-       TKL asset lookup if it has one for this biblionumber. */
+       no cover URL, so start with a generated placeholder. The
+       real cover (if TKL has one) is filled in afterward by
+       enhanceCoversThrottled() below, not here — see its comment
+       for why that's deliberately not immediate. */
     link.appendChild(createBookCover(book.title, book.author, ""));
-    enhanceBookCover(link.querySelector(".bookcover"), book.biblionumber);
 
     const info = document.createElement("div");
     info.className = "pt-book-info";
@@ -410,6 +427,29 @@ function buildBookCard(book) {
     link.appendChild(info);
 
     return link;
+
+}
+
+/**
+ * Fill in real covers for already-rendered cards, a few at a time
+ * instead of all PREVIEW_LIMIT at once. Fire-and-forget from the
+ * caller's side — the panel is already fully visible with
+ * placeholders before this ever runs, so nothing here should delay
+ * anything the user is looking at. Deliberately not awaited by
+ * renderPanelContent().
+ */
+async function enhanceCoversThrottled(books, cards) {
+
+    let next = 0;
+    async function worker() {
+        while (next < books.length) {
+            const i = next++;
+            await enhanceBookCover(cards[i].querySelector(".bookcover"), books[i].biblionumber);
+        }
+    }
+
+    const workerCount = Math.min(COVER_LOOKUP_CONCURRENCY, books.length);
+    await Promise.all(Array.from({ length: workerCount }, worker));
 
 }
 

@@ -16,10 +16,22 @@ export const ASSETS = {
 
 const _cache = new Map();
 
+/* How long to wait for TKL before giving up on one lookup. Every
+   caller here fires several of these in parallel (a shelf, a page
+   of search results, a decade's book-preview panel) — if the TKL
+   host is slow or just doesn't have a given biblionumber, a slow
+   response holds one of the browser's ~6 same-host connection
+   slots open for the full round trip. Since library.pssc.org.ph
+   also serves the Koha CGI scripts themselves, a pile of slow TKL
+   lookups can queue out an unrelated report fetch behind them.
+   Bounding the wait keeps that from compounding. */
+const METADATA_TIMEOUT_MS = 2500;
+
 /**
  * Fetch and cache metadata.json for a biblionumber.
  * Returns null (and caches the null) on any failure — network
- * error, non-OK response, missing file, or malformed JSON — so
+ * error, non-OK response, missing file, malformed JSON, or a
+ * response that didn't arrive within METADATA_TIMEOUT_MS — so
  * callers can fall back to existing Koha behavior without caring
  * why. One request per biblionumber for the page's lifetime.
  */
@@ -28,11 +40,16 @@ export async function loadMetadata(biblionumber) {
     if (_cache.has(biblionumber)) return _cache.get(biblionumber);
 
     let metadata = null;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), METADATA_TIMEOUT_MS);
+
     try {
-        const res = await fetch(`${ASSETS.server}/${biblionumber}/metadata.json`);
+        const res = await fetch(`${ASSETS.server}/${biblionumber}/metadata.json`, { signal: controller.signal });
         if (res.ok) metadata = await res.json();
     } catch {
         metadata = null;
+    } finally {
+        clearTimeout(timeout);
     }
 
     _cache.set(biblionumber, metadata);

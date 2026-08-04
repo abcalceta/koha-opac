@@ -5,7 +5,7 @@
    pioneers-config.js — not this file.
    ============================================================ */
 
-const VERSION = "2.5.0";
+const VERSION = "2.5.1";
 const REPO_BASE = new URL("../", import.meta.url).href;
 
 /* Loaded as separate stylesheets (not a single bundled theme.css)
