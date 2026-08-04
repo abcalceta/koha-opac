@@ -59,8 +59,16 @@
     display: none;
 }
 
+/* flow-root so the float below doesn't collapse #views to zero
+   height (and unlike overflow:hidden, doesn't clip the dropdown
+   menu popping out beneath it) */
+#opac-detail #views {
+    display: flow-root;
+}
+
 #opac-detail .pssc-advanced-view {
     position: relative;
+    float: right;
 }
 
 #opac-detail .pssc-advanced-view-toggle {
@@ -81,7 +89,7 @@
     display: none;
     position: absolute;
     top: 100%;
-    left: 0;
+    right: 0;
     z-index: 20;
     margin-top: 8px;
     min-width: 160px;
@@ -119,6 +127,25 @@
 
 #opac-detail .nav_results .results-pagination {
     display: block;
+}
+
+/* Cover thumbnails added by enhanceBrowseResults() (detail.js) */
+#opac-detail #ul_pagination_lists li.pssc-has-cover {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+#opac-detail .pssc-browse-cover {
+    width: 36px;
+    height: auto;
+    flex-shrink: 0;
+    border-radius: 4px;
+    box-shadow: var(--shadow);
+}
+
+#opac-detail .pssc-browse-info {
+    min-width: 0;
 }
 
 
@@ -166,4 +193,16 @@
 #opac-detail .subject:hover {
     background: var(--purple);
     color: var(--text-on-color);
+}
+
+
+/* ============================================================
+   MARC view / ISBD view (opac-marcdetail, opac-isbddetail)
+   These are separate pages from opac-detail, not tabs on it —
+   Koha renders them edge-to-edge with no padding at all.
+   ============================================================ */
+
+#opac-marcdetail #catalogue_detail_biblio,
+#opac-isbddetail #catalogue_detail_biblio {
+    padding: 28px 40px 36px;
 }

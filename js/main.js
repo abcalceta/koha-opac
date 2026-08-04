@@ -5,7 +5,7 @@
    pioneers-config.js — not this file.
    ============================================================ */
 
-const VERSION = "2.2.0";
+const VERSION = "2.3.0";
 const REPO_BASE = new URL("../", import.meta.url).href;
 
 /* Loaded as separate stylesheets (not a single bundled theme.css)
@@ -35,7 +35,7 @@ const { applyCovers, refreshCovers, loadDetailCover, applySearchCovers, relabelO
 const { loadShelf }                  = await import(`./shelf.js?v=${VERSION}`);
 const { initNavbar }                 = await import(`./navbar.js?v=${VERSION}`);
 const { enhanceWithAssets }          = await import(`./assets.js?v=${VERSION}`);
-const { enhanceDetailViews }         = await import(`./detail.js?v=${VERSION}`);
+const { enhanceDetailViews, enhanceBrowseResults } = await import(`./detail.js?v=${VERSION}`);
 
 
 /* --- Entry point --- */
@@ -52,6 +52,7 @@ function init() {
         relabelOnlineAvailability();
         enhanceWithAssets();
         enhanceDetailViews();
+        enhanceBrowseResults();
     } else {
         applyCovers();
         refreshCovers();
