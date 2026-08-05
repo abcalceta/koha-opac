@@ -41,6 +41,8 @@ const PANEL_TRANSITION_MS = 200; /* keep in sync with publication-timeline.css *
    how many are in flight together. */
 const COVER_LOOKUP_CONCURRENCY = 3;
 
+const PER_YEAR_SAMPLE = 2; /* roughly how many books to pull from each year before capping to PREVIEW_LIMIT */
+
 
 /**
  * Entry point — called by visualization-loader.js with an empty
@@ -129,7 +131,42 @@ function parseBookRows(rows) {
 async function loadDecadeBooks(previewReportId, decade) {
     if (!previewReportId || !decade.earliestYear || !decade.latestYear) return [];
     const params = `&sql_params=${decade.earliestYear}&sql_params=${decade.latestYear}`;
-    return parseBookRows(await fetchReport(previewReportId, params));
+    const books = parseBookRows(await fetchReport(previewReportId, params));
+    return pickRandomSpread(books, PER_YEAR_SAMPLE, PREVIEW_LIMIT);
+}
+
+/**
+ * Pick a spread of books across the years present in `books` —
+ * up to `perYear` shuffled from each year, then shuffled again and
+ * capped at `total`. The SQL report deliberately does no
+ * randomizing or per-year grouping of its own (see sql/publication-
+ * decade-books.sql for why) — this is where that actually happens,
+ * where it's easy to read, test, and change.
+ */
+function pickRandomSpread(books, perYear, total) {
+
+    const byYear = new Map();
+    books.forEach(book => {
+        const list = byYear.get(book.year) || [];
+        list.push(book);
+        byYear.set(book.year, list);
+    });
+
+    const candidates = [];
+    byYear.forEach(list => candidates.push(...shuffle(list).slice(0, perYear)));
+
+    return shuffle(candidates).slice(0, total);
+
+}
+
+/** Fisher–Yates shuffle. Returns a new array; doesn't mutate the input. */
+function shuffle(items) {
+    const result = items.slice();
+    for (let i = result.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [result[i], result[j]] = [result[j], result[i]];
+    }
+    return result;
 }
 
 
