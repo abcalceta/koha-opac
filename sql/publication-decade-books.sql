@@ -13,6 +13,14 @@
 --   [1] title
 --   [2] author
 --   [3] publication_year
+--   [4] cover_url — optional, blank for most rows. Same
+--       ExtractValue-on-MARC-856 pattern the "Digital Collection"
+--       shelf report uses to find a book's cover on
+--       library.pssc.org.ph/covers — most books in a random decade
+--       slice won't have one (that's expected; the frontend falls
+--       back to a TKL lookup, then a generated placeholder, same
+--       as the shelves), but digital-resource items that do will
+--       show their real cover immediately with no extra lookup.
 --
 -- WHY THIS IS DELIBERATELY DUMB SQL: earlier versions tried to do
 -- the "~2 random books per year" selection here in SQL — first
@@ -73,7 +81,13 @@ SELECT
     biblio.biblionumber,
     biblio.title,
     biblio.author,
-    biblio.copyrightdate AS publication_year
+    biblio.copyrightdate AS publication_year,
+    ExtractValue(
+        biblio_metadata.metadata,
+        '//datafield[@tag="856"][contains(subfield[@code="u"], "library.pssc.org.ph/covers")]/subfield[@code="u"]'
+    ) AS cover_url
 FROM biblio
+LEFT JOIN biblio_metadata
+    ON biblio_metadata.biblionumber = biblio.biblionumber
 WHERE biblio.copyrightdate BETWEEN <<Decade start year>> AND <<Decade end year>>
 LIMIT 300;

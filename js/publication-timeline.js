@@ -117,7 +117,7 @@ function parseTimelineRows(rows) {
         .sort((a, b) => (a.earliestYear ?? 0) - (b.earliestYear ?? 0));
 }
 
-/** Report #2 columns: [0] biblionumber [1] title [2] author [3] publication_year */
+/** Report #2 columns: [0] biblionumber [1] title [2] author [3] publication_year [4] cover_url (optional) */
 function parseBookRows(rows) {
     if (!rows) return [];
     return rows.map(row => ({
@@ -125,6 +125,7 @@ function parseBookRows(rows) {
         title:        row[1] || "[NO TITLE]",
         author:       row[2] || "",
         year:         row[3] || "",
+        coverUrl:     row[4] || "",
     }));
 }
 
@@ -348,8 +349,14 @@ function buildChart(mount, decades, vizConfig) {
 
             /* Placeholders are already in the DOM above — this
                fills in real covers progressively, a few at a time,
-               without delaying anything the user can already see. */
-            enhanceCoversThrottled(shownBooks, cards);
+               without delaying anything the user can already see.
+               Books that already came back with a cover_url (see
+               sql/publication-decade-books.sql) are rendering their
+               real cover already via buildBookCard()/createBookCover()
+               and don't need a TKL lookup at all. */
+            enhanceCoversThrottled(
+                shownBooks.map((book, i) => ({ book, card: cards[i] })).filter(x => !x.book.coverUrl)
+            );
 
             if (decade.count > PREVIEW_LIMIT && decade.earliestYear && decade.latestYear) {
                 const link = document.createElement("a");
@@ -449,12 +456,15 @@ function buildBookCard(book) {
     link.className = "pt-book-card";
     link.href = `/cgi-bin/koha/opac-detail.pl?biblionumber=${book.biblionumber}`;
 
-    /* Same cover contract as the homepage shelves: report data has
-       no cover URL, so start with a generated placeholder. The
+    /* Same cover contract as the homepage shelves: if the report
+       gave us a real cover_url (digital-resource items — see
+       sql/publication-decade-books.sql), createBookCover() shows it
+       immediately, same as shelf.js. Most books won't have one; for
+       those this renders the generated placeholder now, and the
        real cover (if TKL has one) is filled in afterward by
-       enhanceCoversThrottled() below, not here — see its comment
-       for why that's deliberately not immediate. */
-    link.appendChild(createBookCover(book.title, book.author, ""));
+       enhanceCoversThrottled() below — see its comment for why
+       that's deliberately not immediate. */
+    link.appendChild(createBookCover(book.title, book.author, book.coverUrl));
 
     const info = document.createElement("div");
     info.className = "pt-book-info";
@@ -468,24 +478,29 @@ function buildBookCard(book) {
 }
 
 /**
- * Fill in real covers for already-rendered cards, a few at a time
- * instead of all PREVIEW_LIMIT at once. Fire-and-forget from the
+ * Fill in real covers for already-rendered cards via a TKL lookup,
+ * a few at a time instead of all at once. Callers should already
+ * have filtered out any book that has a report-provided cover_url
+ * — those render their real cover immediately in buildBookCard()
+ * and have no reason to also hit TKL. Fire-and-forget from the
  * caller's side — the panel is already fully visible with
  * placeholders before this ever runs, so nothing here should delay
  * anything the user is looking at. Deliberately not awaited by
  * renderPanelContent().
+ *
+ * @param {{book: object, card: HTMLElement}[]} items
  */
-async function enhanceCoversThrottled(books, cards) {
+async function enhanceCoversThrottled(items) {
 
     let next = 0;
     async function worker() {
-        while (next < books.length) {
-            const i = next++;
-            await enhanceBookCover(cards[i].querySelector(".bookcover"), books[i].biblionumber);
+        while (next < items.length) {
+            const { book, card } = items[next++];
+            await enhanceBookCover(card.querySelector(".bookcover"), book.biblionumber);
         }
     }
 
-    const workerCount = Math.min(COVER_LOOKUP_CONCURRENCY, books.length);
+    const workerCount = Math.min(COVER_LOOKUP_CONCURRENCY, items.length);
     await Promise.all(Array.from({ length: workerCount }, worker));
 
 }
